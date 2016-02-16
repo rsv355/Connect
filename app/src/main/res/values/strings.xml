@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LeadAppDemo</string>
+    <string name="app_name">Connect</string>
     <string name="dashboard_message">What Your Friends are Looking for?</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>

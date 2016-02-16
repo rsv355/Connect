@@ -22,6 +22,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.webmyne.connect.R;
 
 import com.webmyne.connect.dashboard.DashboardFragmentWithLeads;
+import com.webmyne.connect.user.EditProfileActivity;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -97,18 +98,14 @@ public class DrawerActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        //check if the drawerItem is set.
-                        //there are different reasons for the drawerItem to be null
-                        //--> click on the header
-                        //--> click on the footer
-                        //those items don't contain a drawerItem
-
                         if (drawerItem != null) {
                             Intent intent = null;
                             if (drawerItem.getIdentifier() == 1) {
                                 drawerItem.withSetSelected(true);
-                                Toast.makeText(DrawerActivity.this, "Edit Profile", Toast.LENGTH_SHORT).show();
-                                //intent = new Intent(MainActivity.this, CrossfadeDrawerLayoutActivity.class);
+                                intent = new Intent(DrawerActivity.this, EditProfileActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                             } else if (drawerItem.getIdentifier() == 2) {
                                 drawerItem.withSetSelected(true);
                                 Toast.makeText(DrawerActivity.this, "My Revenue", Toast.LENGTH_SHORT).show();

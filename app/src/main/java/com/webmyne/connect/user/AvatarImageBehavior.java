@@ -100,7 +100,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
             mStartXPosition = (int) (child.getX() + (child.getWidth() / 2));
 
         if (mFinalXPosition == 0)
-            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_material) + (finalHeight / 2);
+            mFinalXPosition = mContext.getResources().getDimensionPixelOffset(R.dimen.space) + (finalHeight / 2);
 
         if (mStartToolbarPosition == 0)
             mStartToolbarPosition = dependency.getY() + (dependency.getHeight() / 2);
