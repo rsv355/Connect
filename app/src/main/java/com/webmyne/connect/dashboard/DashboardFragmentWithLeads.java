@@ -28,6 +28,7 @@ import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 import com.webmyne.connect.leads.LeadsListActivity;
+import com.webmyne.connect.leads.PostLeadActivity;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -86,37 +87,37 @@ public class DashboardFragmentWithLeads extends Fragment  {
         aiImgVertical = (ImageView) aiVerticalView.findViewById(R.id.imgVertical);
         aiTextVertical = (TextView) aiVerticalView.findViewById(R.id.txtVerticalName);
         aiRippleView = (RippleView) aiVerticalView.findViewById(R.id.verticalRippleItem);
-        aiRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(0));
+        aiRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(0, color.get(0)));
         setVerticalView(aiImgVertical, aiTextVertical, Constants.VERTICAL_NAMES.get(0), Constants.VERTICAL_SHORT_NAMES.get(0), color.get(0));
 
         afImgVertical = (ImageView) afVerticalView.findViewById(R.id.imgVertical);
         afTextVertical = (TextView) afVerticalView.findViewById(R.id.txtVerticalName);
         afRippleView = (RippleView) afVerticalView.findViewById(R.id.verticalRippleItem);
-        afRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(1));
+        afRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(1, color.get(1)));
         setVerticalView(afImgVertical, afTextVertical, Constants.VERTICAL_NAMES.get(1), Constants.VERTICAL_SHORT_NAMES.get(1), color.get(1));
 
         hiImgVertical = (ImageView) hiVerticalView.findViewById(R.id.imgVertical);
         hiTextVertical = (TextView) hiVerticalView.findViewById(R.id.txtVerticalName);
         hiRippleView = (RippleView) hiVerticalView.findViewById(R.id.verticalRippleItem);
-        hiRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(2));
+        hiRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(2, color.get(2)));
         setVerticalView(hiImgVertical, hiTextVertical, Constants.VERTICAL_NAMES.get(2), Constants.VERTICAL_SHORT_NAMES.get(2), color.get(2));
 
         liImgVertical = (ImageView) liVerticalView.findViewById(R.id.imgVertical);
         liTextVertical = (TextView) liVerticalView.findViewById(R.id.txtVerticalName);
         liRippleView = (RippleView) liVerticalView.findViewById(R.id.verticalRippleItem);
-        liRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(3));
+        liRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(3, color.get(3)));
         setVerticalView(liImgVertical, liTextVertical, Constants.VERTICAL_NAMES.get(3), Constants.VERTICAL_SHORT_NAMES.get(3), color.get(3));
 
         hoiImgVertical = (ImageView) hoVerticalView.findViewById(R.id.imgVertical);
         hoiTextVertical = (TextView) hoVerticalView.findViewById(R.id.txtVerticalName);
         hoRippleView = (RippleView) hoVerticalView.findViewById(R.id.verticalRippleItem);
-        hoRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(4));
+        hoRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(4, color.get(4)));
         setVerticalView(hoiImgVertical, hoiTextVertical, Constants.VERTICAL_NAMES.get(4), Constants.VERTICAL_SHORT_NAMES.get(4), color.get(4));
 
         ncImgVertical = (ImageView) ncVerticalView.findViewById(R.id.imgVertical);
         ncTextVertical = (TextView) ncVerticalView.findViewById(R.id.txtVerticalName);
         ncRippleView = (RippleView) ncVerticalView.findViewById(R.id.verticalRippleItem);
-        ncRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(5));
+        ncRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(5, color.get(5)));
         setVerticalView(ncImgVertical, ncTextVertical, Constants.VERTICAL_NAMES.get(5), Constants.VERTICAL_SHORT_NAMES.get(5), color.get(5));
 
         //Left to right animation
@@ -204,7 +205,7 @@ public class DashboardFragmentWithLeads extends Fragment  {
             public void onComplete(RippleView rippleView) {
                 Intent intent = new Intent(getActivity(), LeadsListActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_down_out);
             }
         });
     }
@@ -224,14 +225,21 @@ public class DashboardFragmentWithLeads extends Fragment  {
     }
 
     private class OnVerticalClickListener implements RippleView.OnRippleCompleteListener {
-        private int verticalType;
-        OnVerticalClickListener(int verticaltype) {
+        private int verticalType, verticalColorIndex;
+
+
+        OnVerticalClickListener(int verticaltype, int index) {
             verticalType = verticaltype;
+            verticalColorIndex = index;
         }
 
         @Override
         public void onComplete(RippleView rippleView) {
             Toast.makeText(getActivity(), Constants.VERTICAL_NAMES.get(verticalType), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), PostLeadActivity.class);
+            intent.putExtra("vertical_color_index", verticalColorIndex);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 }

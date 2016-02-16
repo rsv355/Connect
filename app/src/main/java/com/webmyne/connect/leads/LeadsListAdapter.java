@@ -1,4 +1,4 @@
-package com.webmyne.connect.dashboard;
+package com.webmyne.connect.leads;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -90,9 +90,9 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
 
         holder.txtLeadId.setText(mDataset.get(position).getLeadName());
         holder.txtLeadId.setTextColor(mDataset.get(position).getColor());
-        holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
         holder.txtCustomerName.setText(mDataset.get(position).getCustomerName());
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
+        holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
         holder.labelStatus.setNum(mDataset.get(position).getStatus());
         String status = mDataset.get(position).getStatus();
 

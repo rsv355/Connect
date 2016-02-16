@@ -8,19 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
 
 import java.util.ArrayList;
 
-import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 
 import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
-import com.webmyne.connect.dashboard.LeadDataObject;
-import com.webmyne.connect.dashboard.LeadsListAdapter;
 import com.webmyne.connect.dialogs.LeadsFilterDialog;
 
 /**
@@ -59,7 +54,8 @@ public class LeadsListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LeadsFilterDialog filterDialog = new LeadsFilterDialog(LeadsListActivity.this);
+                LeadsFilterDialog  filterDialog = new LeadsFilterDialog(LeadsListActivity.this);
+                filterDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 filterDialog.show();
 
             }

@@ -15,10 +15,9 @@
         <item name="android:background">@color/white</item>
     </style>
 
-    <style name="CustomDialogsTheme" parent="AppTheme">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">false</item>
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_left</item>
     </style>
 
 

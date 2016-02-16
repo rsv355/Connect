@@ -1,4 +1,4 @@
-package com.webmyne.connect.dashboard;
+package com.webmyne.connect.leads;
 
 /**
  * Created by priyasindkar on 12-02-2016.

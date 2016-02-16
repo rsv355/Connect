@@ -30,7 +30,7 @@
                     android:id="@+id/header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/business_header"
+                    android:background="@drawable/business_header1"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax" />
