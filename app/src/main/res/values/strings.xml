@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">Connect</string>
+    <string name="app_name">LeadAppDemo</string>
+    <string name="dashboard_message">What Your Friends are Looking for?</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+
+    <string name="auto_insurance">Auto Insurance</string>
+    <string name="auto_finance">Auto Finance</string>
+    <string name="health_finance">Health Insurance</string>
+    <string name="life_finance">Life Insurance</string>
+    <string name="home_finance">Home Insurance</string>
+    <string name="new_car">New Car</string>
 </resources>

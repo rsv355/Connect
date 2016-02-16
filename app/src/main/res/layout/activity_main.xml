@@ -3,14 +3,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.webmyne.connect.MainActivity">
+    tools:context=".base.SplashActivity">
 
-    <TextView
+
+    <webmyne.com.leadappdemo.customUI.viewPager.SCViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:overScrollMode="never"
+        android:layout_height="match_parent"></webmyne.com.leadappdemo.customUI.viewPager.SCViewPager>
+
+    <webmyne.com.leadappdemo.customUI.viewPager.DotsView
+        android:id="@+id/dotsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/guideText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="User Guide 1!"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/small_large_text_size" />
+
+        <ImageView
+            android:id="@+id/guideImage1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/guideText1"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/guideText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="User Guide 2!"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/small_large_text_size" />
+
+        <ImageView
+            android:id="@+id/guideImage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/guideText2"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/guideText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="User Guide 3!"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/small_large_text_size" />
+
+        <ImageView
+            android:id="@+id/guideImage3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/guideText3"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo" />
+    </LinearLayout>
+
+     <include
+         android:id="@+id/loginLayout"
+         android:layout_centerInParent="true"
+         layout="@layout/fragment_login"
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content" />
+
 </RelativeLayout>

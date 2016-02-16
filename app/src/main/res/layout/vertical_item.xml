@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/std_margin"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.andexert.library.RippleView
+        android:id="@+id/verticalRippleItem"
+        rv_centered="true"
+        app:rv_rippleDuration="400"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/std_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgVertical"
+            android:layout_width="@dimen/vertical_item_size"
+            android:layout_height="@dimen/vertical_item_size"
+            android:layout_gravity="center" />
+    </com.andexert.library.RippleView>
+
+    <TextView
+        android:id="@+id/txtVerticalName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/std_margin"
+        android:text="Vertical Name"
+        android:textSize="@dimen/normal_text_size" />
+</LinearLayout>

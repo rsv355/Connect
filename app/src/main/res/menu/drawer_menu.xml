@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <Text
+        android:id="@+id/text_item_1"
+        android:title="Home" />
+
+    <Separator android:id="@+id/separator_item_1" />
+
+
+    <Text
+        android:id="@+id/text_item_3"
+        android:title="My Profile" />
+
+
+    <Separator android:id="@+id/separator_item_2" />
+
+    <Text
+        android:id="@+id/text_item_2"
+        android:title="My Revenue" />
+
+
+</menu>

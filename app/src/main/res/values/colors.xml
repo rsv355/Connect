@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="primaryBackground">#f1c40f</color>
+    <color name="colorPrimary">#2c3e50</color>
+    <color name="colorPrimaryDark">#7baa95</color>
+    <color name="colorAccent">#f1c40f</color>
+    <color name="secondaryTextFill">#92cab1</color>
+    <color name="primaryTextFill">#1e90ff</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000</color>
+    <color name="transparent">#00000000</color>
+
+ <!-- View Pager -->
+ <color name="theme_500">#607D8B</color>
+ <color name="theme_100">#CFD8DC</color>
+ <color name="theme_700">#455A64</color>
+
+ <color name="accent_A100">#FF8A80</color>
+ <color name="accent_A200">#FF5252</color>
+ <color name="accent_A400">#FF1744</color>
+
+ <color name="facebook">#2e4589</color>
+ <color name="google">#d74e30</color>
+
+<color name="material_cyan">#b9e6e3</color>
+<color name="drawer_bg">#4DB6AC</color>
+
+
+
 </resources>

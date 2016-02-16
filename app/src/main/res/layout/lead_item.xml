@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearParent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/std_margin"
+        app:cardCornerRadius="@dimen/small_margin"
+        app:cardElevation="@dimen/small_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgLeadItem"
+                android:layout_margin="@dimen/std_margin"
+                android:layout_width="@dimen/final_profile_image"
+                android:layout_height="@dimen/final_profile_image"
+                android:src="@drawable/logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/std_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtLeadId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/small_margin"
+                    android:text="Lead Transaction Id"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/txtCustomerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/small_margin"
+                    android:text="Customer Name"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="right"
+                android:orientation="vertical">
+
+                <com.webmyne.connect.base.LabelView
+                    android:id="@+id/labelStatus"
+                    android:layout_gravity="right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundColor="@color/primaryBackground"
+                    app:direction="rightTop"
+                    app:labelBottomPadding="@dimen/large_margin"
+                    app:labelCenterPadding="@dimen/small_margin"
+                    app:labelTopPadding="15dp"
+                    app:num="ACTIVE"
+                    app:paddingEnd="@dimen/std_margin"
+                    app:paddingStart="@dimen/std_margin"
+                    app:numSize="@dimen/tiny_text_size"
+                    app:numStyle="italic"
+                    app:text=""
+                    app:textSize="@dimen/tiny_text_size" />
+
+                <TextView
+                    android:id="@+id/txtDateTime"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/small_margin"
+                    android:textSize="@dimen/tiny_text_size"
+                    android:text="2016-01-21 08:00 AM GMT"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+
