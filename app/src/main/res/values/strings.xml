@@ -11,4 +11,6 @@
     <string name="life_finance">Life Insurance</string>
     <string name="home_finance">Home Insurance</string>
     <string name="new_car">New Car</string>
+
+    <string name="filter_leads">Filter Leads</string>
 </resources>

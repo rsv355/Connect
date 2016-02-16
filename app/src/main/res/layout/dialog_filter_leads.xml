@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/std_margin"
+            android:padding="@dimen/small_margin"
+            android:text="@string/filter_leads"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_large_text_size" />
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/std_margin"
+            android:src="@drawable/ic_navigation_close" />
+    </RelativeLayout>
+
+
+    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+        android:id="@+id/editLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin"
+        android:hint="Keyword"
+        android:inputType="text"
+        app:met_baseColor="@color/colorPrimary"
+        app:met_floatingLabel="highlight"
+        app:met_iconLeft="@drawable/ic_profile_name"
+        app:met_primaryColor="@color/primaryBackground"
+        app:met_textColorHint="@color/colorPrimary" />
+
+    <include
+        layout="@layout/vertical_items_checklist"
+        android:layout_margin="@dimen/large_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.andexert.library.RippleView
+            android:id="@+id/viewMoreRipple"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="@dimen/large_margin"
+                android:background="@drawable/rounded_rect_button"
+                android:paddingBottom="@dimen/large_margin"
+                android:paddingLeft="@dimen/v_large_margin"
+                android:paddingRight="@dimen/v_large_margin"
+                android:paddingTop="@dimen/large_margin"
+                android:text="Filter"
+                android:textColor="@color/white" />
+
+        </com.andexert.library.RippleView>
+    </LinearLayout>
+
+</LinearLayout>

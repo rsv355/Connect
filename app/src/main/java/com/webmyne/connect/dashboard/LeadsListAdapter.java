@@ -4,7 +4,10 @@ package com.webmyne.connect.dashboard;
  * Created by priyasindkar on 12-02-2016.
  */
 
+
+
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,7 +34,7 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
 
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView txtLeadId, txtDateTime, txtCustomerName;
+        public TextView txtLeadId, txtDateTime, txtCustomerName, txtCustomerNo;
         public LabelView labelStatus;
         public ImageView image;
         private LinearLayout linearParent;
@@ -42,6 +45,7 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
             txtDateTime = (TextView) itemView.findViewById(R.id.txtDateTime);
             labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
             txtCustomerName = (TextView) itemView.findViewById(R.id.txtCustomerName);
+            txtCustomerNo =(TextView) itemView.findViewById(R.id.txtCustomerNo);
             linearParent = (LinearLayout) itemView.findViewById(R.id.linearParent);
             image = (ImageView) itemView.findViewById(R.id.imgLeadItem);
             Log.e(LOG_TAG, "Adding Listener");
@@ -82,8 +86,11 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
         holder.txtLeadId.setTypeface(Functions.getTypeFace(mContext), Typeface.BOLD);
         holder.txtDateTime.setTypeface(Functions.getTypeFace(mContext));
         holder.txtCustomerName.setTypeface(Functions.getTypeFace(mContext));
+        holder.txtCustomerNo.setTypeface(Functions.getTypeFace(mContext));
 
         holder.txtLeadId.setText(mDataset.get(position).getLeadName());
+        holder.txtLeadId.setTextColor(mDataset.get(position).getColor());
+        holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
         holder.txtCustomerName.setText(mDataset.get(position).getCustomerName());
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
         holder.labelStatus.setNum(mDataset.get(position).getStatus());

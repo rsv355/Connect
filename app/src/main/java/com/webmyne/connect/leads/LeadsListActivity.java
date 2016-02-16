@@ -2,6 +2,7 @@ package com.webmyne.connect.leads;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +15,13 @@ import java.util.ArrayList;
 import jp.wasabeef.recyclerview.animators.BaseItemAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
+
+import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.dashboard.LeadDataObject;
 import com.webmyne.connect.dashboard.LeadsListAdapter;
+import com.webmyne.connect.dialogs.LeadsFilterDialog;
 
 /**
  * Created by priyasindkar on 16-02-2016.
@@ -27,21 +31,8 @@ public class LeadsListActivity extends AppCompatActivity {
     private LeadsListAdapter mLeadsAdapter;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
-
-    enum Type {
-        SlideInLeft(new SlideInLeftAnimator(new OvershootInterpolator(1f))),
-        SlideInRight(new SlideInRightAnimator(new OvershootInterpolator(1f)));
-
-        private BaseItemAnimator mAnimator;
-
-        Type(BaseItemAnimator animator) {
-            mAnimator = animator;
-        }
-
-        public BaseItemAnimator getAnimator() {
-            return mAnimator;
-        }
-    }
+    private RippleView viewMoreRipple;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +51,27 @@ public class LeadsListActivity extends AppCompatActivity {
             }
         });
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         initLeadsList();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LeadsFilterDialog filterDialog = new LeadsFilterDialog(LeadsListActivity.this);
+                filterDialog.show();
+
+            }
+        });
+
+        /*viewMoreRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                LeadsFilterDialog filterDialog = new LeadsFilterDialog(LeadsListActivity.this);
+                filterDialog.show();
+            }
+        });*/
 
 
     }

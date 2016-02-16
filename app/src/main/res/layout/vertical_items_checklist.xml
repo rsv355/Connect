@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_margin="@dimen/large_margin"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/auto_insurance" />
+
+        <CheckBox
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/auto_finance" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="@dimen/large_margin"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/health_finance" />
+
+        <CheckBox
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/life_finance" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="@dimen/large_margin"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_finance" />
+
+        <CheckBox
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/new_car" />
+    </LinearLayout>
+</LinearLayout>
