@@ -55,13 +55,13 @@ public class DrawerActivity extends AppCompatActivity {
                 .withTextColorRes(R.color.colorAccent)
                 .withName("John Doe")
                 .withEmail("johndoe@gmail.com")
-                .withIcon(getResources().getDrawable(R.drawable.logo)).withIdentifier(100);
+                .withIcon(getResources().getDrawable(R.drawable.dummy_boy)).withIdentifier(100);
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withTextColorRes(R.color.white)
-                .withHeaderBackground(R.drawable.material_design_1)
+                .withHeaderBackground(R.drawable.kk)
                 .addProfiles(
                         profile
                 )
