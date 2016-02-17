@@ -11,7 +11,7 @@ public class CommissionHistoryDataObject {
     public CommissionHistoryDataObject() {
     }
 
-    public CommissionHistoryDataObject(String leadName,  long commissionAmount, long boughtAmount,String dateTime, String customerName, int color) {
+    public CommissionHistoryDataObject(String leadName, long boughtAmount, long commissionAmount, String dateTime, String customerName, int color) {
         this.leadName = leadName;
         this.dateTime = dateTime;
         this.customerName = customerName;

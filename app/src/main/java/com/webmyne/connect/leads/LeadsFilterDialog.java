@@ -3,6 +3,8 @@ package com.webmyne.connect.leads;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -16,8 +18,8 @@ import com.webmyne.connect.R;
 /**
  * Created by priyasindkar on 16-02-2016.
  */
-public class LeadsFilterDialog extends Dialog {
-    private RippleView txtCancel, txtFilter;
+public class LeadsFilterDialog extends AppCompatDialog implements View.OnClickListener{
+    private AppCompatButton btnCancel, btnFilter;
     private Context mContext;
 
     public LeadsFilterDialog(Context context) {
@@ -33,22 +35,21 @@ public class LeadsFilterDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.dialog_filter_leads);
-        txtCancel = (RippleView) findViewById(R.id.txtCancel);
-        txtCancel.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
-               dismiss();
-            }
-        });
-        txtFilter = (RippleView) findViewById(R.id.txtFilter);
-        txtFilter.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
-                Toast.makeText(mContext, "Filter", Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnCancel = (AppCompatButton) findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(this);
+        btnFilter = (AppCompatButton) findViewById(R.id.btnFilter);
+        btnFilter.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnFilter:
+                break;
+            case R.id.btnCancel:
+                dismiss();
+                break;
+        }
     }
 }

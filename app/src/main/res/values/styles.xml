@@ -15,20 +15,33 @@
         <item name="android:background">@color/white</item>
     </style>
 
-    <style name="DialogAnimation" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="CustomDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowTitleStyle">@style/DialogTitleStyleColor</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:background">@color/white</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="DialogTitleStyleColor" >
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="DialogAnimation" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
         <item name="android:windowExitAnimation">@anim/slide_out_left</item>
     </style>
 
+    <style name="ExpandedAppBarTitleStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/medium_large_text_size</item>
+    </style>
 
-
-
-
+    <style name="CollapsedAppBarTitleStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/normal_text_size</item>
+    </style>
 
 
 

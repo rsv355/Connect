@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -166,16 +165,19 @@ public class DrawerActivity extends AppCompatActivity {
                             } else if (drawerItem.getIdentifier() == 2) {
                                 drawerItem.withSetSelected(true);
                                 intent = new Intent(DrawerActivity.this, EditProfileActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             } else if (drawerItem.getIdentifier() == 3) {
                                 drawerItem.withSetSelected(true);
                                 intent = new Intent(DrawerActivity.this, RedeemMoneyActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             } else if (drawerItem.getIdentifier() == 4) {
                                 drawerItem.withSetSelected(true);
                                 intent = new Intent(DrawerActivity.this, RevenueHistoryListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             } else if (drawerItem.getIdentifier() == 5) {

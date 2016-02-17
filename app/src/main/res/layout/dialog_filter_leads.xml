@@ -53,55 +53,26 @@
         android:layout_margin="@dimen/large_margin" />
 
     <LinearLayout
-        android:layout_margin="@dimen/std_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/std_margin"
         android:gravity="right">
 
-        <com.andexert.library.RippleView
-            android:id="@+id/txtFilter"
-            rv_centered="true"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnFilter"
+            style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_margin"
-            app:rv_color="@color/theme_100">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingBottom="@dimen/large_margin"
-                android:paddingLeft="@dimen/v_large_margin"
-                android:paddingRight="@dimen/v_large_margin"
-                android:paddingTop="@dimen/large_margin"
-                android:text="Filter"
-                android:textColor="@color/black" />
-
-        </com.andexert.library.RippleView>
+            android:text="Filter" />
 
 
-        <com.andexert.library.RippleView
-            android:id="@+id/txtCancel"
-            rv_centered="true"
-            android:layout_margin="@dimen/large_margin"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:rv_color="@color/theme_100">
+            android:text="Cancel" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingBottom="@dimen/large_margin"
-                android:paddingLeft="@dimen/v_large_margin"
-                android:paddingRight="@dimen/v_large_margin"
-                android:paddingTop="@dimen/large_margin"
-                android:text="Cancel"
-                android:textColor="@color/black" />
-
-        </com.andexert.library.RippleView>
     </LinearLayout>
 
 </LinearLayout>

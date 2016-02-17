@@ -48,6 +48,8 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         imgVertical = (ImageView) findViewById(R.id.imgVertical);
 
         collapsingToolbar.setTitle("Auto Insurance");
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

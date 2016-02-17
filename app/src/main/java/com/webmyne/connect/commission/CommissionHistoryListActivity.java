@@ -23,16 +23,15 @@ public class CommissionHistoryListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CommissionHistoryListAdapter mCommissionHistoryListAdapter;
     private Toolbar toolbar;
-    private RippleView viewMoreRipple;
-    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_revenue_history_list);
+        setContentView(R.layout.activity_commission_history_list);
 
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Commission History");
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -35,6 +35,8 @@ public class LeadsListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("Leads");
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,8 +53,7 @@ public class LeadsListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LeadsFilterDialog  filterDialog = new LeadsFilterDialog(LeadsListActivity.this);
-                filterDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                LeadsFilterDialog  filterDialog = new LeadsFilterDialog(LeadsListActivity.this, R.style.CustomDialogStyle);
                 filterDialog.show();
 
             }

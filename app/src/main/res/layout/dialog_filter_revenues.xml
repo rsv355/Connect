@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="vertical">
 
 
@@ -36,18 +37,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_margin="@dimen/std_margin"
+        android:orientation="vertical"
         android:weightSum="2">
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editStartDate"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_margin"
+            android:layout_margin="@dimen/std_margin"
             android:layout_weight="1"
             android:focusable="false"
             android:hint="Start Date"
             android:inputType="text"
+            android:textSize="@dimen/normal_text_size"
             app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/ic_profile_dob"
@@ -56,13 +59,14 @@
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/editEndDate"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_margin"
+            android:layout_margin="@dimen/std_margin"
             android:layout_weight="1"
             android:focusable="false"
             android:hint="End Date"
             android:inputType="text"
+            android:textSize="@dimen/normal_text_size"
             app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
             app:met_iconLeft="@drawable/ic_profile_dob"
@@ -83,50 +87,20 @@
         android:layout_margin="@dimen/std_margin"
         android:gravity="right">
 
-        <com.andexert.library.RippleView
-            android:id="@+id/txtFilter"
-            rv_centered="true"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnFilter"
+            style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_margin"
-            app:rv_color="@color/theme_100">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingBottom="@dimen/large_margin"
-                android:paddingLeft="@dimen/v_large_margin"
-                android:paddingRight="@dimen/v_large_margin"
-                android:paddingTop="@dimen/large_margin"
-                android:text="Filter"
-                android:textColor="@color/black" />
-
-        </com.andexert.library.RippleView>
+            android:text="Filter" />
 
 
-        <com.andexert.library.RippleView
-            android:id="@+id/txtCancel"
-            rv_centered="true"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/large_margin"
-            app:rv_color="@color/theme_100">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingBottom="@dimen/large_margin"
-                android:paddingLeft="@dimen/v_large_margin"
-                android:paddingRight="@dimen/v_large_margin"
-                android:paddingTop="@dimen/large_margin"
-                android:text="Cancel"
-                android:textColor="@color/black" />
-
-        </com.andexert.library.RippleView>
+            android:text="Cancel" />
     </LinearLayout>
 
 </LinearLayout>

@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
-import com.webmyne.connect.leads.LeadsFilterDialog;
 
 import java.util.ArrayList;
 
@@ -34,6 +33,8 @@ public class RevenueHistoryListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("Revenue History");
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +50,7 @@ public class RevenueHistoryListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RevenueHistoryFilterDialog filterDialog = new RevenueHistoryFilterDialog(RevenueHistoryListActivity.this);
-                filterDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                RevenueHistoryFilterDialog filterDialog = new RevenueHistoryFilterDialog(RevenueHistoryListActivity.this, R.style.CustomDialogStyle);
                 filterDialog.show();
 
             }

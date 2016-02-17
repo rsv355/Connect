@@ -22,21 +22,19 @@ import com.webmyne.connect.R;
 /**
  * Created by priyasindkar on 11-02-2016.
  */
-public class EditProfileActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, View.OnClickListener  {
+public class EditProfileActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener  {
 
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
     private static final int ALPHA_ANIMATIONS_DURATION              = 200;
 
     private boolean mIsTheTitleVisible          = false;
-    private boolean mIsCloseVisible          = false;
     private boolean mIsTheTitleContainerVisible = true;
 
     private LinearLayout mTitleContainer;
     private TextView mTitle;
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
-    private ImageView imgClose;
     MaterialAutoCompleteTextView editLocation;
     List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
 
@@ -50,13 +48,19 @@ public class EditProfileActivity extends AppCompatActivity implements AppBarLayo
         mAppBarLayout   = (AppBarLayout) findViewById(R.id.main_appbar);
         mToolbar.setTitle("");
         mAppBarLayout.addOnOffsetChangedListener(this);
-        imgClose = (ImageView) findViewById(R.id.imgClose);
-        imgClose.setOnClickListener(this);
 
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         startAlphaAnimation(mTitle, 0, View.INVISIBLE);
-        startAlphaAnimation(imgClose, 0, View.INVISIBLE);
 
+        mToolbar.setNavigationIcon(R.drawable.ic_navigation_close);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataset);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         editLocation = (MaterialAutoCompleteTextView) findViewById(R.id.editLocation);
@@ -70,7 +74,6 @@ public class EditProfileActivity extends AppCompatActivity implements AppBarLayo
 
         handleAlphaOnTitle(percentage);
         handleToolbarTitleVisibility(percentage);
-        handleToolbarCloseVisibility(percentage);
     }
 
     private void handleToolbarTitleVisibility(float percentage) {
@@ -86,23 +89,6 @@ public class EditProfileActivity extends AppCompatActivity implements AppBarLayo
             if (mIsTheTitleVisible) {
                 startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
                 mIsTheTitleVisible = false;
-            }
-        }
-    }
-
-    private void handleToolbarCloseVisibility(float percentage) {
-        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
-
-            if(!mIsCloseVisible) {
-                startAlphaAnimation(imgClose, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsCloseVisible = true;
-            }
-
-        } else {
-
-            if (mIsCloseVisible) {
-                startAlphaAnimation(imgClose, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsCloseVisible = false;
             }
         }
     }
@@ -131,14 +117,5 @@ public class EditProfileActivity extends AppCompatActivity implements AppBarLayo
         alphaAnimation.setDuration(duration);
         alphaAnimation.setFillAfter(true);
         v.startAnimation(alphaAnimation);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.imgClose:
-                onBackPressed();
-                break;
-        }
     }
 }
