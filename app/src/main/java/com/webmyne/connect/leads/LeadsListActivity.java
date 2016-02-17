@@ -8,16 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
-import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
-import com.webmyne.connect.dialogs.LeadsFilterDialog;
 
 /**
  * Created by priyasindkar on 16-02-2016.
@@ -27,7 +24,6 @@ public class LeadsListActivity extends AppCompatActivity {
     private LeadsListAdapter mLeadsAdapter;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
-    private RippleView viewMoreRipple;
     private FloatingActionButton fab;
 
     @Override

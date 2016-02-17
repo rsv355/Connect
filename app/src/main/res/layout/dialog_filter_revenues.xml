@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left"
+            android:layout_marginLeft="@dimen/std_margin"
+            android:padding="@dimen/small_margin"
+            android:text="@string/filter_revenue_history"
+            android:textColor="@color/black"
+            android:textSize="@dimen/medium_large_text_size" />
+
+        <!-- <ImageView
+             android:id="@+id/imgClose"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_centerVertical="true"
+             android:layout_marginRight="@dimen/std_margin"
+             android:src="@drawable/ic_navigation_close" />-->
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editStartDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_margin"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:hint="Start Date"
+            android:inputType="text"
+            app:met_baseColor="@color/colorPrimary"
+            app:met_floatingLabel="highlight"
+            app:met_iconLeft="@drawable/ic_profile_dob"
+            app:met_primaryColor="@color/primaryBackground"
+            app:met_textColorHint="@color/colorPrimary" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/editEndDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_margin"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:hint="End Date"
+            android:inputType="text"
+            app:met_baseColor="@color/colorPrimary"
+            app:met_floatingLabel="highlight"
+            app:met_iconLeft="@drawable/ic_profile_dob"
+            app:met_primaryColor="@color/primaryBackground"
+            app:met_textColorHint="@color/colorPrimary" />
+    </LinearLayout>
+
+
+    <include
+        layout="@layout/vertical_items_checklist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/large_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/std_margin"
+        android:gravity="right">
+
+        <com.andexert.library.RippleView
+            android:id="@+id/txtFilter"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_margin"
+            app:rv_color="@color/theme_100">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingBottom="@dimen/large_margin"
+                android:paddingLeft="@dimen/v_large_margin"
+                android:paddingRight="@dimen/v_large_margin"
+                android:paddingTop="@dimen/large_margin"
+                android:text="Filter"
+                android:textColor="@color/black" />
+
+        </com.andexert.library.RippleView>
+
+
+        <com.andexert.library.RippleView
+            android:id="@+id/txtCancel"
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_margin"
+            app:rv_color="@color/theme_100">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingBottom="@dimen/large_margin"
+                android:paddingLeft="@dimen/v_large_margin"
+                android:paddingRight="@dimen/v_large_margin"
+                android:paddingTop="@dimen/large_margin"
+                android:text="Cancel"
+                android:textColor="@color/black" />
+
+        </com.andexert.library.RippleView>
+    </LinearLayout>
+
+</LinearLayout>

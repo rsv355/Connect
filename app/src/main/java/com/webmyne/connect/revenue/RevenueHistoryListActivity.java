@@ -1,7 +1,7 @@
 package com.webmyne.connect.revenue;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,13 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
+import com.webmyne.connect.leads.LeadsFilterDialog;
 
 import java.util.ArrayList;
-
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
  * Created by priyasindkar on 16-02-2016.
@@ -24,7 +22,7 @@ public class RevenueHistoryListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RevenueHistoryListAdapter mRevenueHistoryListAdapter;
     private Toolbar toolbar;
-    private RippleView viewMoreRipple;
+    private CollapsingToolbarLayout collapsingToolbar;
     private FloatingActionButton fab;
 
     @Override
@@ -34,7 +32,8 @@ public class RevenueHistoryListActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle("Revenue History");
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +44,17 @@ public class RevenueHistoryListActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         initRevenueHistoryList();
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RevenueHistoryFilterDialog filterDialog = new RevenueHistoryFilterDialog(RevenueHistoryListActivity.this);
+                filterDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                filterDialog.show();
+
+            }
+        });
     }
 
     private void initRevenueHistoryList() {
@@ -60,18 +70,6 @@ public class RevenueHistoryListActivity extends AppCompatActivity {
 
         mRevenueHistoryListAdapter = new RevenueHistoryListAdapter(RevenueHistoryListActivity.this, list);
         recyclerView.setAdapter(mRevenueHistoryListAdapter);
-
-      /*  mLeadsAdapter.addItem(new LeadDataObject(), 0);
-        mLeadsAdapter.addItem(new LeadDataObject(), 1);
-        mLeadsAdapter.addItem(new LeadDataObject(), 2);*/
-
-        recyclerView.setItemAnimator(new SlideInLeftAnimator());
-      /*  recyclerView.getItemAnimator().setAddDuration(1000);
-        recyclerView.getItemAnimator().setRemoveDuration(1000);
-        recyclerView.getItemAnimator().setMoveDuration(1000);
-        recyclerView.getItemAnimator().setChangeDuration(1000);*/
-
-
 
         mRevenueHistoryListAdapter.setOnItemClickListener(new RevenueHistoryListAdapter.MyClickListener() {
             @Override

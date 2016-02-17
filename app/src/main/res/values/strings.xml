@@ -13,6 +13,7 @@
     <string name="new_car">New Car</string>
 
     <string name="filter_leads">Filter Leads</string>
+    <string name="filter_revenue_history">Filter Revenue History</string>
 
     <!-- Drawer Menu Items -->
     <string name="home">HOME</string>
@@ -23,7 +24,5 @@
     <string name="share_and_earn">SHARE AND EARN</string>
     <string name="help">HELP</string>
     <string name="logout">LOGOUT</string>
-
-
 
 </resources>

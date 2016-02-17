@@ -1,4 +1,4 @@
-package com.webmyne.connect.dialogs;
+package com.webmyne.connect.leads;
 
 import android.app.Dialog;
 import android.content.Context;
