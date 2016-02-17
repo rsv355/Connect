@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryBackground">#f1c40f</color>
+
+    <color name="splashRippleBackground">#364d63</color>
+
+    <color name="primaryBackground">#fff1c40f</color>
     <color name="colorPrimary">#2c3e50</color>
     <color name="colorPrimaryDark">#7baa95</color>
     <color name="colorAccent">#f1c40f</color>

@@ -9,18 +9,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".base.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".base.MainActivity"></activity>
         <activity android:name=".user.EditProfileActivity"></activity>
 
         <activity android:name=".base.DrawerActivityNew"></activity>
         <activity android:name=".base.DrawerActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".leads.PostLeadActivity"> </activity>
         <activity android:name=".leads.LeadsListActivity"></activity>
