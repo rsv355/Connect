@@ -23,8 +23,8 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.commission.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragmentWithLeads;
 import com.webmyne.connect.revenue.RedeemMoneyActivity;
-import com.webmyne.connect.revenue.RevenueHistoryListActivity;
-import com.webmyne.connect.user.EditProfileActivity;
+import com.webmyne.connect.revenue.TransactionHistoryListActivity;
+import com.webmyne.connect.user.EditProfileActivity1;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -118,7 +118,7 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withSelectedColorRes(R.color.white)
                                 .withTextColor(getResources().getColor(R.color.primaryBackground))
                                 .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
-                                .withName(R.string.revenue_history)
+                                .withName(R.string.transaction_history)
                                 .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
                                 .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(4),
@@ -164,7 +164,7 @@ public class DrawerActivity extends AppCompatActivity {
 
                             } else if (drawerItem.getIdentifier() == 2) {
                                 drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, EditProfileActivity.class);
+                                intent = new Intent(DrawerActivity.this, EditProfileActivity1.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -176,7 +176,7 @@ public class DrawerActivity extends AppCompatActivity {
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             } else if (drawerItem.getIdentifier() == 4) {
                                 drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, RevenueHistoryListActivity.class);
+                                intent = new Intent(DrawerActivity.this, TransactionHistoryListActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

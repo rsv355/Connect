@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHistoryListAdapter.DataObjectHolder> {
     private static String LOG_TAG = "RevenueHistoryListAdapter";
-    private ArrayList<RevenueHistoryDataObject> mDataset;
+    private ArrayList<TransactionHistoryDataObject> mDataset;
     private static MyClickListener myClickListener;
     private Context mContext;
 
@@ -68,7 +68,7 @@ public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHisto
         mDataset = new ArrayList<>();
     }
 
-    public RevenueHistoryListAdapter(Context _context, ArrayList<RevenueHistoryDataObject> myDataset) {
+    public RevenueHistoryListAdapter(Context _context, ArrayList<TransactionHistoryDataObject> myDataset) {
         mContext = _context;
         mDataset = myDataset;
     }
@@ -76,7 +76,7 @@ public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHisto
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater mInflater = LayoutInflater.from (parent.getContext());
-        ViewGroup viewgroup1 = ( ViewGroup ) mInflater.inflate ( R.layout.revenue_history_item, parent, false );
+        ViewGroup viewgroup1 = ( ViewGroup ) mInflater.inflate ( R.layout.transaction_history_item, parent, false );
         DataObjectHolder listHolder = new DataObjectHolder (viewgroup1);
         return listHolder;
     }
@@ -119,7 +119,7 @@ public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHisto
         holder.image.setImageDrawable(drawable2);*/
     }
 
-    public void addItem(RevenueHistoryDataObject dataObj, int index) {
+    public void addItem(TransactionHistoryDataObject dataObj, int index) {
         mDataset.add(dataObj);
         notifyItemInserted(index);
     }

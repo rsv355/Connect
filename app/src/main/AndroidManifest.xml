@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".base.MainActivity"></activity>
         <activity android:name=".user.EditProfileActivity"></activity>
+        <activity android:name=".user.EditProfileActivity1"></activity>
 
         <activity android:name=".base.DrawerActivityNew"></activity>
         <activity android:name=".base.DrawerActivity">
@@ -26,7 +27,7 @@
         <activity android:name=".leads.LeadsListActivity"></activity>
         <activity android:name=".revenue.RedeemMoneyActivity"> </activity>
         <activity android:name=".revenue.AddBankActivity"></activity>
-        <activity android:name=".revenue.RevenueHistoryListActivity"></activity>
+        <activity android:name=".revenue.TransactionHistoryListActivity"></activity>
         <activity android:name=".commission.CommissionHistoryListActivity"></activity>
     </application>
 

@@ -27,8 +27,8 @@
                     android:id="@+id/cardAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/accent_A100"
-                    app:cardElevation="@dimen/std_margin">
+                    app:cardElevation="8dp"
+                    app:cardBackgroundColor="@color/accent_A100">
                     <TextView
                         android:id="@+id/txtCommissionAmount"
                         android:textColor="@color/white"

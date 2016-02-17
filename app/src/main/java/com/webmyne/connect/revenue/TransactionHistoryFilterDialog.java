@@ -21,17 +21,17 @@ import java.util.Calendar;
 /**
  * Created by priyasindkar on 16-02-2016.
  */
-public class RevenueHistoryFilterDialog extends AppCompatDialog implements View.OnClickListener{
+public class TransactionHistoryFilterDialog extends AppCompatDialog implements View.OnClickListener{
     private AppCompatButton btnCancel, btnFilter;
     private Context mContext;
     private MaterialEditText editStartDate, editEndDate;
 
-    public RevenueHistoryFilterDialog(Context context) {
+    public TransactionHistoryFilterDialog(Context context) {
         super(context);
         mContext = context;
     }
 
-    public RevenueHistoryFilterDialog(Context context, int themeResId) {
+    public TransactionHistoryFilterDialog(Context context, int themeResId) {
         super(context, themeResId);
         mContext = context;
     }

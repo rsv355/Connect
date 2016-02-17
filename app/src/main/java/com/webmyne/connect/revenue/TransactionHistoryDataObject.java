@@ -3,15 +3,15 @@ package com.webmyne.connect.revenue;
 /**
  * Created by priyasindkar on 12-02-2016.
  */
-public class RevenueHistoryDataObject {
+public class TransactionHistoryDataObject {
     private String leadName ,dateTime, status, customerName;
     private int color;
     private long amount;
 
-    public RevenueHistoryDataObject() {
+    public TransactionHistoryDataObject() {
     }
 
-    public RevenueHistoryDataObject(String leadName, long amount, String dateTime, String status, String customerName, int color) {
+    public TransactionHistoryDataObject(String leadName, long amount, String dateTime, String status, String customerName, int color) {
         this.leadName = leadName;
         this.amount = amount;
         this.dateTime = dateTime;
