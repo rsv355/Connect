@@ -105,6 +105,7 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withIcon(getResources().getDrawable(R.drawable.ic_profile_dob))
                                 .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(2),
+                        new DividerDrawerItem(),
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
                                 .withTextColor(getResources().getColor(R.color.primaryBackground))
@@ -148,9 +149,7 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withName(R.string.help)
                                 .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
                                 .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
-                                .withIdentifier(7),
-                        new DividerDrawerItem(),
-                        new DividerDrawerItem())
+                                .withIdentifier(7))
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
