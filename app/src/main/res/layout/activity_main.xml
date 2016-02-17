@@ -34,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="User Guide 1!"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/white"
             android:textSize="@dimen/small_large_text_size" />
 
         <ImageView
@@ -59,7 +59,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="User Guide 2!"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/white"
             android:textSize="@dimen/small_large_text_size" />
 
         <ImageView
@@ -84,7 +84,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="User Guide 3!"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/white"
             android:textSize="@dimen/small_large_text_size" />
 
         <ImageView

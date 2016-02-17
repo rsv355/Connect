@@ -43,7 +43,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         mPageAdapter = new SCViewPagerAdapter(getSupportFragmentManager());
         mPageAdapter.setNumberOfPage(NUM_PAGES);
-        mPageAdapter.setFragmentBackgroundColor(R.color.primaryBackground);
+        mPageAdapter.setFragmentBackgroundColor(R.color.splashRippleBackground);
         mViewPager.setAdapter(mPageAdapter);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
