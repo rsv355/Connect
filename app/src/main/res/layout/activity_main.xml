@@ -6,13 +6,13 @@
     tools:context=".base.SplashActivity">
 
 
-    <webmyne.com.leadappdemo.customUI.viewPager.SCViewPager
+    <com.webmyne.connect.customUI.viewPager.SCViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:overScrollMode="never"
-        android:layout_height="match_parent"></webmyne.com.leadappdemo.customUI.viewPager.SCViewPager>
+        android:layout_height="match_parent"></com.webmyne.connect.customUI.viewPager.SCViewPager>
 
-    <webmyne.com.leadappdemo.customUI.viewPager.DotsView
+    <com.webmyne.connect.customUI.viewPager.DotsView
         android:id="@+id/dotsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

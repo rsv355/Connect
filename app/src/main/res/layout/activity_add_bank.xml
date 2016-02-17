@@ -1,0 +1,165 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!--<android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_image_size"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">-->
+
+            <!--<ImageView
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/business_header"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+            <ImageView
+                android:id="@+id/headerBG"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_gradient"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />-->
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/anim_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+       <!-- </FrameLayout>
+    </android.support.design.widget.AppBarLayout>-->
+
+    <ScrollView
+        android:layout_below="@id/anim_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/std_margin"
+                app:cardElevation="@dimen/std_margin"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:id="@+id/linearDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:id="@+id/editBankAccNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/large_margin"
+                        android:layout_weight="1"
+                        android:hint="Enter Bank Account No."
+                        android:inputType="text"
+                        app:met_baseColor="@color/colorPrimary"
+                        app:met_floatingLabel="highlight"
+                        app:met_iconLeft="@drawable/ic_profile_phone"
+                        app:met_primaryColor="@color/primaryBackground"
+                        app:met_textColorHint="@color/colorPrimary" />
+
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:id="@+id/editBankName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/large_margin"
+                        android:hint="Enter Bank Name"
+                        android:inputType="text"
+                        app:met_baseColor="@color/colorPrimary"
+                        app:met_floatingLabel="highlight"
+                        app:met_iconLeft="@drawable/ic_profile_name"
+                        app:met_primaryColor="@color/primaryBackground"
+                        app:met_textColorHint="@color/colorPrimary" />
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:id="@+id/editEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/large_margin"
+                        android:hint="Enter Swift Code"
+                        android:inputType="text"
+                        app:met_baseColor="@color/colorPrimary"
+                        app:met_floatingLabel="highlight"
+                        app:met_iconLeft="@drawable/ic_profile_email"
+                        app:met_primaryColor="@color/primaryBackground"
+                        app:met_textColorHint="@color/colorPrimary" />
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:id="@+id/editBranchCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/large_margin"
+                        android:layout_marginRight="@dimen/large_margin"
+                        android:layout_marginTop="@dimen/large_margin"
+                        android:hint="Enter Bank Branch Code"
+                        android:inputType="text"
+                        app:met_baseColor="@color/colorPrimary"
+                        app:met_floatingLabel="highlight"
+                        app:met_iconLeft="@drawable/ic_profile_email"
+                        app:met_primaryColor="@color/primaryBackground"
+                        app:met_textColorHint="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="@dimen/large_margin"
+                        android:text="*Optional"
+                        android:textColor="@color/accent_A200" />
+
+                    <com.andexert.library.RippleView
+                        android:id="@+id/txtFilter"
+                        rv_centered="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/large_margin"
+                        android:background="@color/accent_A100">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/large_margin"
+                            android:text="Save"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/normal_text_size" />
+
+                    </com.andexert.library.RippleView>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

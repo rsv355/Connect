@@ -276,6 +276,12 @@ public class TextDrawable extends ShapeDrawable {
         }
 
         @Override
+        public TextDrawable buildRound(String text, int color, int fontSize) {
+            round();
+            return buildRound(text, color, fontSize);
+        }
+
+        @Override
         public TextDrawable build(String text, int color) {
             this.color = color;
             this.text = text;
@@ -323,5 +329,6 @@ public class TextDrawable extends ShapeDrawable {
         public TextDrawable buildRoundRect(String text, int color, int radius);
 
         public TextDrawable buildRound(String text, int color);
+        public TextDrawable buildRound(String text, int color, int fontSize);
     }
 }

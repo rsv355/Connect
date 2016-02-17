@@ -21,7 +21,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.webmyne.connect.R;
 
+import com.webmyne.connect.commission.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragmentWithLeads;
+import com.webmyne.connect.revenue.RedeemMoneyActivity;
+import com.webmyne.connect.revenue.RevenueHistoryListActivity;
 import com.webmyne.connect.user.EditProfileActivity;
 
 /**
@@ -46,6 +49,7 @@ public class DrawerActivity extends AppCompatActivity {
         ft.commit();
     }
 
+
     private void init(Bundle savedInstanceState) {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,11 +67,18 @@ public class DrawerActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withTextColorRes(R.color.white)
                 .withHeaderBackground(R.drawable.kk)
+                /*.withSelectionListEnabledForSingleProfile(true)
+                .withSelectionListEnabled(false)
+                .withOnAccountHeaderSelectionViewClickListener(null)
+                .withAlternativeProfileHeaderSwitching(false)
+                .withCurrentProfileHiddenInList(true)
+                .withSelectionListEnabled(false)*/
                 .addProfiles(
                         profile
                 )
                 .withSavedInstance(savedInstanceState)
                 .build();
+
 
         //Create the drawer
         result = new DrawerBuilder()
@@ -81,7 +92,7 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withSelectedColorRes(R.color.white)
                                 .withTextColor(getResources().getColor(R.color.primaryBackground))
                                 .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
-                                .withName("Edit Profile")
+                                .withName(R.string.home)
                                 .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
                                 .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(1),
@@ -90,10 +101,55 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withSelectedColorRes(R.color.white)
                                 .withTextColor(getResources().getColor(R.color.primaryBackground))
                                 .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
-                                .withName("My Revenue")
+                                .withName(R.string.my_profile)
                                 .withIcon(getResources().getDrawable(R.drawable.ic_profile_dob))
                                 .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(2),
+                        new PrimaryDrawerItem()
+                                .withSelectedColorRes(R.color.white)
+                                .withTextColor(getResources().getColor(R.color.primaryBackground))
+                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withName(R.string.redeem_revenue)
+                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withIdentifier(3),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem()
+                                .withSelectedColorRes(R.color.white)
+                                .withTextColor(getResources().getColor(R.color.primaryBackground))
+                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withName(R.string.revenue_history)
+                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withIdentifier(4),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem()
+                                .withSelectedColorRes(R.color.white)
+                                .withTextColor(getResources().getColor(R.color.primaryBackground))
+                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withName(R.string.my_commission)
+                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withIdentifier(5),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem()
+                                .withSelectedColorRes(R.color.white)
+                                .withTextColor(getResources().getColor(R.color.primaryBackground))
+                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withName(R.string.share_and_earn)
+                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withIdentifier(6),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem()
+                                .withSelectedColorRes(R.color.white)
+                                .withTextColor(getResources().getColor(R.color.primaryBackground))
+                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withName(R.string.help)
+                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withIdentifier(7),
+                        new DividerDrawerItem(),
                         new DividerDrawerItem())
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -102,14 +158,33 @@ public class DrawerActivity extends AppCompatActivity {
                             Intent intent = null;
                             if (drawerItem.getIdentifier() == 1) {
                                 drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, EditProfileActivity.class);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                //Dashboard Fragment
+                                FragmentManager manager = getFragmentManager();
+                                FragmentTransaction ft = manager.beginTransaction();
+                                ft.replace(R.id.frame_container, DashboardFragmentWithLeads.newInstance(), "DASHBOARD");
+                                ft.commit();
 
                             } else if (drawerItem.getIdentifier() == 2) {
                                 drawerItem.withSetSelected(true);
-                                Toast.makeText(DrawerActivity.this, "My Revenue", Toast.LENGTH_SHORT).show();
-                                // intent = new Intent(MainActivity.this, CrossfadeDrawerLayout.class);
+                                intent = new Intent(DrawerActivity.this, EditProfileActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 3) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, RedeemMoneyActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 4) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, RevenueHistoryListActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 5) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, CommissionHistoryListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                             if (intent != null) {
                                 DrawerActivity.this.startActivity(intent);

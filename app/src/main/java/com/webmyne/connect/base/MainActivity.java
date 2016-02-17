@@ -140,12 +140,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void onComplete(RippleView rippleView) {
         switch (rippleView.getId()) {
             case R.id.facebookRipple:
-                Intent intent = new Intent(MainActivity.this, EditProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.googleRipple:
-                intent = new Intent(MainActivity.this, EditProfileActivity.class);
+                intent = new Intent(MainActivity.this, DrawerActivity.class);
                 startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
         }
     }

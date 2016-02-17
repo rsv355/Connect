@@ -55,13 +55,13 @@
         <CheckBox
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/home_finance" />
 
         <CheckBox
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/new_car" />
     </LinearLayout>
 </LinearLayout>

@@ -22,13 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".leads.PostLeadActivity">
-
-
-        </activity>
-        <activity android:name=".leads.LeadsListActivity">
-
-        </activity>
+        <activity android:name=".leads.PostLeadActivity"> </activity>
+        <activity android:name=".leads.LeadsListActivity"></activity>
+        <activity android:name=".revenue.RedeemMoneyActivity"> </activity>
+        <activity android:name=".revenue.AddBankActivity"></activity>
+        <activity android:name=".revenue.RevenueHistoryListActivity"></activity>
+        <activity android:name=".commission.CommissionHistoryListActivity"></activity>
     </application>
 
 </manifest>

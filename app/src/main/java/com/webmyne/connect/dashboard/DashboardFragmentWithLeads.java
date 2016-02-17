@@ -238,6 +238,7 @@ public class DashboardFragmentWithLeads extends Fragment  {
             Toast.makeText(getActivity(), Constants.VERTICAL_NAMES.get(verticalType), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), PostLeadActivity.class);
             intent.putExtra("vertical_color_index", verticalColorIndex);
+            intent.putExtra("selected_vertical", Constants.VERTICAL_NAMES.get(verticalType));
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }

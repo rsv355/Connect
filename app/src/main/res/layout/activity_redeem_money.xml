@@ -41,10 +41,9 @@
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax" />
 
-
             </FrameLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -60,7 +59,7 @@
                     android:fitsSystemWindows="true"
                     android:src="@drawable/logo"
                     app:layout_collapseMode="parallax" />
-            </LinearLayout>
+            </LinearLayout>-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/anim_toolbar"
@@ -72,93 +71,84 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/medium_large_text_size"
-        android:clipToPadding="false"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/std_margin"
-            app:cardElevation="@dimen/std_margin"
-            app:cardUseCompatPadding="true">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/linearDetails"
+            <!--<android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/std_margin"
+                app:cardElevation="@dimen/std_margin"
+                app:cardUseCompatPadding="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="@dimen/std_margin"
+                    android:text="Add Bank" />
+
+            </android.support.v7.widget.CardView>-->
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/std_margin"
+                android:layout_marginRight="@dimen/std_margin"
+                android:layout_marginTop="@dimen/v_large_margin"
+                app:cardElevation="@dimen/std_margin"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:orientation="vertical">
 
                     <com.rengwuxian.materialedittext.MaterialEditText
-                        android:id="@+id/editRefNo"
+                        android:id="@+id/editAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/large_margin"
-                        android:layout_weight="1"
-                        android:hint="Enter Reference No."
+                        android:hint="Enter Redeem Amount"
                         android:inputType="text"
                         app:met_baseColor="@color/colorPrimary"
                         app:met_floatingLabel="highlight"
-                        app:met_iconLeft="@drawable/ic_profile_phone"
+                        app:met_iconLeft="@drawable/ic_dollar"
                         app:met_primaryColor="@color/primaryBackground"
                         app:met_textColorHint="@color/colorPrimary" />
 
-                    <ImageView
+                    <com.andexert.library.RippleView
+                        android:id="@+id/txtFilter"
+                        rv_centered="true"
+                        android:background="@color/accent_A100"
+                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/std_margin"
-                        android:src="@drawable/ic_action_search" />
+                        android:layout_margin="@dimen/large_margin">
+
+                        <TextView
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/normal_text_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/large_margin"
+                            android:text="Redeem" />
+
+                    </com.andexert.library.RippleView>
                 </LinearLayout>
-
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/editName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/large_margin"
-                    android:hint="Enter Name"
-                    android:inputType="text"
-                    app:met_baseColor="@color/colorPrimary"
-                    app:met_floatingLabel="highlight"
-                    app:met_iconLeft="@drawable/ic_profile_name"
-                    app:met_primaryColor="@color/primaryBackground"
-                    app:met_textColorHint="@color/colorPrimary" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/editEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/large_margin"
-                    android:hint="Enter Email"
-                    android:inputType="text"
-                    app:met_baseColor="@color/colorPrimary"
-                    app:met_floatingLabel="highlight"
-                    app:met_iconLeft="@drawable/ic_profile_email"
-                    app:met_primaryColor="@color/primaryBackground"
-                    app:met_textColorHint="@color/colorPrimary" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/large_margin">
-
-                    <include layout="@layout/vertical_items_checklist" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -168,7 +158,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_margin"
         android:clickable="true"
-        android:src="@drawable/ic_undo_arrow"
+        android:src="@drawable/ic_add_bank"
         app:backgroundTint="@color/accent_A100"
         app:backgroundTintMode="src_atop"
         app:layout_anchor="@+id/appbar"
