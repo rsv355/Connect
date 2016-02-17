@@ -12,6 +12,18 @@
         android:layout_margin="@dimen/v_large_margin"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/guideText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_marginBottom="48dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="Explore your contacts and earn MONEY"
+            android:textColor="@color/primaryBackground"
+            android:textSize="@dimen/small_large_text_size" />
+
         <com.andexert.library.RippleView
             android:id="@+id/facebookRipple"
             rv_centered="true"
