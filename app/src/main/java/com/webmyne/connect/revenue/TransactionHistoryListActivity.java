@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class TransactionHistoryListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RevenueHistoryListAdapter mRevenueHistoryListAdapter;
+    private TransactionHistoryListAdapter mTransactionHistoryListAdapter;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
     private FloatingActionButton fab;
@@ -68,10 +68,10 @@ public class TransactionHistoryListActivity extends AppCompatActivity {
         list.add(new TransactionHistoryDataObject("XS956", 100, "2015-11-16 08:00AM GMT", "DEACTIVE", "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
         list.add(new TransactionHistoryDataObject("OP123", 5000,"2015-10-13 08:00AM GMT", "DEACTIVE", "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
 
-        mRevenueHistoryListAdapter = new RevenueHistoryListAdapter(TransactionHistoryListActivity.this, list);
-        recyclerView.setAdapter(mRevenueHistoryListAdapter);
+        mTransactionHistoryListAdapter = new TransactionHistoryListAdapter(TransactionHistoryListActivity.this, list);
+        recyclerView.setAdapter(mTransactionHistoryListAdapter);
 
-        mRevenueHistoryListAdapter.setOnItemClickListener(new RevenueHistoryListAdapter.MyClickListener() {
+        mTransactionHistoryListAdapter.setOnItemClickListener(new TransactionHistoryListAdapter.MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
 

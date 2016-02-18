@@ -26,4 +26,7 @@
     <dimen name="vertical_item_size">80dp</dimen>
 
     <dimen name="header_image_size">200dp</dimen>
+
+    <dimen name="label_shadowZ">2dp</dimen>
+    <dimen name="label_shadow_elevation">4dp</dimen>
 </resources>

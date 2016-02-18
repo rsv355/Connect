@@ -23,8 +23,8 @@ import com.webmyne.connect.base.LabelView;
 
 import java.util.ArrayList;
 
-public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHistoryListAdapter.DataObjectHolder> {
-    private static String LOG_TAG = "RevenueHistoryListAdapter";
+public class TransactionHistoryListAdapter extends RecyclerView.Adapter<TransactionHistoryListAdapter.DataObjectHolder> {
+    private static String LOG_TAG = "TransactionHistoryListAdapter";
     private ArrayList<TransactionHistoryDataObject> mDataset;
     private static MyClickListener myClickListener;
     private Context mContext;
@@ -45,7 +45,7 @@ public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHisto
             labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
             txtCustomerName = (TextView) itemView.findViewById(R.id.txtCustomerName);
             txtCustomerNo =(TextView) itemView.findViewById(R.id.txtCustomerNo);
-            txtAmount = (TextView) itemView .findViewById(R.id.txtCommissionAmount);
+            txtAmount = (TextView) itemView .findViewById(R.id.txtAmount);
             cardAmount = (CardView) itemView.findViewById(R.id.cardAmount);
             linearParent = (LinearLayout) itemView.findViewById(R.id.linearParent);
             //image = (ImageView) itemView.findViewById(R.id.imgLeadItem);
@@ -62,13 +62,13 @@ public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHisto
         this.myClickListener = myClickListener;
     }
 
-    public RevenueHistoryListAdapter(Context _context) {
+    public TransactionHistoryListAdapter(Context _context) {
         Log.e(LOG_TAG, _context.toString());
         mContext = _context;
         mDataset = new ArrayList<>();
     }
 
-    public RevenueHistoryListAdapter(Context _context, ArrayList<TransactionHistoryDataObject> myDataset) {
+    public TransactionHistoryListAdapter(Context _context, ArrayList<TransactionHistoryDataObject> myDataset) {
         mContext = _context;
         mDataset = myDataset;
     }
@@ -97,8 +97,9 @@ public class RevenueHistoryListAdapter extends RecyclerView.Adapter<RevenueHisto
         holder.txtCustomerName.setText(mDataset.get(position).getCustomerName());
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
         holder.txtAmount.setText("$ "+String.valueOf(mDataset.get(position).getAmount()));
+        holder.txtAmount.setBackgroundColor(color);
         //holder.txtAmount.setTextColor(color);
-        holder.cardAmount.setCardBackgroundColor(color);
+//        holder.cardAmount.setCardBackgroundColor(color);
         holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
         holder.labelStatus.setNum(mDataset.get(position).getStatus());
         String status = mDataset.get(position).getStatus();

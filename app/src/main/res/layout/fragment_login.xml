@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/guideText3"
+            android:id="@+id/txtLoginGuide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -43,8 +43,9 @@
                     android:src="@drawable/ic_facebook" />
 
                 <TextView
+                    android:id="@+id/txtFbLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Login With Facebook"
@@ -57,6 +58,7 @@
         <com.andexert.library.RippleView
             android:id="@+id/googleRipple"
             rv_centered="true"
+            android:layout_marginTop="@dimen/std_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -74,8 +76,9 @@
                     android:src="@drawable/ic_google" />
 
                 <TextView
+                    android:id="@+id/txtGoogleLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Login With Google+"

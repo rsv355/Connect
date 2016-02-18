@@ -2,7 +2,9 @@ package com.webmyne.connect.base;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.renderscript.BaseObj;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -125,7 +127,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         RippleView googleRipple = (RippleView) loginView.findViewById(R.id.googleRipple);
         googleRipple.setOnRippleCompleteListener(this);
         //fbLogin.setOnClickListener(this);
-        LinearLayout gPlusrLogin = (LinearLayout) loginView.findViewById(R.id.linearGPlusLogin);
+        TextView txtLoginGuide = (TextView) loginView.findViewById(R.id.txtLoginGuide);
+        txtLoginGuide.setTypeface(Functions.getTypeFace(MainActivity.this), Typeface.BOLD);
+
+        TextView txtFbLogin = (TextView) loginView.findViewById(R.id.txtFbLogin);
+        txtFbLogin.setTypeface(Functions.getTypeFace(MainActivity.this));
+
+        TextView txtGoogleLogin = (TextView) loginView.findViewById(R.id.txtGoogleLogin);
+        txtGoogleLogin.setTypeface(Functions.getTypeFace(MainActivity.this));
     }
 
     @Override

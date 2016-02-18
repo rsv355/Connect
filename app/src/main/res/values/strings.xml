@@ -14,6 +14,7 @@
 
     <string name="filter_leads">Filter Leads</string>
     <string name="filter_revenue_history">Filter Revenue History</string>
+    <string name="filter_add_refer">Add Refer Code</string>
 
     <!-- Drawer Menu Items -->
     <string name="home">HOME</string>

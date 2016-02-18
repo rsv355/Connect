@@ -99,8 +99,9 @@ public class CommissionHistoryListAdapter extends RecyclerView.Adapter<Commissio
         holder.txtCustomerName.setText(mDataset.get(position).getCustomerName());
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
         holder.txtCommissionAmount.setText("$ "+String.valueOf(mDataset.get(position).getCommissionAmount()));
-        holder.txtBoughtAmount.setText(String.valueOf(mDataset.get(position).getBoughtAmount()));
-        holder.cardAmount.setCardBackgroundColor(color);
+        holder.txtCommissionAmount.setBackgroundColor(color);
+        holder.txtBoughtAmount.setText("$ "+String.valueOf(mDataset.get(position).getBoughtAmount()));
+        //holder.cardAmount.setCardBackgroundColor(color);
         holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
     }
 
