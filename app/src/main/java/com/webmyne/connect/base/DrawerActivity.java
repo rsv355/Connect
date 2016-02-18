@@ -4,26 +4,33 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.MiniDrawer;
+import com.mikepenz.materialdrawer.interfaces.ICrossfader;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.DrawerUIUtils;
+import com.mikepenz.materialize.util.UIUtils;
 import com.webmyne.connect.R;
 
 import com.webmyne.connect.commission.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragmentWithLeads;
 import com.webmyne.connect.revenue.RedeemMoneyActivity;
 import com.webmyne.connect.revenue.TransactionHistoryListActivity;
+import com.webmyne.connect.shareAndEarn.SharAndEarnActivity;
 import com.webmyne.connect.user.EditProfileActivity1;
 
 /**
@@ -33,7 +40,6 @@ public class DrawerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AccountHeader headerResult = null;
     private Drawer result = null;
-    private static final int PROFILE_SETTING = 100000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +72,8 @@ public class DrawerActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withTextColorRes(R.color.white)
                 .withHeaderBackground(R.drawable.kk)
-                /*.withSelectionListEnabledForSingleProfile(true)
-                .withSelectionListEnabled(false)
-                .withOnAccountHeaderSelectionViewClickListener(null)
                 .withAlternativeProfileHeaderSwitching(false)
-                .withCurrentProfileHiddenInList(true)
-                .withSelectionListEnabled(false)*/
+                .withSelectionListEnabled(false)
                 .addProfiles(
                         profile
                 )
@@ -183,6 +185,12 @@ public class DrawerActivity extends AppCompatActivity {
                             } else if (drawerItem.getIdentifier() == 5) {
                                 drawerItem.withSetSelected(true);
                                 intent = new Intent(DrawerActivity.this, CommissionHistoryListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 6) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, SharAndEarnActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

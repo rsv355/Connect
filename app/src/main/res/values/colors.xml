@@ -8,7 +8,7 @@
     <color name="colorPrimaryDark">#7baa95</color>
     <color name="colorAccent">#f1c40f</color>
     <color name="secondaryTextFill">#92cab1</color>
-    <color name="primaryTextFill">#1e90ff</color>
+    <color name="colorBlue">#2196f3</color>
     <color name="white">#ffffff</color>
     <color name="black">#000</color>
     <color name="transparent">#00000000</color>

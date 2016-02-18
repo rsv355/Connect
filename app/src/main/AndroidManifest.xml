@@ -8,6 +8,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+
+
         <activity android:name=".base.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +32,7 @@
         <activity android:name=".revenue.AddBankActivity"></activity>
         <activity android:name=".revenue.TransactionHistoryListActivity"></activity>
         <activity android:name=".commission.CommissionHistoryListActivity"></activity>
+        <activity android:name=".shareAndEarn.SharAndEarnActivity"></activity>
     </application>
 
 </manifest>

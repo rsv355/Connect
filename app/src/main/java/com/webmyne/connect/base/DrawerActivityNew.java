@@ -13,6 +13,7 @@ import com.appeaser.sublimenavigationviewlibrary.SublimeNavigationView;
 import com.webmyne.connect.R;
 
 import com.webmyne.connect.dashboard.DashboardFragment;
+import com.webmyne.connect.dashboard.DashboardFragmentWithLeads;
 
 /**
  * Created by priyasindkar on 15-02-2016.
@@ -35,13 +36,14 @@ public class DrawerActivityNew extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             toolbar.setTitle("Hi, John Doe");
             toolbar.setSubtitle("$100.00");
+            toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         }
 
         snv = (SublimeNavigationView) findViewById(R.id.navigation_view);
         //Dashboard Fragment
         FragmentManager manager = getFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.frame_container, DashboardFragment.newInstance(), "DASHBOARD");
+        ft.replace(R.id.frame_container, DashboardFragmentWithLeads.newInstance(), "DASHBOARD");
         ft.commit();
     }
 
