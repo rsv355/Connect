@@ -97,13 +97,13 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
         String status = mDataset.get(position).getStatus();
 
         if(status.equals("ACTIVE")){
-            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.primaryBackground));
+            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.primaryTextColor));
         } else  if(status.equals("ONGOING")){
             holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.accent_A200));
         } else  if(status.equals("DEACTIVE")){
             holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.theme_500));
         } else {
-            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.primaryBackground));
+            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.primaryTextColor));
         }
 
         TextDrawable drawable2 = TextDrawable.builder().buildRound(mDataset.get(position).getVerticalName(), mDataset.get(position).getColor());

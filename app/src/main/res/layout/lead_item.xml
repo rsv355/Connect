@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_weight="1"
-                        app:backgroundColor="@color/primaryBackground"
+                        app:backgroundColor="@color/primaryTextColor"
                         app:direction="rightTop"
                         app:labelBottomPadding="@dimen/large_margin"
                         app:labelCenterPadding="@dimen/small_margin"

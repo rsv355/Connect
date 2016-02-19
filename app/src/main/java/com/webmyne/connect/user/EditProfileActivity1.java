@@ -1,20 +1,20 @@
 package com.webmyne.connect.user;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.andexert.library.RippleView;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.webmyne.connect.R;
-import com.webmyne.connect.revenue.TransactionHistoryFilterDialog;
+import com.webmyne.connect.Utils.Functions;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -23,13 +23,15 @@ import java.util.List;
 /**
  * Created by priyasindkar on 11-02-2016.
  */
-public class EditProfileActivity1 extends AppCompatActivity implements View.OnClickListener {
+public class EditProfileActivity1 extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
     private FloatingActionButton fab;
-    MaterialAutoCompleteTextView editLocation;
-    List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
+    private TextView txtMyReferCode;
+    private MaterialAutoCompleteTextView editLocation;
+    private RippleView txtUpdate;
+    private List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,24 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
         });
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
+        txtMyReferCode = (TextView) findViewById(R.id.txtMyReferCode);
+        txtMyReferCode.setTypeface(Functions.getReferCodeTypeFace(this));
+        txtUpdate = (RippleView) findViewById(R.id.txtUpdate);
+        txtUpdate.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity1.this, R.style.MaterialBaseTheme_Light_AlertDialog);
+                builder.setMessage("Profile Updated Successfully!");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataset);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

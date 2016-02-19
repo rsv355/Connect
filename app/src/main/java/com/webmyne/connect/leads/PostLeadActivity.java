@@ -1,21 +1,19 @@
 package com.webmyne.connect.leads;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
+import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.base.DrawerActivity;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
@@ -25,13 +23,14 @@ import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 /**
  * Created by priyasindkar on 15-02-2016.
  */
-public class PostLeadActivity extends AppCompatActivity implements View.OnClickListener{
+public class PostLeadActivity extends AppCompatActivity implements View.OnClickListener, RippleView.OnRippleCompleteListener{
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
     private int verticalColorIndex;
     private String selectedVertical;
     private ImageView imgVertical;
     private FloatingActionButton fab;
+    private RippleView txtPostLead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +42,6 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
-        imgVertical = (ImageView) findViewById(R.id.imgVertical);
-
         collapsingToolbar.setTitle("Auto Insurance");
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
@@ -57,12 +52,18 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
                 finish();
             }
         });
-
         collapsingToolbar.setContentScrimColor(ColorGenerator.MATERIAL.getColorAtIndex(verticalColorIndex));
-        fab.setBackgroundTintList(ColorStateList.valueOf(ColorGenerator.MATERIAL.getColorAtIndex(verticalColorIndex)));
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
+        imgVertical = (ImageView) findViewById(R.id.imgVertical);
+       // fab.setBackgroundTintList(ColorStateList.valueOf(ColorGenerator.MATERIAL.getColorAtIndex(verticalColorIndex)));
         TextDrawable drawable2 = TextDrawable.builder().buildRound("AI", ColorGenerator.MATERIAL.getColorAtIndex(verticalColorIndex));
         imgVertical.setImageDrawable(drawable2);
+
+        txtPostLead = (RippleView) findViewById(R.id.txtPostLead);
+        txtPostLead.setOnRippleCompleteListener(this);
+
     }
 
     @Override
@@ -90,6 +91,27 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
 
                     }
                 });*/
+                break;
+        }
+    }
+
+    @Override
+    public void onComplete(RippleView rippleView) {
+        switch (rippleView.getId()) {
+            case R.id.txtPostLead:
+                AlertDialog.Builder builder = new AlertDialog.Builder(PostLeadActivity.this, R.style.MaterialBaseTheme_Light_AlertDialog);
+                builder.setMessage("Lead Successfully Uploaded!");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
+                        preferences.edit().putBoolean("isLeadPosted", true).commit();
+                        Intent intent = new Intent(PostLeadActivity.this, DrawerActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                builder.show();
                 break;
         }
     }

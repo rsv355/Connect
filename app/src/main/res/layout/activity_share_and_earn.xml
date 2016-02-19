@@ -47,7 +47,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:cardBackgroundColor="@color/accent_A200"
                     android:layout_margin="@dimen/std_margin"
                     app:cardCornerRadius="@dimen/std_margin"
                     app:cardElevation="@dimen/std_margin"
@@ -56,13 +55,14 @@
 
                     <TextView
                         android:id="@+id/txtReferCode"
+                        android:background="@drawable/refer_code_box"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:padding="@dimen/v_large_margin"
                         android:text="WR23RTYU"
-                        android:textColor="@color/white"
+                        android:textColor="@color/accent_A200"
                         android:textSize="@dimen/medium_large_text_size" />
                 </android.support.v7.widget.CardView>
 
@@ -87,8 +87,8 @@
                         <ImageView
                             android:layout_margin="@dimen/std_margin"
                             android:layout_gravity="center"
-                            android:layout_width="@dimen/small_profile_image"
-                            android:layout_height="@dimen/small_profile_image"
+                            android:layout_width="@dimen/space"
+                            android:layout_height="@dimen/space"
                             android:src="@drawable/shake_to_share"/>
 
                         <TextView

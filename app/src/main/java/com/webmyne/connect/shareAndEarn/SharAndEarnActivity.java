@@ -55,6 +55,7 @@ public class SharAndEarnActivity extends AppCompatActivity implements Accelerome
         TextView txtShakeText = (TextView) findViewById(R.id.txtShakeText);
         txtShakeText.setTypeface(Functions.getTypeFace(this), Typeface.BOLD_ITALIC);
         txtReferCode = (TextView) findViewById(R.id.txtReferCode);
+        txtReferCode.setTypeface(Functions.getReferCodeTypeFace(this));
         bottomSheetLayout = (BottomSheetLayout) findViewById(R.id.bottomsheet);
         cardReferCode = (CardView) findViewById(R.id.cardReferCode);
         cardShakeInfo = (CardView) findViewById(R.id.cardShakeInfo);

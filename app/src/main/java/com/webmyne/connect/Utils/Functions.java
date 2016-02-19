@@ -14,6 +14,7 @@ import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 public class Functions {
 
     public static String fontFamilyPathThin = "fonts/HelveticaNeue-ThinExt.otf";
+    public static String referCodeFontPathThin = "fonts/KaushanScript-Regular.otf";
 
 
     public static Typeface getTypeFace(Context ctx){
@@ -21,9 +22,9 @@ public class Functions {
         return  typeface;
     }
 
-    public static void setVerticalView (Context _ctx, ImageView verticalImageView, String shortName, int index) {
-        int color = ColorGenerator.MATERIAL.getColorAtIndex(index);
-        TextDrawable drawable2 = TextDrawable.builder().buildRound(shortName, color);
-        verticalImageView.setImageDrawable(drawable2);
+    public static Typeface getReferCodeTypeFace(Context ctx){
+        Typeface typeface = Typeface.createFromAsset(ctx.getAssets(), referCodeFontPathThin);
+        return  typeface;
     }
+
 }

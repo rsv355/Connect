@@ -75,7 +75,6 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/medium_large_text_size"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -109,7 +108,7 @@
                         app:met_baseColor="@color/colorPrimary"
                         app:met_floatingLabel="highlight"
                         app:met_iconLeft="@drawable/ic_profile_phone"
-                        app:met_primaryColor="@color/primaryBackground"
+                        app:met_primaryColor="@color/primaryTextColor"
                         app:met_textColorHint="@color/colorPrimary" />
 
                     <ImageView
@@ -130,7 +129,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_name"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
@@ -143,7 +142,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_email"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
 
@@ -155,6 +154,34 @@
                     <include layout="@layout/vertical_items_checklist" />
                 </LinearLayout>
 
+                <com.andexert.library.RippleView
+                    android:id="@+id/txtPostLead"
+                    rv_centered="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        app:cardBackgroundColor="@color/colorAccent"
+                        app:cardCornerRadius="@dimen/small_margin"
+                        app:cardElevation="@dimen/std_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/large_margin"
+                            android:paddingLeft="@dimen/v_large_margin"
+                            android:paddingRight="@dimen/v_large_margin"
+                            android:paddingTop="@dimen/large_margin"
+                            android:text="Post Lead"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/normal_text_size" />
+
+                    </android.support.v7.widget.CardView>
+                </com.andexert.library.RippleView>
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
@@ -168,11 +195,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_margin"
         android:clickable="true"
+        app:borderWidth="0dp"
         android:src="@drawable/ic_undo_arrow"
-        app:backgroundTint="@color/accent_A100"
+        app:backgroundTint="@color/colorAccent"
         app:backgroundTintMode="src_atop"
-        app:layout_anchor="@+id/appbar"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchor="@+id/scroll"
+        app:layout_anchorGravity="top|right" />
 
 
 </android.support.design.widget.CoordinatorLayout>

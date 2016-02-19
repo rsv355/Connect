@@ -3,31 +3,28 @@ package com.webmyne.connect.base;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.MiniDrawer;
-import com.mikepenz.materialdrawer.interfaces.ICrossfader;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikepenz.materialdrawer.util.DrawerUIUtils;
-import com.mikepenz.materialize.util.UIUtils;
 import com.webmyne.connect.R;
 
+import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.commission.CommissionHistoryListActivity;
-import com.webmyne.connect.dashboard.DashboardFragmentWithLeads;
+import com.webmyne.connect.dashboard.DashboardFragment;
 import com.webmyne.connect.revenue.RedeemMoneyActivity;
 import com.webmyne.connect.revenue.TransactionHistoryListActivity;
 import com.webmyne.connect.shareAndEarn.SharAndEarnActivity;
@@ -40,6 +37,7 @@ public class DrawerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private AccountHeader headerResult = null;
     private Drawer result = null;
+    private boolean isLeadPosted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +45,17 @@ public class DrawerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_drawer);
         init(savedInstanceState);
 
+        SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
+        isLeadPosted = preferences.getBoolean("isLeadPosted", false);
+
         //Dashboard Fragment
         FragmentManager manager = getFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.frame_container, DashboardFragmentWithLeads.newInstance(), "DASHBOARD");
+        if(isLeadPosted) {
+            ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
+        } else {
+            ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
+        }
         ft.commit();
     }
 
@@ -70,6 +75,8 @@ public class DrawerActivity extends AppCompatActivity {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
+                .withNameTypeface(Functions.getReferCodeTypeFace(DrawerActivity.this))
+                .withEmailTypeface(Functions.getReferCodeTypeFace(DrawerActivity.this))
                 .withTextColorRes(R.color.white)
                 .withHeaderBackground(R.drawable.kk)
                 .withAlternativeProfileHeaderSwitching(false)
@@ -91,65 +98,72 @@ public class DrawerActivity extends AppCompatActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
-                                .withTextColor(getResources().getColor(R.color.primaryBackground))
-                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.home)
-                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
-                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+                                //.withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                //.withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(1),
-                        new DividerDrawerItem(),
+                   /*     new DividerDrawerItem(),*/
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
-                                .withTextColor(getResources().getColor(R.color.primaryBackground))
-                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.my_profile)
-                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_dob))
-                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+//                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_dob))
+//                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(2),
-                        new DividerDrawerItem(),
+                     /*   new DividerDrawerItem(),*/
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
-                                .withTextColor(getResources().getColor(R.color.primaryBackground))
-                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.redeem_revenue)
-                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
-                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+//                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+//                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(3),
-                        new DividerDrawerItem(),
+                       /* new DividerDrawerItem(),*/
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
-                                .withTextColor(getResources().getColor(R.color.primaryBackground))
-                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.transaction_history)
-                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
-                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+//                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+//                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(4),
-                        new DividerDrawerItem(),
+                       /* new DividerDrawerItem(),*/
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
-                                .withTextColor(getResources().getColor(R.color.primaryBackground))
-                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.my_commission)
-                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
-                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+//                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+//                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(5),
-                        new DividerDrawerItem(),
+                     /*   new DividerDrawerItem(),*/
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
-                                .withTextColor(getResources().getColor(R.color.primaryBackground))
-                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.share_and_earn)
-                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
-                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+//                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+//                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(6),
-                        new DividerDrawerItem(),
+                   /*     new DividerDrawerItem(),*/
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
-                                .withTextColor(getResources().getColor(R.color.primaryBackground))
-                                .withSelectedTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.help)
-                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
-                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+//                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+//                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(7))
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -161,7 +175,11 @@ public class DrawerActivity extends AppCompatActivity {
                                 //Dashboard Fragment
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction ft = manager.beginTransaction();
-                                ft.replace(R.id.frame_container, DashboardFragmentWithLeads.newInstance(), "DASHBOARD");
+                                if(isLeadPosted) {
+                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
+                                } else {
+                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
+                                }
                                 ft.commit();
 
                             } else if (drawerItem.getIdentifier() == 2) {

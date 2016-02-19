@@ -3,29 +3,32 @@ package com.webmyne.connect.dashboard;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andexert.library.RippleView;
-
-import java.util.ArrayList;
-
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
+import com.webmyne.connect.leads.LeadsListActivity;
 import com.webmyne.connect.leads.PostLeadActivity;
+
+import java.util.ArrayList;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -33,16 +36,24 @@ import com.webmyne.connect.leads.PostLeadActivity;
 public class DashboardFragment extends Fragment {
     private View aiVerticalView, afVerticalView, hiVerticalView, liVerticalView, hoVerticalView, ncVerticalView;
     private ImageView aiImgVertical, afImgVertical, hiImgVertical, liImgVertical, hoiImgVertical, ncImgVertical;
-    private TextView txtDashboardMessage, aiTextVertical, afTextVertical, hiTextVertical, liTextVertical, hoiTextVertical, ncTextVertical;
+    private TextView txtDashboardMessage, aiTextVertical, afTextVertical, hiTextVertical, liTextVertical, hoiTextVertical, ncTextVertical, txtViewMoreButton;
     private RippleView aiRippleView, afRippleView, hiRippleView, liRippleView, hoRippleView, ncRippleView;
     private LinearLayout linearTop,linearMiddle,linearBottom;
+    private Activity activity;
+    private RippleView viewMoreRipple;
+    private FloatingActionButton fab;
+    private static boolean isLeadPosted;
 
     private OnVerticalClickListener onVerticalClickListener;
 
-    public static DashboardFragment newInstance() {
+    public static DashboardFragment newInstance(boolean isLeadPosted) {
         DashboardFragment fragment = new DashboardFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isLeadPosted", isLeadPosted);
+        fragment.setArguments(bundle);
         return fragment;
     }
+
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -51,18 +62,19 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        isLeadPosted = getArguments().getBoolean("isLeadPosted", false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, null);
+        activity = getActivity();
         init(view);
+
         return view;
     }
 
     private void init(View view) {
-
         txtDashboardMessage = (TextView) view.findViewById(R.id.txtDashboardMessage);
         txtDashboardMessage.setTypeface(Functions.getTypeFace(getActivity()));
 
@@ -73,13 +85,18 @@ public class DashboardFragment extends Fragment {
         hoVerticalView = view.findViewById(R.id.hoiVerticalView);
         ncVerticalView = view.findViewById(R.id.ncVerticalView);
 
+        viewMoreRipple = (RippleView) view.findViewById(R.id.viewMoreRipple);
+        if(isLeadPosted) {
+            viewMoreRipple.setVisibility(View.VISIBLE);
+        }
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+
         ArrayList<Integer> color = ColorGenerator.MATERIAL.getRandomColor();
 
         aiImgVertical = (ImageView) aiVerticalView.findViewById(R.id.imgVertical);
         aiTextVertical = (TextView) aiVerticalView.findViewById(R.id.txtVerticalName);
         aiRippleView = (RippleView) aiVerticalView.findViewById(R.id.verticalRippleItem);
         aiRippleView.setOnRippleCompleteListener(new OnVerticalClickListener(0, color.get(0)));
-        //aiRippleView.setOnClickListener(new OnVerticalClickListener());
         setVerticalView(aiImgVertical, aiTextVertical, Constants.VERTICAL_NAMES.get(0), Constants.VERTICAL_SHORT_NAMES.get(0), color.get(0));
 
         afImgVertical = (ImageView) afVerticalView.findViewById(R.id.imgVertical);
@@ -191,12 +208,26 @@ public class DashboardFragment extends Fragment {
 
             }
         });
+
+        viewMoreRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                Intent intent = new Intent(getActivity(), LeadsListActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_down_out);
+            }
+        });
     }
 
     private void setVerticalView (ImageView verticalImageView, TextView verticalTextView, String verticalName, String shortName, int index) {
         int color = ColorGenerator.MATERIAL.getColorAtIndex(index);
         TextDrawable drawable2 = TextDrawable.builder().buildRound(shortName, color);
         verticalImageView.setImageDrawable(drawable2);
+
+        int dimensions = (int) getResources().getDimension(R.dimen.small_profile_image);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(dimensions, dimensions);
+        verticalImageView.setLayoutParams(layoutParams);
+
         verticalTextView.setText(verticalName);
         verticalTextView.setTextColor(color);
         verticalTextView.setTypeface(Functions.getTypeFace(getActivity()), Typeface.BOLD);
@@ -216,6 +247,7 @@ public class DashboardFragment extends Fragment {
             Toast.makeText(getActivity(), Constants.VERTICAL_NAMES.get(verticalType), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), PostLeadActivity.class);
             intent.putExtra("vertical_color_index", verticalColorIndex);
+            intent.putExtra("selected_vertical", Constants.VERTICAL_NAMES.get(verticalType));
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }

@@ -77,7 +77,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_name"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
@@ -90,7 +90,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_email"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
@@ -103,7 +103,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_dob"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
@@ -116,7 +116,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_phone"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
@@ -129,7 +129,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_zipcode"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
 
@@ -143,7 +143,7 @@
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
                     app:met_iconLeft="@drawable/ic_profile_location"
-                    app:met_primaryColor="@color/primaryBackground"
+                    app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
 
