@@ -28,6 +28,8 @@
 <color name="material_cyan">#b9e6e3</color>
 <color name="drawer_bg">#4DB6AC</color>
 
-
+    <color name="flatGreenColor">#2ecc71</color>
+    <color name="walletDividerLine">#bdc3c7</color>
+    <color name="textColor">#999999</color>
 
 </resources>

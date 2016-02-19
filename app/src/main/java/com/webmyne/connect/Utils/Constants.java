@@ -30,4 +30,6 @@ public class Constants {
             return value;
         }
     }
+
+    public static int KEYBOARD_CELL_ITEM_ANIMATION_DURATION = 800;
 }
