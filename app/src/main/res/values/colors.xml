@@ -11,7 +11,9 @@
     <color name="black">#000</color>
     <color name="transparent">#00000000</color>
     <color name="drawer_items_color">#FFB548</color>
-
+    <color name="appYellowColor">#f2ca27</color>
+    <color name="buttonBg">#ff5722</color>
+    <color name="appPurpleColor">#4527A0</color>
 
  <!-- View Pager -->
  <color name="theme_500">#607D8B</color>

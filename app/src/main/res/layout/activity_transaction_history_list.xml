@@ -74,7 +74,7 @@
         android:src="@drawable/ic_filter"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom|right|end"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/colorPrimary"
         app:backgroundTintMode="src_atop"/>
 
     <!--</com.andexert.library.RippleView>-->

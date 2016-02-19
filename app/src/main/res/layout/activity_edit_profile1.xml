@@ -95,6 +95,7 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -102,7 +103,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/std_margin"
-            app:cardElevation="@dimen/std_margin">
+            app:cardElevation="@dimen/std_margin"
+            app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -192,6 +194,7 @@
                 <com.andexert.library.RippleView
                     android:id="@+id/txtUpdate"
                     rv_centered="true"
+                    android:layout_margin="@dimen/large_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
@@ -199,7 +202,9 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="center"
+                        android:clipToPadding="false"
+                        android:layout_margin="@dimen/std_margin"
                         app:cardBackgroundColor="@color/colorAccent"
                         app:cardCornerRadius="@dimen/small_margin"
                         app:cardElevation="@dimen/std_margin">
@@ -232,11 +237,11 @@
         android:layout_margin="@dimen/large_margin"
         android:clickable="true"
         android:src="@drawable/ic_add_refer_code"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/colorPrimary"
         app:backgroundTintMode="src_atop"
         app:borderWidth="0dp"
-        app:layout_anchor="@+id/scroll"
-        app:layout_anchorGravity="top|right|end" />
+        app:layout_anchor="@+id/appbar"
+        app:layout_anchorGravity="bottom|right|end" />
 
 
 </android.support.design.widget.CoordinatorLayout>

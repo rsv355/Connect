@@ -1,6 +1,7 @@
 package com.webmyne.connect.base;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -46,7 +47,14 @@ public class SplashActivity extends CustomAwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        SharedPreferences preferences = getSharedPreferences("user_login", 0);
+        boolean isUserLoggedIn = preferences.getBoolean("isUserLoggedIn", false);
+        Intent intent = null;
+        if( !isUserLoggedIn) {
+            intent = new Intent(SplashActivity.this, MainActivity.class);
+        } else {
+            intent = new Intent(SplashActivity.this, DrawerActivity.class);
+        }
         startActivity(intent);
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

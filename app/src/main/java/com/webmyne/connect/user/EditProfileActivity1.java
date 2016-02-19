@@ -55,7 +55,7 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
         fab.setOnClickListener(this);
 
         txtMyReferCode = (TextView) findViewById(R.id.txtMyReferCode);
-        txtMyReferCode.setTypeface(Functions.getReferCodeTypeFace(this));
+        txtMyReferCode.setTypeface(Functions.getTypeFace(this));
         txtUpdate = (RippleView) findViewById(R.id.txtUpdate);
         txtUpdate.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override

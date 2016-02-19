@@ -1,6 +1,7 @@
 package com.webmyne.connect.base;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -22,7 +23,6 @@ import com.webmyne.connect.customUI.viewPager.SCViewAnimation;
 import com.webmyne.connect.customUI.viewPager.SCViewAnimationUtil;
 import com.webmyne.connect.customUI.viewPager.SCViewPager;
 import com.webmyne.connect.customUI.viewPager.SCViewPagerAdapter;
-import com.webmyne.connect.user.EditProfileActivity;
 
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, RippleView.OnRippleCompleteListener {
@@ -150,11 +150,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void onComplete(RippleView rippleView) {
         switch (rippleView.getId()) {
             case R.id.facebookRipple:
+                SharedPreferences preferences = getSharedPreferences("user_login", 0);
+                preferences.edit().putBoolean("isUserLoggedIn", true).commit();
                 Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             case R.id.googleRipple:
+                preferences = getSharedPreferences("user_login", 0);
+                preferences.edit().putBoolean("isUserLoggedIn", true).commit();
                 intent = new Intent(MainActivity.this, DrawerActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

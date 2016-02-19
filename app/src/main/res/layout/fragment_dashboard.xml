@@ -17,29 +17,6 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/small_large_text_size" />
 
-
-    <com.andexert.library.RippleView
-        android:id="@+id/viewMoreRipple"
-        rv_centered="true"
-        android:visibility="gone"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="right"
-        android:layout_margin="@dimen/small_margin">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:backgroundTint="@color/colorAccent"
-            app:backgroundTintMode="src_atop"
-            android:src="@drawable/ic_more" />
-    </com.andexert.library.RippleView>
-
-
     <ScrollView
         android:scrollbars="none"
         android:id="@+id/scrollView"
@@ -47,7 +24,6 @@
         android:overScrollMode="never"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtDashboardMessage"
-        android:layout_above="@id/viewMoreRipple"
         android:fillViewport="true">
 
         <LinearLayout
@@ -128,5 +104,26 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <com.andexert.library.RippleView
+        android:id="@+id/viewMoreRipple"
+        rv_centered="true"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/small_margin">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTintMode="src_atop"
+            android:src="@drawable/ic_more" />
+    </com.andexert.library.RippleView>
 
 </RelativeLayout>

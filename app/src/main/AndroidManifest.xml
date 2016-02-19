@@ -14,6 +14,12 @@
 
 
         <activity android:name=".base.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
 
         </activity>
         <activity android:name=".base.MainActivity"></activity>
@@ -26,12 +32,6 @@
         <activity android:name=".leads.PostLeadActivity"> </activity>
         <activity android:name=".leads.LeadsListActivity"></activity>
         <activity android:name=".revenue.RedeemMoneyActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
 
         </activity>
         <activity android:name=".revenue.AddBankActivity"></activity>

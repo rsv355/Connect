@@ -157,6 +157,7 @@
                 <com.andexert.library.RippleView
                     android:id="@+id/txtPostLead"
                     rv_centered="true"
+                    android:layout_margin="@dimen/large_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
@@ -165,13 +166,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
+                        android:layout_margin="@dimen/std_margin"
                         app:cardBackgroundColor="@color/colorAccent"
                         app:cardCornerRadius="@dimen/small_margin"
                         app:cardElevation="@dimen/std_margin">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:paddingBottom="@dimen/large_margin"
                             android:paddingLeft="@dimen/v_large_margin"
                             android:paddingRight="@dimen/v_large_margin"
@@ -197,10 +199,10 @@
         android:clickable="true"
         app:borderWidth="0dp"
         android:src="@drawable/ic_undo_arrow"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/colorPrimary"
         app:backgroundTintMode="src_atop"
-        app:layout_anchor="@+id/scroll"
-        app:layout_anchorGravity="top|right" />
+        app:layout_anchor="@+id/appbar"
+        app:layout_anchorGravity="bottom|right|end" />
 
 
 </android.support.design.widget.CoordinatorLayout>

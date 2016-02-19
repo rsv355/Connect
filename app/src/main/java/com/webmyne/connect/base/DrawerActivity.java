@@ -51,7 +51,7 @@ public class DrawerActivity extends AppCompatActivity {
         //Dashboard Fragment
         FragmentManager manager = getFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        if(isLeadPosted) {
+        if (isLeadPosted) {
             ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
         } else {
             ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
@@ -164,63 +164,79 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withTypeface(Functions.getTypeFace(DrawerActivity.this))
 //                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
 //                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
-                                .withIdentifier(7))
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            Intent intent = null;
-                            if (drawerItem.getIdentifier() == 1) {
-                                drawerItem.withSetSelected(true);
-                                //Dashboard Fragment
-                                FragmentManager manager = getFragmentManager();
-                                FragmentTransaction ft = manager.beginTransaction();
-                                if(isLeadPosted) {
-                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
-                                } else {
-                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
-                                }
-                                ft.commit();
-
-                            } else if (drawerItem.getIdentifier() == 2) {
-                                drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, EditProfileActivity1.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, RedeemMoneyActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            } else if (drawerItem.getIdentifier() == 4) {
-                                drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, TransactionHistoryListActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            } else if (drawerItem.getIdentifier() == 5) {
-                                drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, CommissionHistoryListActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            } else if (drawerItem.getIdentifier() == 6) {
-                                drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, SharAndEarnActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            }
-                            if (intent != null) {
-                                DrawerActivity.this.startActivity(intent);
-                            }
+                                .withIdentifier(7),
+                        new PrimaryDrawerItem()
+                                .withSelectedColorRes(R.color.white)
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
+                                .withName(R.string.logout)
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+        //                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+        //                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withIdentifier(8))
+        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                if (drawerItem != null) {
+                    Intent intent = null;
+                    if (drawerItem.getIdentifier() == 1) {
+                        drawerItem.withSetSelected(true);
+                        //Dashboard Fragment
+                        FragmentManager manager = getFragmentManager();
+                        FragmentTransaction ft = manager.beginTransaction();
+                        if (isLeadPosted) {
+                            ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
+                        } else {
+                            ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
                         }
+                        ft.commit();
 
-                        return false;
+                    } else if (drawerItem.getIdentifier() == 2) {
+                        drawerItem.withSetSelected(true);
+                        intent = new Intent(DrawerActivity.this, EditProfileActivity1.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    } else if (drawerItem.getIdentifier() == 3) {
+                        drawerItem.withSetSelected(true);
+                        intent = new Intent(DrawerActivity.this, RedeemMoneyActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    } else if (drawerItem.getIdentifier() == 4) {
+                        drawerItem.withSetSelected(true);
+                        intent = new Intent(DrawerActivity.this, TransactionHistoryListActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    } else if (drawerItem.getIdentifier() == 5) {
+                        drawerItem.withSetSelected(true);
+                        intent = new Intent(DrawerActivity.this, CommissionHistoryListActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    } else if (drawerItem.getIdentifier() == 6) {
+                        drawerItem.withSetSelected(true);
+                        intent = new Intent(DrawerActivity.this, SharAndEarnActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    } else if (drawerItem.getIdentifier() == 8) {
+                        drawerItem.withSetSelected(true);
+                        SharedPreferences preferences = getSharedPreferences("user_login", 0);
+                        SharedPreferences preferences1 = getSharedPreferences("is_lead_posted", 0);
+                        preferences.edit().clear().commit();
+                        preferences1.edit().clear().commit();
+                        finish();
                     }
-                })
+                    if (intent != null) {
+                        DrawerActivity.this.startActivity(intent);
+                    }
+                }
+
+                return false;
+            }
+        })
                 .withSavedInstance(savedInstanceState)
                 .build();
     }
