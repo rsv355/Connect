@@ -53,7 +53,7 @@ public class LeadsListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LeadsFilterDialog  filterDialog = new LeadsFilterDialog(LeadsListActivity.this, R.style.CustomDialogStyle);
+                LeadsFilterDialog  filterDialog = new LeadsFilterDialog(LeadsListActivity.this, R.style.CustomAlertDialogStyle);
                 filterDialog.show();
 
             }

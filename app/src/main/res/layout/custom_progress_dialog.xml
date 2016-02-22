@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <com.tt.whorlviewlibrary.WhorlView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/progressBar"
+        android:layout_width="2dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:whorlview_circle_colors="@string/custom_progress_bar_colors"
+        app:whorlview_circle_speed="270"
+        app:whorlview_parallax="fast"
+        app:whorlview_strokeWidth="6"
+        app:whorlview_sweepAngle="90"></com.tt.whorlviewlibrary.WhorlView>
+
+</LinearLayout>

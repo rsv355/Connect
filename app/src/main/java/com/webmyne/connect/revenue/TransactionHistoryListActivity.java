@@ -50,7 +50,7 @@ public class TransactionHistoryListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TransactionHistoryFilterDialog filterDialog = new TransactionHistoryFilterDialog(TransactionHistoryListActivity.this, R.style.CustomDialogStyle);
+                TransactionHistoryFilterDialog filterDialog = new TransactionHistoryFilterDialog(TransactionHistoryListActivity.this, R.style.CustomAlertDialogStyle);
                 filterDialog.show();
 
             }

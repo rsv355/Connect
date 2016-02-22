@@ -106,6 +106,12 @@
             app:cardElevation="@dimen/std_margin"
             app:cardUseCompatPadding="true">
 
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                layout="@layout/custom_progress_dialog"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
