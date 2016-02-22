@@ -78,7 +78,7 @@
                         android:layout_weight="1"
                         app:backgroundColor="@color/primaryTextColor"
                         app:direction="rightTop"
-                        app:labelBottomPadding="@dimen/large_margin"
+                        app:labelBottomPadding="@dimen/margin_10"
                         app:labelCenterPadding="@dimen/small_margin"
                         app:labelTopPadding="15dp"
                         app:num="ACTIVE"

@@ -33,7 +33,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
         init();
 
         mFinalLeftAvatarPadding = context.getResources().getDimension(
-                R.dimen.large_margin);
+                R.dimen.margin_10);
     }
 
     private void init() {

@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/large_margin"
+                android:layout_marginTop="@dimen/margin_10"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -101,7 +101,7 @@
                         android:id="@+id/editRefNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/large_margin"
+                        android:layout_margin="@dimen/margin_10"
                         android:layout_weight="1"
                         android:hint="Enter Reference No."
                         android:inputType="text"
@@ -123,7 +123,7 @@
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/large_margin"
+                    android:layout_margin="@dimen/margin_10"
                     android:hint="Enter Name"
                     android:inputType="text"
                     app:met_baseColor="@color/colorPrimary"
@@ -136,7 +136,7 @@
                     android:id="@+id/editEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/large_margin"
+                    android:layout_margin="@dimen/margin_10"
                     android:hint="Enter Email"
                     android:inputType="text"
                     app:met_baseColor="@color/colorPrimary"
@@ -149,7 +149,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/large_margin">
+                    android:layout_margin="@dimen/margin_10">
 
                     <include layout="@layout/vertical_items_checklist" />
                 </LinearLayout>
@@ -157,7 +157,7 @@
                 <com.andexert.library.RippleView
                     android:id="@+id/txtPostLead"
                     rv_centered="true"
-                    android:layout_margin="@dimen/large_margin"
+                    android:layout_margin="@dimen/margin_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
@@ -174,10 +174,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingBottom="@dimen/large_margin"
+                            android:paddingBottom="@dimen/margin_10"
                             android:paddingLeft="@dimen/v_large_margin"
                             android:paddingRight="@dimen/v_large_margin"
-                            android:paddingTop="@dimen/large_margin"
+                            android:paddingTop="@dimen/margin_10"
                             android:text="Post Lead"
                             android:textColor="@color/white"
                             android:textSize="@dimen/normal_text_size" />
@@ -195,7 +195,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/large_margin"
+        android:layout_margin="@dimen/margin_10"
         android:clickable="true"
         app:borderWidth="0dp"
         android:src="@drawable/ic_undo_arrow"

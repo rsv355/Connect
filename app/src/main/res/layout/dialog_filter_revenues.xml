@@ -79,7 +79,7 @@
         layout="@layout/vertical_items_checklist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/large_margin" />
+        android:layout_margin="@dimen/margin_10" />
 
     <LinearLayout
         android:layout_width="match_parent"

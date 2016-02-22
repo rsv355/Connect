@@ -73,6 +73,7 @@
         android:layout_alignParentBottom="true">
 
         <com.andexert.library.RippleView
+            android:id="@+id/viewRedeemRipple"
             rv_centered="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +106,7 @@
 
 
     <com.andexert.library.RippleView
-        android:id="@+id/viewMoreRipple"
+        android:id="@+id/viewAddBankRipple"
         rv_centered="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

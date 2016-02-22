@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -30,13 +31,14 @@ import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 /**
  * Created by priyasindkar on 17-02-2016.
  */
-public class RedeemMoneyActivity extends AppCompatActivity implements View.OnClickListener {
+public class RedeemMoneyActivity extends AppCompatActivity implements RippleView.OnRippleCompleteListener {
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private LinearLayout linear1row, linear2row, linear3row, linear4row;
     private TextView txtAmount,txtDollar,txtButtonRedeem;
     private StringBuilder AMOUNT = new StringBuilder();
+    private RippleView viewAddBankRipple, viewRedeemRipple;
 
     private int maxLengthofAMOUNT = 6;
     private int maxLengthofAfterDecimal = 2;
@@ -54,7 +56,6 @@ public class RedeemMoneyActivity extends AppCompatActivity implements View.OnCli
     private void init() {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
         linear1row = (LinearLayout) findViewById(R.id.linear1row);
         linear2row = (LinearLayout) findViewById(R.id.linear2row);
         linear3row = (LinearLayout) findViewById(R.id.linear3row);
@@ -62,18 +63,15 @@ public class RedeemMoneyActivity extends AppCompatActivity implements View.OnCli
         txtAmount = (TextView) findViewById(R.id.txtAmount);
         txtDollar= (TextView) findViewById(R.id.txtAmount);
         txtButtonRedeem = (TextView) findViewById(R.id.txtButtonRedeem);
+        viewAddBankRipple = (RippleView) findViewById(R.id.viewAddBankRipple);
+        viewAddBankRipple.setOnRippleCompleteListener(this);
+        viewRedeemRipple = (RippleView) findViewById(R.id.viewRedeemRipple);
+        viewRedeemRipple.setOnRippleCompleteListener(this);
 
         setFirstCellData();
         setSecondCellData();
         setThirdCellData();
         setFourthCellData();
-
-        txtButtonRedeem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(RedeemMoneyActivity.this, "DONE", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void setFirstCellData() {
@@ -302,12 +300,16 @@ public class RedeemMoneyActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab:
+    public void onComplete(RippleView rippleView) {
+        switch (rippleView.getId()) {
+            case R.id.viewAddBankRipple:
                 Intent intent = new Intent(RedeemMoneyActivity.this, AddBankActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_down_in, R.anim.push_up_out);
+                break;
+            case R.id.viewRedeemRipple:
+                AlertDialog.Builder dialog = Functions.getSimpleOkAlterDialog(RedeemMoneyActivity.this, "Redeem Successful!", "Ok");
+                dialog.show();
                 break;
         }
     }

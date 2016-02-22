@@ -244,7 +244,6 @@ public class DashboardFragment extends Fragment {
 
         @Override
         public void onComplete(RippleView rippleView) {
-            Toast.makeText(getActivity(), Constants.VERTICAL_NAMES.get(verticalType), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getActivity(), PostLeadActivity.class);
             intent.putExtra("vertical_color_index", verticalColorIndex);
             intent.putExtra("selected_vertical", Constants.VERTICAL_NAMES.get(verticalType));

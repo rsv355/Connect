@@ -39,7 +39,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/large_margin"
+                    android:padding="@dimen/margin_10"
                     android:src="@drawable/ic_facebook" />
 
                 <TextView
@@ -58,7 +58,7 @@
         <com.andexert.library.RippleView
             android:id="@+id/googleRipple"
             rv_centered="true"
-            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginTop="@dimen/margin_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -71,7 +71,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/large_margin"
+                    android:padding="@dimen/margin_10"
                     android:src="@drawable/ic_google" />
 
                 <TextView

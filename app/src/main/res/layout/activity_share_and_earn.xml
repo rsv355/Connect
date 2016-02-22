@@ -37,7 +37,7 @@
                     android:id="@+id/imgReferAndEarn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/large_margin"
+                    android:layout_marginBottom="@dimen/margin_10"
                     android:layout_marginTop="@dimen/std_margin" />
 
 

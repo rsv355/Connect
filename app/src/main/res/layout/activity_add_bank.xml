@@ -76,7 +76,7 @@
                         android:id="@+id/editBankAccNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/large_margin"
+                        android:layout_margin="@dimen/margin_10"
                         android:layout_weight="1"
                         android:hint="Enter Bank Account No."
                         android:inputType="text"
@@ -91,7 +91,7 @@
                         android:id="@+id/editBankName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/large_margin"
+                        android:layout_margin="@dimen/margin_10"
                         android:hint="Enter Bank Name"
                         android:inputType="text"
                         app:met_baseColor="@color/colorPrimary"
@@ -104,7 +104,7 @@
                         android:id="@+id/editEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/large_margin"
+                        android:layout_margin="@dimen/margin_10"
                         android:hint="Enter Swift Code"
                         android:inputType="text"
                         app:met_baseColor="@color/colorPrimary"
@@ -117,9 +117,9 @@
                         android:id="@+id/editBranchCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/large_margin"
-                        android:layout_marginRight="@dimen/large_margin"
-                        android:layout_marginTop="@dimen/large_margin"
+                        android:layout_marginLeft="@dimen/margin_10"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:layout_marginTop="@dimen/margin_10"
                         android:hint="Enter Bank Branch Code"
                         android:inputType="text"
                         app:met_baseColor="@color/colorPrimary"
@@ -132,26 +132,40 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_marginRight="@dimen/large_margin"
+                        android:layout_marginRight="@dimen/margin_10"
                         android:text="*Optional"
                         android:textColor="@color/accent_A200" />
 
                     <com.andexert.library.RippleView
-                        android:id="@+id/txtFilter"
+                        android:id="@+id/txtSave"
                         rv_centered="true"
+                        android:layout_margin="@dimen/margin_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/large_margin"
-                        android:background="@color/accent_A100">
+                        android:layout_gravity="center">
 
-                        <TextView
+                        <android.support.v7.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/large_margin"
-                            android:text="Save"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/normal_text_size" />
+                            android:layout_gravity="center"
+                            android:clipToPadding="false"
+                            android:layout_margin="@dimen/std_margin"
+                            app:cardBackgroundColor="@color/colorAccent"
+                            app:cardCornerRadius="@dimen/small_margin"
+                            app:cardElevation="@dimen/std_margin">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/margin_10"
+                                android:paddingLeft="@dimen/v_large_margin"
+                                android:paddingRight="@dimen/v_large_margin"
+                                android:paddingTop="@dimen/margin_10"
+                                android:text="Save"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/normal_text_size" />
+
+                        </android.support.v7.widget.CardView>
 
                     </com.andexert.library.RippleView>
 

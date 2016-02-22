@@ -60,15 +60,8 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
         txtUpdate.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity1.this, R.style.MaterialBaseTheme_Light_AlertDialog);
-                builder.setMessage("Profile Updated Successfully!");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
+                AlertDialog.Builder dialog = Functions.getSimpleOkAlterDialog(EditProfileActivity1.this, "Profile Updated Successfully!", "Ok");
+                dialog.show();
             }
         });
 
