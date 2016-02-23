@@ -51,7 +51,7 @@ public class CommissionHistoryListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(CommissionHistoryListActivity.this));
         ArrayList<CommissionHistoryDataObject> list = new ArrayList<>();
         list.add(new CommissionHistoryDataObject("QW123", 100,10, "2016-02-03 08:00AM GMT", "John Doe", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new CommissionHistoryDataObject("UY123", 200,20,"2016-02-03 08:00AM GMT",  "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new CommissionHistoryDataObject("UY123", 200,20.50,"2016-02-03 08:00AM GMT",  "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
         list.add(new CommissionHistoryDataObject("EW786", 100,5,"2016-01-21 08:00AM GMT", "John Doe", ColorGenerator.MATERIAL.getARandomColor()));
         list.add(new CommissionHistoryDataObject("IN386", 1000, 35 ,"2016-01-20 08:00AM GMT", "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
         list.add(new CommissionHistoryDataObject("BJ096", 50, 4,"2015-12-10 08:00AM GMT",  "John Doe", ColorGenerator.MATERIAL.getARandomColor()));

@@ -1,4 +1,4 @@
-package com.webmyne.connect.revenue;
+package com.webmyne.connect.revenuePayment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

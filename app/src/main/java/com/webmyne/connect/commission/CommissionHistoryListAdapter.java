@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.webmyne.connect.R;
+import com.webmyne.connect.Utils.AdvancedSpannableString;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.LabelView;
 
@@ -33,23 +34,15 @@ public class CommissionHistoryListAdapter extends RecyclerView.Adapter<Commissio
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtLeadId, txtDateTime, txtCustomerName, txtCustomerNo, txtCommissionAmount, txtBoughtAmount;
-        public LabelView labelStatus;
-        //public ImageView image;
-        private CardView cardAmount;
-        private LinearLayout linearParent;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             txtLeadId = (TextView) itemView.findViewById(R.id.txtLeadId);
             txtDateTime = (TextView) itemView.findViewById(R.id.txtDateTime);
-            labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
             txtCustomerName = (TextView) itemView.findViewById(R.id.txtCustomerName);
             txtCustomerNo =(TextView) itemView.findViewById(R.id.txtRedeemAmount);
             txtCommissionAmount = (TextView) itemView .findViewById(R.id.txtCommissionAmount);
             txtBoughtAmount = (TextView) itemView .findViewById(R.id.txtBoughtAmount);
-            cardAmount = (CardView) itemView.findViewById(R.id.cardAmount);
-            linearParent = (LinearLayout) itemView.findViewById(R.id.linearParent);
-            //image = (ImageView) itemView.findViewById(R.id.imgLeadItem);
             itemView.setOnClickListener(this);
         }
 
@@ -64,7 +57,6 @@ public class CommissionHistoryListAdapter extends RecyclerView.Adapter<Commissio
     }
 
     public CommissionHistoryListAdapter(Context _context) {
-        Log.e(LOG_TAG, _context.toString());
         mContext = _context;
         mDataset = new ArrayList<>();
     }
@@ -100,8 +92,10 @@ public class CommissionHistoryListAdapter extends RecyclerView.Adapter<Commissio
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
         holder.txtCommissionAmount.setText("$ "+String.valueOf(mDataset.get(position).getCommissionAmount()));
         holder.txtCommissionAmount.setBackgroundColor(color);
-        holder.txtBoughtAmount.setText("Lead Sold: $ "+String.valueOf(mDataset.get(position).getBoughtAmount()));
-        //holder.cardAmount.setCardBackgroundColor(color);
+        AdvancedSpannableString sp = new AdvancedSpannableString("Lead Sold  $ "+String.valueOf(mDataset.get(position).getBoughtAmount()));
+        sp.setColor(mContext.getResources().getColor(R.color.colorPrimary), "Lead Sold");
+        sp.setColor(mContext.getResources().getColor(R.color.flatGreenColor), "$ "+String.valueOf(mDataset.get(position).getBoughtAmount()));
+        holder.txtBoughtAmount.setText(sp);
         holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
     }
 

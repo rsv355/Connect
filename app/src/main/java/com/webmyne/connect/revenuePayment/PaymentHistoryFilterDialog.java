@@ -1,17 +1,13 @@
-package com.webmyne.connect.revenue;
+package com.webmyne.connect.revenuePayment;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.view.Window;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
-import com.andexert.library.RippleView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
 

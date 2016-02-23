@@ -247,6 +247,7 @@ public class DashboardFragment extends Fragment {
             Intent intent = new Intent(getActivity(), PostLeadActivity.class);
             intent.putExtra("vertical_color_index", verticalColorIndex);
             intent.putExtra("selected_vertical", Constants.VERTICAL_NAMES.get(verticalType));
+            intent.putExtra("selected_vertical_no", verticalType);
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }

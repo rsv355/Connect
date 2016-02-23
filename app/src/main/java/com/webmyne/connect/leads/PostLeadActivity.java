@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
+import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.base.DrawerActivity;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
@@ -26,23 +27,30 @@ import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 public class PostLeadActivity extends AppCompatActivity implements View.OnClickListener, RippleView.OnRippleCompleteListener{
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
-    private int verticalColorIndex;
+    private int verticalColorIndex, selectedVerticalNo;
     private String selectedVertical;
     private ImageView imgVertical;
     private FloatingActionButton fab;
     private RippleView txtPostLead;
+    private String verticalName="", verticalShortName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_lead);
-        verticalColorIndex = getIntent().getIntExtra("vertical_color_index", 0);
-        selectedVertical = getIntent().getStringExtra("selected_vertical");
+
+        if(getIntent()!=null) {
+            verticalColorIndex = getIntent().getIntExtra("vertical_color_index", 0);
+            selectedVertical = getIntent().getStringExtra("selected_vertical");
+            selectedVerticalNo = getIntent().getIntExtra("selected_vertical_no", 0);
+            verticalName = Constants.VERTICAL_NAMES.get(selectedVerticalNo);
+            verticalShortName = Constants.VERTICAL_SHORT_NAMES.get(selectedVerticalNo);
+        }
 
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("Auto Insurance");
+        collapsingToolbar.setTitle(verticalName);
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
@@ -58,7 +66,7 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         fab.setOnClickListener(this);
         imgVertical = (ImageView) findViewById(R.id.imgVertical);
        // fab.setBackgroundTintList(ColorStateList.valueOf(ColorGenerator.MATERIAL.getColorAtIndex(verticalColorIndex)));
-        TextDrawable drawable2 = TextDrawable.builder().buildRound("AI", ColorGenerator.MATERIAL.getColorAtIndex(verticalColorIndex));
+        TextDrawable drawable2 = TextDrawable.builder().buildRound(verticalShortName, ColorGenerator.MATERIAL.getColorAtIndex(verticalColorIndex));
         imgVertical.setImageDrawable(drawable2);
 
         txtPostLead = (RippleView) findViewById(R.id.txtPostLead);
@@ -100,7 +108,8 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         switch (rippleView.getId()) {
             case R.id.txtPostLead:
                 AlertDialog.Builder builder = new AlertDialog.Builder(PostLeadActivity.this, R.style.MaterialBaseTheme_Light_AlertDialog);
-                builder.setMessage("Lead Successfully Uploaded!");
+                builder.setTitle("Lead Successfully Uploaded!");
+                builder.setMessage("An SMS is sent to your contact with further details");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

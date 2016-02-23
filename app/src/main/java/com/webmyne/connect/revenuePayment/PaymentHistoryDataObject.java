@@ -1,17 +1,17 @@
-package com.webmyne.connect.revenue;
+package com.webmyne.connect.revenuePayment;
 
 /**
  * Created by priyasindkar on 12-02-2016.
  */
 public class PaymentHistoryDataObject {
-    private String leadName ,dateTime, redeeemAmount, customerName;
+    private String leadName ,dateTime, customerName;
     private int color;
-    private long amount;
+    private double amount, redeeemAmount;
 
     public PaymentHistoryDataObject() {
     }
 
-    public PaymentHistoryDataObject(String leadName, long amount, String dateTime, String redeeemAmount, String customerName, int color) {
+    public PaymentHistoryDataObject(String leadName, double amount, String dateTime, double redeeemAmount, String customerName, int color) {
         this.leadName = leadName;
         this.amount = amount;
         this.dateTime = dateTime;
@@ -28,11 +28,11 @@ public class PaymentHistoryDataObject {
         this.leadName = leadName;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -44,11 +44,11 @@ public class PaymentHistoryDataObject {
         this.dateTime = dateTime;
     }
 
-    public String getRedeeemAmount() {
+    public double getRedeeemAmount() {
         return redeeemAmount;
     }
 
-    public void setRedeeemAmount(String redeeemAmount) {
+    public void setRedeeemAmount(double redeeemAmount) {
         this.redeeemAmount = redeeemAmount;
     }
 

@@ -6,12 +6,12 @@ package com.webmyne.connect.commission;
 public class CommissionHistoryDataObject {
     private String leadName ,dateTime, customerName;
     private int color;
-    private long commissionAmount, boughtAmount;
+    private double commissionAmount, boughtAmount;
 
     public CommissionHistoryDataObject() {
     }
 
-    public CommissionHistoryDataObject(String leadName, long boughtAmount, long commissionAmount, String dateTime, String customerName, int color) {
+    public CommissionHistoryDataObject(String leadName, double boughtAmount, double commissionAmount, String dateTime, String customerName, int color) {
         this.leadName = leadName;
         this.dateTime = dateTime;
         this.customerName = customerName;
@@ -28,19 +28,19 @@ public class CommissionHistoryDataObject {
         this.leadName = leadName;
     }
 
-    public long getCommissionAmount() {
+    public double getCommissionAmount() {
         return commissionAmount;
     }
 
-    public void setCommissionAmount(long commissionAmount) {
+    public void setCommissionAmount(double commissionAmount) {
         this.commissionAmount = commissionAmount;
     }
 
-    public long getBoughtAmount() {
+    public double getBoughtAmount() {
         return boughtAmount;
     }
 
-    public void setBoughtAmount(long boughtAmount) {
+    public void setBoughtAmount(double boughtAmount) {
         this.boughtAmount = boughtAmount;
     }
 

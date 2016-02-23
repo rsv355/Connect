@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -128,10 +129,12 @@ public class SharAndEarnActivity extends AppCompatActivity implements Accelerome
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(txtReferCode.getWindowToken(), 0);
 
+        ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(500);
+
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_TEXT, txtReferCode.getText().toString());
         shareIntent.setType("text/plain");
-        IntentPickerSheetView intentPickerSheet = new IntentPickerSheetView(SharAndEarnActivity.this, shareIntent, "Share Refer...", new IntentPickerSheetView.OnIntentPickedListener() {
+        IntentPickerSheetView intentPickerSheet = new IntentPickerSheetView(SharAndEarnActivity.this, shareIntent, "Share Refer Code...", new IntentPickerSheetView.OnIntentPickedListener() {
             @Override
             public void onIntentPicked(IntentPickerSheetView.ActivityInfo activityInfo) {
                 bottomSheetLayout.dismissSheet();

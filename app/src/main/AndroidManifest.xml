@@ -12,15 +12,12 @@
         android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
 
-
         <activity android:name=".base.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
         <activity android:name=".base.MainActivity"></activity>
         <activity android:name=".user.EditProfileActivity"></activity>
@@ -31,13 +28,13 @@
         </activity>
         <activity android:name=".leads.PostLeadActivity"> </activity>
         <activity android:name=".leads.LeadsListActivity"></activity>
-        <activity android:name=".revenue.RedeemMoneyActivity">
+        <activity android:name=".revenuePayment.RedeemMoneyActivity">
 
         </activity>
-        <activity android:name=".revenue.AddBankActivity"></activity>
-        <activity android:name=".revenue.PaymentHistoryListActivity"></activity>
+        <activity android:name=".revenuePayment.AddBankActivity"></activity>
+        <activity android:name=".revenuePayment.PaymentHistoryListActivity"></activity>
         <activity android:name=".commission.CommissionHistoryListActivity"></activity>
         <activity android:name=".shareAndEarn.SharAndEarnActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 </manifest>

@@ -24,8 +24,8 @@ import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.commission.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragment;
 import com.webmyne.connect.leads.LeadsListActivity;
-import com.webmyne.connect.revenue.RedeemMoneyActivity;
-import com.webmyne.connect.revenue.PaymentHistoryListActivity;
+import com.webmyne.connect.revenuePayment.RedeemMoneyActivity;
+import com.webmyne.connect.revenuePayment.PaymentHistoryListActivity;
 import com.webmyne.connect.shareAndEarn.SharAndEarnActivity;
 import com.webmyne.connect.user.EditProfileActivity1;
 

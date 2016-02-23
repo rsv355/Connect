@@ -1,4 +1,4 @@
-package com.webmyne.connect.revenue;
+package com.webmyne.connect.revenuePayment;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -8,16 +8,14 @@ package com.webmyne.connect.revenue;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.webmyne.connect.R;
+import com.webmyne.connect.Utils.AdvancedSpannableString;
 import com.webmyne.connect.Utils.Functions;
 
 import java.util.ArrayList;
@@ -32,10 +30,6 @@ public class PaymentHistoryListAdapter extends RecyclerView.Adapter<PaymentHisto
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView txtLeadId, txtDateTime, txtCustomerName, txtRedeemAmount, txtAmount;
-      //  public LabelView labelStatus;
-        //public ImageView image;
-        private CardView cardAmount;
-        private LinearLayout linearParent;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -45,9 +39,6 @@ public class PaymentHistoryListAdapter extends RecyclerView.Adapter<PaymentHisto
             txtCustomerName = (TextView) itemView.findViewById(R.id.txtCustomerName);
             txtRedeemAmount =(TextView) itemView.findViewById(R.id.txtRedeemAmount);
             txtAmount = (TextView) itemView .findViewById(R.id.txtAmount);
-            cardAmount = (CardView) itemView.findViewById(R.id.cardAmount);
-            linearParent = (LinearLayout) itemView.findViewById(R.id.linearParent);
-            //image = (ImageView) itemView.findViewById(R.id.imgLeadItem);
             itemView.setOnClickListener(this);
         }
 
@@ -62,7 +53,6 @@ public class PaymentHistoryListAdapter extends RecyclerView.Adapter<PaymentHisto
     }
 
     public PaymentHistoryListAdapter(Context _context) {
-        Log.e(LOG_TAG, _context.toString());
         mContext = _context;
         mDataset = new ArrayList<>();
     }
@@ -97,7 +87,10 @@ public class PaymentHistoryListAdapter extends RecyclerView.Adapter<PaymentHisto
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
         holder.txtAmount.setText("$ "+String.valueOf(mDataset.get(position).getAmount()));
         holder.txtAmount.setBackgroundColor(color);
-        holder.txtRedeemAmount.setText("Encashable Amount: $ "+mDataset.get(position).getRedeeemAmount());
+        AdvancedSpannableString sp = new AdvancedSpannableString("Encashable Amount  $ "+String.valueOf(mDataset.get(position).getRedeeemAmount()));
+        sp.setColor(mContext.getResources().getColor(R.color.colorPrimary), "Encashable Amount");
+        sp.setColor(mContext.getResources().getColor(R.color.flatGreenColor), "$ "+String.valueOf(mDataset.get(position).getRedeeemAmount()));
+        holder.txtRedeemAmount.setText(sp);
         holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
     }
 

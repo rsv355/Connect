@@ -1,32 +1,25 @@
-package com.webmyne.connect.revenue;
+package com.webmyne.connect.revenuePayment;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
-import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 
 /**
  * Created by priyasindkar on 17-02-2016.

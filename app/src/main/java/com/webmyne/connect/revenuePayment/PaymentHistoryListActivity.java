@@ -1,4 +1,4 @@
-package com.webmyne.connect.revenue;
+package com.webmyne.connect.revenuePayment;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -60,13 +60,13 @@ public class PaymentHistoryListActivity extends AppCompatActivity {
     private void initRevenueHistoryList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(PaymentHistoryListActivity.this));
         ArrayList<PaymentHistoryDataObject> list = new ArrayList<>();
-        list.add(new PaymentHistoryDataObject("QW123", 100,"2016-02-03 08:00AM GMT", "95", "Funds Pending Clearance", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new PaymentHistoryDataObject("UY123", 200,"2016-02-03 08:00AM GMT", "175.50", "Funds Pending Clearance", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new PaymentHistoryDataObject("EW786", 100,"2016-01-21 08:00AM GMT", "95", "Withdrawal Initiated", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new PaymentHistoryDataObject("IN386", 70,"2016-01-20 08:00AM GMT", "65", "Funds Pending Clearance", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new PaymentHistoryDataObject("BJ096", 50, "2015-12-10 08:00AM GMT", "45", "Withdrawal Completed", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new PaymentHistoryDataObject("XS956", 100, "2015-11-16 08:00AM GMT", "95", "Withdrawal Completed", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new PaymentHistoryDataObject("OP123", 20,"2015-10-13 08:00AM GMT", "17.50", "Withdrawal Completed", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new PaymentHistoryDataObject("QW123", 100,"2016-02-03 08:00AM GMT", 95, "Funds Pending Clearance", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new PaymentHistoryDataObject("UY123", 200,"2016-02-03 08:00AM GMT", 175.50, "Funds Pending Clearance", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new PaymentHistoryDataObject("EW786", 100,"2016-01-21 08:00AM GMT", 95, "Withdrawal Initiated", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new PaymentHistoryDataObject("IN386", 70,"2016-01-20 08:00AM GMT", 65, "Funds Pending Clearance", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new PaymentHistoryDataObject("BJ096", 50, "2015-12-10 08:00AM GMT", 45, "Withdrawal Completed", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new PaymentHistoryDataObject("XS956", 100, "2015-11-16 08:00AM GMT", 95, "Withdrawal Completed", ColorGenerator.MATERIAL.getARandomColor()));
+        list.add(new PaymentHistoryDataObject("OP123", 20,"2015-10-13 08:00AM GMT", 7.50, "Withdrawal Completed", ColorGenerator.MATERIAL.getARandomColor()));
 
         mPaymentHistoryListAdapter = new PaymentHistoryListAdapter(PaymentHistoryListActivity.this, list);
         recyclerView.setAdapter(mPaymentHistoryListAdapter);
