@@ -3,19 +3,19 @@ package com.webmyne.connect.revenue;
 /**
  * Created by priyasindkar on 12-02-2016.
  */
-public class TransactionHistoryDataObject {
-    private String leadName ,dateTime, status, customerName;
+public class PaymentHistoryDataObject {
+    private String leadName ,dateTime, redeeemAmount, customerName;
     private int color;
     private long amount;
 
-    public TransactionHistoryDataObject() {
+    public PaymentHistoryDataObject() {
     }
 
-    public TransactionHistoryDataObject(String leadName, long amount, String dateTime, String status, String customerName, int color) {
+    public PaymentHistoryDataObject(String leadName, long amount, String dateTime, String redeeemAmount, String customerName, int color) {
         this.leadName = leadName;
         this.amount = amount;
         this.dateTime = dateTime;
-        this.status = status;
+        this.redeeemAmount = redeeemAmount;
         this.customerName = customerName;
         this.color = color;
     }
@@ -44,12 +44,12 @@ public class TransactionHistoryDataObject {
         this.dateTime = dateTime;
     }
 
-    public String getStatus() {
-        return status;
+    public String getRedeeemAmount() {
+        return redeeemAmount;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setRedeeemAmount(String redeeemAmount) {
+        this.redeeemAmount = redeeemAmount;
     }
 
     public String getCustomerName() {

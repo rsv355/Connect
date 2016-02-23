@@ -54,7 +54,7 @@
                         android:textColor="@color/colorPrimary" />
 
                     <TextView
-                        android:id="@+id/txtCustomerNo"
+                        android:id="@+id/txtRedeemAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/small_margin"

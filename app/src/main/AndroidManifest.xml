@@ -35,7 +35,7 @@
 
         </activity>
         <activity android:name=".revenue.AddBankActivity"></activity>
-        <activity android:name=".revenue.TransactionHistoryListActivity"></activity>
+        <activity android:name=".revenue.PaymentHistoryListActivity"></activity>
         <activity android:name=".commission.CommissionHistoryListActivity"></activity>
         <activity android:name=".shareAndEarn.SharAndEarnActivity"></activity>
     </application>

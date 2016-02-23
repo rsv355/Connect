@@ -44,7 +44,7 @@ public class CommissionHistoryListAdapter extends RecyclerView.Adapter<Commissio
             txtDateTime = (TextView) itemView.findViewById(R.id.txtDateTime);
             labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
             txtCustomerName = (TextView) itemView.findViewById(R.id.txtCustomerName);
-            txtCustomerNo =(TextView) itemView.findViewById(R.id.txtCustomerNo);
+            txtCustomerNo =(TextView) itemView.findViewById(R.id.txtRedeemAmount);
             txtCommissionAmount = (TextView) itemView .findViewById(R.id.txtCommissionAmount);
             txtBoughtAmount = (TextView) itemView .findViewById(R.id.txtBoughtAmount);
             cardAmount = (CardView) itemView.findViewById(R.id.cardAmount);
@@ -91,7 +91,7 @@ public class CommissionHistoryListAdapter extends RecyclerView.Adapter<Commissio
         holder.txtCustomerName.setTypeface(Functions.getTypeFace(mContext));
         holder.txtCustomerNo.setTypeface(Functions.getTypeFace(mContext));
         holder.txtCommissionAmount.setTypeface(Functions.getTypeFace(mContext), Typeface.BOLD);
-        holder.txtBoughtAmount.setTypeface(Functions.getTypeFace(mContext));
+        holder.txtBoughtAmount.setTypeface(Functions.getTypeFace(mContext),Typeface.BOLD );
 
 
         holder.txtLeadId.setText(mDataset.get(position).getLeadName());
@@ -100,7 +100,7 @@ public class CommissionHistoryListAdapter extends RecyclerView.Adapter<Commissio
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
         holder.txtCommissionAmount.setText("$ "+String.valueOf(mDataset.get(position).getCommissionAmount()));
         holder.txtCommissionAmount.setBackgroundColor(color);
-        holder.txtBoughtAmount.setText("$ "+String.valueOf(mDataset.get(position).getBoughtAmount()));
+        holder.txtBoughtAmount.setText("Lead Sold: $ "+String.valueOf(mDataset.get(position).getBoughtAmount()));
         //holder.cardAmount.setCardBackgroundColor(color);
         holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
     }

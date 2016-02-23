@@ -34,7 +34,7 @@ public class LeadsListActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("Leads");
+        collapsingToolbar.setTitle("Lead History");
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);

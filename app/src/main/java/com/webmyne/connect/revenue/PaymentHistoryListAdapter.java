@@ -19,21 +19,20 @@ import android.widget.TextView;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.base.LabelView;
 
 import java.util.ArrayList;
 
-public class TransactionHistoryListAdapter extends RecyclerView.Adapter<TransactionHistoryListAdapter.DataObjectHolder> {
-    private static String LOG_TAG = "TransactionHistoryListAdapter";
-    private ArrayList<TransactionHistoryDataObject> mDataset;
+public class PaymentHistoryListAdapter extends RecyclerView.Adapter<PaymentHistoryListAdapter.DataObjectHolder> {
+    private static String LOG_TAG = "PaymentHistoryListAdapter";
+    private ArrayList<PaymentHistoryDataObject> mDataset;
     private static MyClickListener myClickListener;
     private Context mContext;
 
 
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView txtLeadId, txtDateTime, txtCustomerName, txtCustomerNo, txtAmount;
-        public LabelView labelStatus;
+        public TextView txtLeadId, txtDateTime, txtCustomerName, txtRedeemAmount, txtAmount;
+      //  public LabelView labelStatus;
         //public ImageView image;
         private CardView cardAmount;
         private LinearLayout linearParent;
@@ -42,9 +41,9 @@ public class TransactionHistoryListAdapter extends RecyclerView.Adapter<Transact
             super(itemView);
             txtLeadId = (TextView) itemView.findViewById(R.id.txtLeadId);
             txtDateTime = (TextView) itemView.findViewById(R.id.txtDateTime);
-            labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
+            //labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
             txtCustomerName = (TextView) itemView.findViewById(R.id.txtCustomerName);
-            txtCustomerNo =(TextView) itemView.findViewById(R.id.txtCustomerNo);
+            txtRedeemAmount =(TextView) itemView.findViewById(R.id.txtRedeemAmount);
             txtAmount = (TextView) itemView .findViewById(R.id.txtAmount);
             cardAmount = (CardView) itemView.findViewById(R.id.cardAmount);
             linearParent = (LinearLayout) itemView.findViewById(R.id.linearParent);
@@ -62,13 +61,13 @@ public class TransactionHistoryListAdapter extends RecyclerView.Adapter<Transact
         this.myClickListener = myClickListener;
     }
 
-    public TransactionHistoryListAdapter(Context _context) {
+    public PaymentHistoryListAdapter(Context _context) {
         Log.e(LOG_TAG, _context.toString());
         mContext = _context;
         mDataset = new ArrayList<>();
     }
 
-    public TransactionHistoryListAdapter(Context _context, ArrayList<TransactionHistoryDataObject> myDataset) {
+    public PaymentHistoryListAdapter(Context _context, ArrayList<PaymentHistoryDataObject> myDataset) {
         mContext = _context;
         mDataset = myDataset;
     }
@@ -76,7 +75,7 @@ public class TransactionHistoryListAdapter extends RecyclerView.Adapter<Transact
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater mInflater = LayoutInflater.from (parent.getContext());
-        ViewGroup viewgroup1 = ( ViewGroup ) mInflater.inflate ( R.layout.transaction_history_item, parent, false );
+        ViewGroup viewgroup1 = ( ViewGroup ) mInflater.inflate ( R.layout.payment_history_item, parent, false );
         DataObjectHolder listHolder = new DataObjectHolder (viewgroup1);
         return listHolder;
     }
@@ -88,7 +87,7 @@ public class TransactionHistoryListAdapter extends RecyclerView.Adapter<Transact
         holder.txtLeadId.setTypeface(Functions.getTypeFace(mContext), Typeface.BOLD);
         holder.txtDateTime.setTypeface(Functions.getTypeFace(mContext));
         holder.txtCustomerName.setTypeface(Functions.getTypeFace(mContext));
-        holder.txtCustomerNo.setTypeface(Functions.getTypeFace(mContext));
+        holder.txtRedeemAmount.setTypeface(Functions.getTypeFace(mContext), Typeface.BOLD);
         holder.txtAmount.setTypeface(Functions.getTypeFace(mContext), Typeface.BOLD);
 
 
@@ -98,29 +97,11 @@ public class TransactionHistoryListAdapter extends RecyclerView.Adapter<Transact
         holder.txtDateTime.setText(mDataset.get(position).getDateTime());
         holder.txtAmount.setText("$ "+String.valueOf(mDataset.get(position).getAmount()));
         holder.txtAmount.setBackgroundColor(color);
-        //holder.txtAmount.setTextColor(color);
-//        holder.cardAmount.setCardBackgroundColor(color);
+        holder.txtRedeemAmount.setText("Encashable Amount: $ "+mDataset.get(position).getRedeeemAmount());
         holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
-        holder.labelStatus.setNum(mDataset.get(position).getStatus());
-        String status = mDataset.get(position).getStatus();
-
-        if(status.equals("ACTIVE")){
-            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.primaryTextColor));
-        } else  if(status.equals("ONGOING")){
-            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.accent_A200));
-        } else  if(status.equals("DEACTIVE")){
-            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.theme_500));
-        } else {
-            holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.primaryTextColor));
-        }
-
-
-       /* int dimensions = (int) mContext.getResources().getDimension(R.dimen.normal_text_size);
-        TextDrawable drawable2 = TextDrawable.builder().buildRound("$" + String.valueOf(mDataset.get(position).getAmount()),color );
-        holder.image.setImageDrawable(drawable2);*/
     }
 
-    public void addItem(TransactionHistoryDataObject dataObj, int index) {
+    public void addItem(PaymentHistoryDataObject dataObj, int index) {
         mDataset.add(dataObj);
         notifyItemInserted(index);
     }

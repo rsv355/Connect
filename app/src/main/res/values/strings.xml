@@ -19,8 +19,9 @@
     <!-- Drawer Menu Items -->
     <string name="home">HOME</string>
     <string name="my_profile">MY PROFILE</string>
+    <string name="lead_history">LEAD HISTORY</string>
     <string name="redeem_revenue">REDEEM MONEY</string>
-    <string name="transaction_history">TRANSACTION HISTORY</string>
+    <string name="transaction_history">PAYMENT HISTORY</string>
     <string name="my_commission">MY COMMISSION HISTORY</string>
     <string name="share_and_earn">SHARE AND EARN</string>
     <string name="help">HELP</string>

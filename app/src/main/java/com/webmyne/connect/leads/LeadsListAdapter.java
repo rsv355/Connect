@@ -45,7 +45,7 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
             txtDateTime = (TextView) itemView.findViewById(R.id.txtDateTime);
             labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
             txtCustomerName = (TextView) itemView.findViewById(R.id.txtCustomerName);
-            txtCustomerNo =(TextView) itemView.findViewById(R.id.txtCustomerNo);
+            txtCustomerNo =(TextView) itemView.findViewById(R.id.txtRedeemAmount);
             linearParent = (LinearLayout) itemView.findViewById(R.id.linearParent);
             image = (ImageView) itemView.findViewById(R.id.imgLeadItem);
             Log.e(LOG_TAG, "Adding Listener");

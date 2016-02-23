@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +14,6 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -25,8 +23,9 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.commission.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragment;
+import com.webmyne.connect.leads.LeadsListActivity;
 import com.webmyne.connect.revenue.RedeemMoneyActivity;
-import com.webmyne.connect.revenue.TransactionHistoryListActivity;
+import com.webmyne.connect.revenue.PaymentHistoryListActivity;
 import com.webmyne.connect.shareAndEarn.SharAndEarnActivity;
 import com.webmyne.connect.user.EditProfileActivity1;
 
@@ -106,6 +105,15 @@ public class DrawerActivity extends AppCompatActivity {
                                 //.withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(1),
                    /*     new DividerDrawerItem(),*/
+                        new PrimaryDrawerItem()
+                                .withSelectedColorRes(R.color.white)
+                                .withTextColor(getResources().getColor(R.color.colorPrimary))
+                                .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
+                                .withName(R.string.lead_history)
+                                .withTypeface(Functions.getTypeFace(DrawerActivity.this))
+                                //.withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                //.withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                .withIdentifier(9),
                         new PrimaryDrawerItem()
                                 .withSelectedColorRes(R.color.white)
                                 .withTextColor(getResources().getColor(R.color.colorPrimary))
@@ -205,7 +213,7 @@ public class DrawerActivity extends AppCompatActivity {
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     } else if (drawerItem.getIdentifier() == 4) {
                         drawerItem.withSetSelected(true);
-                        intent = new Intent(DrawerActivity.this, TransactionHistoryListActivity.class);
+                        intent = new Intent(DrawerActivity.this, PaymentHistoryListActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -228,6 +236,12 @@ public class DrawerActivity extends AppCompatActivity {
                         preferences.edit().clear().commit();
                         preferences1.edit().clear().commit();
                         finish();
+                    } else if (drawerItem.getIdentifier() == 9) {
+                        drawerItem.withSetSelected(true);
+                        intent = new Intent(DrawerActivity.this, LeadsListActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                     if (intent != null) {
                         DrawerActivity.this.startActivity(intent);
