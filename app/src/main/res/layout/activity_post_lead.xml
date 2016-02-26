@@ -112,6 +112,7 @@
                         app:met_textColorHint="@color/colorPrimary" />
 
                     <ImageView
+                        android:id="@+id/imgSearchContacts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/std_margin"
