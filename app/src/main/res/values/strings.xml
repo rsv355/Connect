@@ -32,4 +32,7 @@
 
     <!--<string name="custom_progress_bar_colors">#F14336_#ffffff_#5677fc_#F44336_#4CAF50</string>-->
     <string name="custom_progress_bar_colors">#673AB7_#E91E63_#2196F3_#FF5722_#795548</string>
+
+
+    <string name="facebook_app_id">978921992200010</string>
 </resources>

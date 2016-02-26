@@ -1,8 +1,14 @@
 package com.webmyne.connect.base;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
+import android.util.Base64;
+import android.util.Log;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -11,8 +17,43 @@ import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.CustomAwesomeSplash;
 import com.webmyne.connect.customUI.CustomConfigSplash;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class SplashActivity extends CustomAwesomeSplash {
+    public static String printKeyHash(Activity context) {
+        PackageInfo packageInfo;
+        String key = null;
+        try {
+            //getting application package name, as defined in manifest
+            String packageName = context.getApplicationContext().getPackageName();
+
+            //Retriving package info
+            packageInfo = context.getPackageManager().getPackageInfo(packageName,
+                    PackageManager.GET_SIGNATURES);
+
+            Log.e("Package Name=", context.getApplicationContext().getPackageName());
+
+            for (Signature signature : packageInfo.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                key = new String(Base64.encode(md.digest(), 0));
+
+                // String key = new String(Base64.encodeBytes(md.digest()));
+                Log.e("Key Hash=", key);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("Name not found", e1.toString());
+        }
+        catch (NoSuchAlgorithmException e) {
+            Log.e("No such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("Exception", e.toString());
+        }
+
+        return key;
+    }
 
 
     @Override
@@ -21,7 +62,7 @@ public class SplashActivity extends CustomAwesomeSplash {
 
         //Customize Circular Reveal
 
-
+        printKeyHash(SplashActivity.this);
         configSplash.setBackgroundColor(R.color.splashRippleBackground); //any color you want form colors.xml
         configSplash.setBackgroundResource(R.drawable.kk);
 

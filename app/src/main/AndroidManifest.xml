@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.webmyne.connect">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,10 +35,23 @@
         <activity android:name=".revenuePayment.RedeemMoneyActivity">
 
         </activity>
+
         <activity android:name=".revenuePayment.AddBankActivity"></activity>
         <activity android:name=".revenuePayment.PaymentHistoryListActivity"></activity>
         <activity android:name=".commission.CommissionHistoryListActivity"></activity>
         <activity android:name=".shareAndEarn.SharAndEarnActivity"></activity>
+
+
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
+
     </application>
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+
+
 </manifest>

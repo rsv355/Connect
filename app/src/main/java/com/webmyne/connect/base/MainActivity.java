@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.renderscript.BaseObj;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -15,6 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andexert.library.RippleView;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.viewPager.DotsView;
@@ -24,6 +32,8 @@ import com.webmyne.connect.customUI.viewPager.SCViewAnimationUtil;
 import com.webmyne.connect.customUI.viewPager.SCViewPager;
 import com.webmyne.connect.customUI.viewPager.SCViewPagerAdapter;
 
+import java.util.Arrays;
+
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, RippleView.OnRippleCompleteListener {
     private static final int NUM_PAGES = 4;
@@ -31,12 +41,45 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private SCViewPager mViewPager;
     private SCViewPagerAdapter mPageAdapter;
     private DotsView mDotsView;
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // Intialize Facebook
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+
+                        Log.e("FB Login result",loginResult.
+                                toString());
+
+
+                        Toast.makeText(MainActivity.this, "Login Sucess", Toast.LENGTH_LONG).show();
+                        SharedPreferences preferences = getSharedPreferences("user_login", 0);
+                        preferences.edit().putBoolean("isUserLoggedIn", true).commit();
+                        Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(MainActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(MainActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
         setContentView(R.layout.activity_main);
 
         mViewPager = (SCViewPager) findViewById(R.id.viewPager);
@@ -134,14 +177,23 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         TextView txtFbLogin = (TextView) loginView.findViewById(R.id.txtFbLogin);
         txtFbLogin.setTypeface(Functions.getTypeFace(MainActivity.this));
 
+
+
         TextView txtGoogleLogin = (TextView) loginView.findViewById(R.id.txtGoogleLogin);
         txtGoogleLogin.setTypeface(Functions.getTypeFace(MainActivity.this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.linearFbLogin:
+
                 break;
         }
     }
@@ -150,16 +202,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void onComplete(RippleView rippleView) {
         switch (rippleView.getId()) {
             case R.id.facebookRipple:
-                SharedPreferences preferences = getSharedPreferences("user_login", 0);
-                preferences.edit().putBoolean("isUserLoggedIn", true).commit();
-                Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+                LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, Arrays.asList("public_profile", "user_friends"));
+
                 break;
             case R.id.googleRipple:
+                SharedPreferences preferences = getSharedPreferences("user_login", 0);
                 preferences = getSharedPreferences("user_login", 0);
                 preferences.edit().putBoolean("isUserLoggedIn", true).commit();
-                intent = new Intent(MainActivity.this, DrawerActivity.class);
+                Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
