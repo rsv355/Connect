@@ -83,7 +83,14 @@
                     android:text="Login With Google+"
                     android:textColor="@color/white" />
 
+
+
             </LinearLayout>
         </com.andexert.library.RippleView>
+        <com.google.android.gms.common.SignInButton
+            android:visibility="gone"
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>
