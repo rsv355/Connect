@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "erudite-scholar-123612",
+    "project_number": "732099720034",
+    "name": "Connect"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732099720034:android:7566bf00df85008f",
+        "client_id": "android:com.webmyne.connect",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.webmyne.connect",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732099720034-6033vafuosrqlrje0bba94aodj54pn9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webmyne.connect",
+            "certificate_hash": "465671F27E6B58FAC7568BEF89F0D2729FC5BC99"
+          }
+        },
+        {
+          "client_id": "732099720034-v4t2imlprksldeajandq5el6qpstjavl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

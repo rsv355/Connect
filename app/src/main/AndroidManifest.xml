@@ -3,18 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.webmyne.connect">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <permission
+        android:name="com.webmyne.connect.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.webmyne.connect.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        tools:replace="android:icon,android:theme"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:theme">
 
         <activity android:name=".base.SplashActivity">
             <intent-filter>
@@ -30,7 +44,7 @@
         <activity android:name=".base.DrawerActivity">
 
         </activity>
-        <activity android:name=".leads.PostLeadActivity"> </activity>
+        <activity android:name=".leads.PostLeadActivity"></activity>
         <activity android:name=".leads.LeadsListActivity"></activity>
         <activity android:name=".revenuePayment.RedeemMoneyActivity">
 
@@ -41,17 +55,24 @@
         <activity android:name=".commission.CommissionHistoryListActivity"></activity>
         <activity android:name=".shareAndEarn.SharAndEarnActivity"></activity>
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <receiver
+            android:name=".GCM.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.webmyne.connect" />
+            </intent-filter>
+        </receiver>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
-
-
+        <service android:name=".GCM.GcmMessageHandler" />
     </application>
-
-
 </manifest>
