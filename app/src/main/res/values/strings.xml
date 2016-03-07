@@ -37,12 +37,23 @@
     <string name="facebook_app_id">978921992200010</string>
     <string name="google_client_id">AIzaSyAa4EDPzxccmJi4gaOL6S46rvX_AQNoCYo</string>
 
+    <string name="project_id">732099720034</string>
+
     <!-- User Messages -->
     <string name="facebook_connection_cancelled">Facebook Connection Cancelled</string>
     <string name="facebook_connection_failed">Facebook Connection Failed</string>
     <string name="facebook_connection_error">Error Encountered While Login via Facebook</string>
     <string name="google_connection_failed">Google Connection Failed</string>
+    <string name="google_login">Google Login</string>
+    <string name="facebook_login">Facebook Login</string>
     <string name="success">Success</string>
+    <string name="gcm_error">Google Services Not Found. Please Install/Update It</string>
+    <string name="login_failed">Error Was Encountered While Login. Please Try Again.</string>
+    <string name="login_successful">Login Successful</string>
+    <string name="name_empty_validation">Name Cannot Be Empty</string>
+    <string name="email_empty_validation">Email Cannot Be Empty</string>
+    <string name="email_invalid_validation">Invalid Email Id</string>
+    <string name="mobile_invalid_validation">Invalid Mobile No.</string>
 
 
 

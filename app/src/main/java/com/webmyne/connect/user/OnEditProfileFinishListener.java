@@ -1,4 +1,4 @@
-package com.webmyne.connect.user.MVP;
+package com.webmyne.connect.user;
 
 /**
  * Created by priyasindkar on 22-02-2016.

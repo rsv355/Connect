@@ -15,10 +15,8 @@ import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.login.model.UserLoginOutput;
 import com.webmyne.connect.customUI.CustomProgressDialog;
-import com.webmyne.connect.user.MVP.EditProfilePresenter;
-import com.webmyne.connect.user.MVP.EditProfilePresenterImpl;
-import com.webmyne.connect.user.MVP.EditProfileView;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -35,17 +33,20 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
     private TextView txtMyReferCode;
     private MaterialAutoCompleteTextView editLocation;
     private RippleView txtUpdate;
-    private MaterialEditText editEmail;
+    private MaterialEditText editName, editEmail, editDOB, editPhone, editZipcode;
     private List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
     private CustomProgressDialog progressDialog;
-
     private EditProfilePresenter editProfilePresenter;
+    private UserLoginOutput currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile1);
+        init();
+    }
 
+    private void init() {
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -65,7 +66,11 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
 
         editProfilePresenter = new EditProfilePresenterImpl(this);
 
+        editName = (MaterialEditText) findViewById(R.id.editName);
+        editDOB = (MaterialEditText)findViewById(R.id.editDOB);
+        editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         editEmail = (MaterialEditText) findViewById(R.id.editEmail);
+        editZipcode = (MaterialEditText) findViewById(R.id.editZipcode);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
@@ -75,9 +80,13 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
         txtUpdate.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                editProfilePresenter.validateFormFields(editEmail.getText().toString().trim());
+                editProfilePresenter.validateFormFields(EditProfileActivity1.this, editName.getText().toString().trim(), editEmail.getText().toString().trim(),
+                        editDOB.getText().toString().trim(), editPhone.getText().toString().trim(), editZipcode.getText().toString().trim(),
+                        editLocation.getText().toString().trim(), currentUser.Gender , currentUser.UserID);
             }
         });
+
+        editProfilePresenter.initUserData(EditProfileActivity1.this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataset);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -107,9 +116,49 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    public void setNameError(String errorString) {
+        editName.setError(errorString);
+    }
+
+    @Override
+    public void setEmailError(String errorString) {
+       editEmail.setError(errorString);
+    }
+
+    @Override
+    public void setMobileError(String errorString) {
+        editPhone.setError(errorString);
+    }
+
+    @Override
     public void onSuccess(String successString) {
         AlertDialog.Builder dialog = Functions.getSimpleOkAlterDialog(EditProfileActivity1.this, successString, "Ok");
         dialog.show();
+    }
+
+    @Override
+    public void initUserData(UserLoginOutput currentUser) {
+        this.currentUser = currentUser;
+
+        editName.setText(currentUser.Name);
+        editEmail.setText(currentUser.Email);
+
+        if( !currentUser.Mobile.equals("")) {
+            editPhone.setText(currentUser.Mobile);
+        }
+        if( !currentUser.DOB.equals("")) {
+            editDOB.setText(currentUser.DOB);
+        }
+        if( !currentUser.ZipCode.equals("")) {
+            editZipcode.setText(currentUser.ZipCode);
+        }
+        if( !currentUser.Address.equals("")) {
+            editLocation.setText(currentUser.Address);
+        }
+
+        if( !currentUser.UserReferCode.equals("")) {
+            txtMyReferCode.setText(currentUser.UserReferCode);
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
-package com.webmyne.connect.base.login;
+package com.webmyne.connect.login;
 
-import com.webmyne.connect.base.model.UserProfile;
+import com.webmyne.connect.login.model.UserLoginOutput;
+import com.webmyne.connect.login.model.UserProfile;
 
 /**
  * Created by priyasindkar on 03-03-2016.
@@ -10,4 +11,8 @@ public interface LoginView {
     void onGoogleLoginError(String error);
     void onFacebookLoginError(String error);
     void onFacebookLoginSuccess(UserProfile userProfile, String success);
+    void onLoginSuccess(UserLoginOutput userLoginOutput, String success);
+    void onLoginError(String error);
+    void showProgressDialog();
+    void hideProgressDialog();
 }

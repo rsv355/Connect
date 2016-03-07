@@ -20,7 +20,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.webmyne.connect.R;
 
+import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.login.model.UserLoginOutput;
 import com.webmyne.connect.commission.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragment;
 import com.webmyne.connect.leads.LeadsListActivity;
@@ -37,6 +39,7 @@ public class DrawerActivity extends AppCompatActivity {
     private AccountHeader headerResult = null;
     private Drawer result = null;
     private boolean isLeadPosted = false;
+    private UserLoginOutput currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +65,28 @@ public class DrawerActivity extends AppCompatActivity {
     private void init(Bundle savedInstanceState) {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Hi, John Doe");
-        toolbar.setSubtitle("$100.00");
+
+        ComplexPreferences complexPreferences = new ComplexPreferences(this, "login-user", MODE_PRIVATE);
+        currentUser = complexPreferences.getObject("loggedInUser", UserLoginOutput.class);
+
+        toolbar.setTitle("Hi, " + currentUser.Name);
+        toolbar.setSubtitle("$ " + String.valueOf(currentUser.WalletBalance));
 
         final IProfile profile = new ProfileDrawerItem()
                 .withTextColorRes(R.color.colorAccent)
-                .withName("John Doe")
-                .withEmail("johndoe@gmail.com")
-                .withIcon(getResources().getDrawable(R.drawable.dummy_boy)).withIdentifier(100);
+                .withName(currentUser.Name)
+                .withEmail(currentUser.Email).withIdentifier(100);
+        //.withIcon(getResources().getDrawable(R.drawable.dummy_boy)).withIdentifier(100);
+
+        if (currentUser.Gender != null) {
+            if (currentUser.Gender.equalsIgnoreCase("Female")) {
+                profile.withIcon(getResources().getDrawable(R.drawable.dummy_girl));
+            } else if (currentUser.Gender.equalsIgnoreCase("Male")) {
+                profile.withIcon(getResources().getDrawable(R.drawable.dummy_boy));
+            } else {
+                profile.withIcon(getResources().getDrawable(R.drawable.dummy_boy));
+            }
+        }
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -179,78 +196,78 @@ public class DrawerActivity extends AppCompatActivity {
                                 .withSelectedTextColor(getResources().getColor(R.color.drawer_items_color))
                                 .withName(R.string.logout)
                                 .withTypeface(Functions.getTypeFace(DrawerActivity.this))
-        //                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
-        //                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
+                                //                                .withIcon(getResources().getDrawable(R.drawable.ic_profile_name))
+                                //                                .withSelectedIconColor(getResources().getColor(R.color.colorPrimary))
                                 .withIdentifier(8))
-        .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                if (drawerItem != null) {
-                    Intent intent = null;
-                    if (drawerItem.getIdentifier() == 1) {
-                        drawerItem.withSetSelected(true);
-                        //Dashboard Fragment
-                        FragmentManager manager = getFragmentManager();
-                        FragmentTransaction ft = manager.beginTransaction();
-                        if (isLeadPosted) {
-                            ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
-                        } else {
-                            ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            Intent intent = null;
+                            if (drawerItem.getIdentifier() == 1) {
+                                drawerItem.withSetSelected(true);
+                                //Dashboard Fragment
+                                FragmentManager manager = getFragmentManager();
+                                FragmentTransaction ft = manager.beginTransaction();
+                                if (isLeadPosted) {
+                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
+                                } else {
+                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
+                                }
+                                ft.commit();
+
+                            } else if (drawerItem.getIdentifier() == 2) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, EditProfileActivity1.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 3) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, RedeemMoneyActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 4) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, PaymentHistoryListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 5) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, CommissionHistoryListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 6) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, SharAndEarnActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            } else if (drawerItem.getIdentifier() == 8) {
+                                drawerItem.withSetSelected(true);
+                                SharedPreferences preferences = getSharedPreferences("user_login", 0);
+                                SharedPreferences preferences1 = getSharedPreferences("is_lead_posted", 0);
+                                preferences.edit().clear().commit();
+                                preferences1.edit().clear().commit();
+                                finish();
+                            } else if (drawerItem.getIdentifier() == 9) {
+                                drawerItem.withSetSelected(true);
+                                intent = new Intent(DrawerActivity.this, LeadsListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            }
+                            if (intent != null) {
+                                DrawerActivity.this.startActivity(intent);
+                            }
                         }
-                        ft.commit();
 
-                    } else if (drawerItem.getIdentifier() == 2) {
-                        drawerItem.withSetSelected(true);
-                        intent = new Intent(DrawerActivity.this, EditProfileActivity1.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    } else if (drawerItem.getIdentifier() == 3) {
-                        drawerItem.withSetSelected(true);
-                        intent = new Intent(DrawerActivity.this, RedeemMoneyActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    } else if (drawerItem.getIdentifier() == 4) {
-                        drawerItem.withSetSelected(true);
-                        intent = new Intent(DrawerActivity.this, PaymentHistoryListActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    } else if (drawerItem.getIdentifier() == 5) {
-                        drawerItem.withSetSelected(true);
-                        intent = new Intent(DrawerActivity.this, CommissionHistoryListActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    } else if (drawerItem.getIdentifier() == 6) {
-                        drawerItem.withSetSelected(true);
-                        intent = new Intent(DrawerActivity.this, SharAndEarnActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    } else if (drawerItem.getIdentifier() == 8) {
-                        drawerItem.withSetSelected(true);
-                        SharedPreferences preferences = getSharedPreferences("user_login", 0);
-                        SharedPreferences preferences1 = getSharedPreferences("is_lead_posted", 0);
-                        preferences.edit().clear().commit();
-                        preferences1.edit().clear().commit();
-                        finish();
-                    } else if (drawerItem.getIdentifier() == 9) {
-                        drawerItem.withSetSelected(true);
-                        intent = new Intent(DrawerActivity.this, LeadsListActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        return false;
                     }
-                    if (intent != null) {
-                        DrawerActivity.this.startActivity(intent);
-                    }
-                }
-
-                return false;
-            }
-        })
+                })
                 .withSavedInstance(savedInstanceState)
                 .build();
     }

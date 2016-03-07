@@ -1,5 +1,6 @@
 package com.webmyne.connect.base;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -10,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andexert.library.RippleView;
 import com.facebook.FacebookSdk;
@@ -23,11 +23,13 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.base.login.MainPresenterImpl;
-import com.webmyne.connect.base.login.LoginView;
-import com.webmyne.connect.base.login.SocialMediaPresenter;
-import com.webmyne.connect.base.login.SocialMediaPresenterImp;
-import com.webmyne.connect.base.model.UserProfile;
+import com.webmyne.connect.login.MainPresenterImpl;
+import com.webmyne.connect.login.LoginView;
+import com.webmyne.connect.login.LoginPresenter;
+import com.webmyne.connect.login.LoginPresenterImp;
+import com.webmyne.connect.login.model.UserLoginOutput;
+import com.webmyne.connect.login.model.UserProfile;
+import com.webmyne.connect.customUI.CustomProgressDialog;
 import com.webmyne.connect.customUI.viewPager.DotsView;
 import com.webmyne.connect.customUI.viewPager.SCViewAnimationUtil;
 import com.webmyne.connect.customUI.viewPager.SCViewPager;
@@ -46,7 +48,9 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
 
     //MVP
     private MainPresenterImpl mainPresenterImpl;
-    private SocialMediaPresenter socialMediaPresenter;
+    private LoginPresenter loginPresenter;
+
+    private ProgressDialog progressDialog;
 
     private void initSocialLogins() {
         // Initialize Facebook
@@ -69,13 +73,18 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
                 .requestScopes(new Scope(Scopes.PROFILE))
                 .build();
 
-        if(mGoogleApiClient == null) {
+        if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .enableAutoManage(this, this)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .addApi(Plus.API)
                     .build();
         }
+
+        mainPresenterImpl = new MainPresenterImpl(this);
+        loginPresenter = new LoginPresenterImp(this);
+        progressDialog = new CustomProgressDialog(MainActivity.this);
+        progressDialog.setCancelable(false);
 
         mViewPager = (SCViewPager) findViewById(R.id.viewPager);
         mDotsView = (DotsView) findViewById(R.id.dotsView);
@@ -86,9 +95,6 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
         mPageAdapter.setNumberOfPage(NUM_PAGES);
         mPageAdapter.setFragmentBackgroundColor(R.color.splashRippleBackground);
         mViewPager.setAdapter(mPageAdapter);
-
-        mainPresenterImpl = new MainPresenterImpl(this);
-        socialMediaPresenter = new SocialMediaPresenterImp(this);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -145,14 +151,15 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        socialMediaPresenter.socialMediaActivityResultHandler(requestCode, resultCode, data, mGoogleApiClient);
+        loginPresenter.socialMediaActivityResultHandler(requestCode, resultCode, data, mGoogleApiClient);
     }
 
     @Override
     public void onComplete(RippleView rippleView) {
         switch (rippleView.getId()) {
             case R.id.facebookRipple:
-                socialMediaPresenter.doFacebookLogin(MainActivity.this);
+                loginPresenter.doFacebookLogin(MainActivity.this);
+                //Functions.getGCMid(MainActivity.this);
                 break;
             case R.id.googleRipple:
                /* SharedPreferences preferences = getSharedPreferences("user_login", 0);
@@ -161,34 +168,58 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
                 Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*/
-                socialMediaPresenter.doGoogleLogin(MainActivity.this, mGoogleApiClient);
+                loginPresenter.doGoogleLogin(MainActivity.this, mGoogleApiClient);
                 break;
         }
     }
 
     @Override
     public void onGoogleLoginSuccess(UserProfile userProfile, String success) {
-        Toast.makeText(MainActivity.this, "Welcome, " + success + ". Google Login Success.", Toast.LENGTH_SHORT).show();
+        loginPresenter.doLogin(MainActivity.this, userProfile);
     }
 
     @Override
     public void onGoogleLoginError(String error) {
-        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+        Functions.getSimpleOkAlterDialog(MainActivity.this, error, "Ok").show();
     }
 
     @Override
     public void onFacebookLoginError(String error) {
-        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+        Functions.getSimpleOkAlterDialog(MainActivity.this, error, "Ok").show();
     }
 
     @Override
-    public void onFacebookLoginSuccess(UserProfile userProfile,String success) {
-        Toast.makeText(MainActivity.this, "Welcome, " + userProfile.getFirstName() + ". Facebook Login Success.", Toast.LENGTH_SHORT).show();
+    public void onFacebookLoginSuccess(UserProfile userProfile, String success) {
+        loginPresenter.doLogin(MainActivity.this, userProfile);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(MainActivity.this, "Google Connection Failed.", Toast.LENGTH_SHORT).show();
+        Functions.getSimpleOkAlterDialog(MainActivity.this, getString(R.string.google_connection_failed), "Ok").show();
+    }
+
+    @Override
+    public void onLoginSuccess(UserLoginOutput userLoginOutput, String success) {
+        //Functions.getSimpleOkAlterDialog(MainActivity.this, success, "Ok").show();
+        mainPresenterImpl.saveLoggedInUser(MainActivity.this, userLoginOutput);
+        Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    @Override
+    public void onLoginError(String error) {
+        Functions.getSimpleOkAlterDialog(MainActivity.this, error, "Ok").show();
+    }
+
+    @Override
+    public void showProgressDialog() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        progressDialog.hide();
     }
 
     //end of class

@@ -7,7 +7,6 @@ import java.util.List;
  * Created by priyasindkar on 12-02-2016.
  */
 public class Constants {
-
     public static final List<String> VERTICAL_NAMES = Arrays.asList("Auto Insurance", "Auto Finance", "Health Insurance",
             "Life Insurance" , "Home Insurance", "New Car");
     public static final List<String> VERTICAL_SHORT_NAMES = Arrays.asList("AI", "AF", "HI", "LI" , "HO", "NC");

@@ -62,7 +62,7 @@ public class SplashActivity extends CustomAwesomeSplash {
 
         //Customize Circular Reveal
 
-        printKeyHash(SplashActivity.this);
+        //printKeyHash(SplashActivity.this);
         configSplash.setBackgroundColor(R.color.splashRippleBackground); //any color you want form colors.xml
         configSplash.setBackgroundResource(R.drawable.kk);
 
@@ -88,7 +88,7 @@ public class SplashActivity extends CustomAwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        SharedPreferences preferences = getSharedPreferences("user_login", 0);
+        SharedPreferences preferences = getSharedPreferences("login-user-prefs", MODE_PRIVATE);
         boolean isUserLoggedIn = preferences.getBoolean("isUserLoggedIn", false);
         Intent intent = null;
         if( !isUserLoggedIn) {

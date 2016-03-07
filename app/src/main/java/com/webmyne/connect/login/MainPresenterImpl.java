@@ -1,27 +1,15 @@
-package com.webmyne.connect.base.login;
+package com.webmyne.connect.login;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.facebook.CallbackManager;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.plus.People;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
+import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.base.model.UserProfile;
+import com.webmyne.connect.login.model.UserLoginOutput;
 import com.webmyne.connect.customUI.viewPager.SCPositionAnimation;
 import com.webmyne.connect.customUI.viewPager.SCViewAnimation;
 import com.webmyne.connect.customUI.viewPager.SCViewAnimationUtil;
@@ -30,37 +18,18 @@ import com.webmyne.connect.customUI.viewPager.SCViewPager;
 /**
  * Created by priyasindkar on 03-03-2016.
  */
-public class MainPresenterImpl {
+public class MainPresenterImpl implements MainPresenter{
     private LoginView loginView;
-
-    //GCM
-    private GoogleCloudMessaging gcm;
-    private String GCM_ID;
-    private String deviceId;
 
     public MainPresenterImpl(LoginView loginView) {
         this.loginView = loginView;
     }
 
     public void callLoginUser(Context mContext) {
-        try {
-            if (gcm == null) {
-                gcm = GoogleCloudMessaging.getInstance(mContext);
-                GCM_ID = "dd";
 
-                Log.e("GCM ID :", GCM_ID);
-                if (GCM_ID == null || GCM_ID == "") {
-
-                } else {
-                    deviceId = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
-                    // call webservice
-                }
-            }
-        } catch (Exception e) {
-
-        }
     }
 
+    @Override
     public void animateGuidePageView(Context mContext, View guideText1, Point size, SCViewPager mViewPager) {
         TextView textView = (TextView) guideText1;
         textView.setTypeface(Functions.getTypeFace(mContext));
@@ -70,6 +39,7 @@ public class MainPresenterImpl {
         mViewPager.addAnimation(nameTagAnimation);
     }
 
+    @Override
     public void animateGuidePageImageSkewType(Context mContext, View guideImage, Point size, SCViewPager mViewPager) {
         SCViewAnimationUtil.prepareViewToGetSize(guideImage);
         SCViewAnimation atSkexAnimation = new SCViewAnimation(guideImage);
@@ -78,6 +48,7 @@ public class MainPresenterImpl {
         mViewPager.addAnimation(atSkexAnimation);
     }
 
+    @Override
     public void animateGuidePageTextDjangoType(Context mContext, View guideText, Point size, int forPageStart, int forPageEnd, SCViewPager mViewPager) {
         TextView textView = (TextView) guideText;
         textView.setTypeface(Functions.getTypeFace(mContext));
@@ -88,6 +59,7 @@ public class MainPresenterImpl {
         mViewPager.addAnimation(djangoAnimation);
     }
 
+    @Override
     public void animateGuidePageImageMobileType(Context mContext, View guideImage, Point size, int forPageStart, int forPageEnd, SCViewPager mViewPager) {
         SCViewAnimation mobileAnimation = new SCViewAnimation(guideImage);
         mobileAnimation.startToPosition((int) (size.x * 1.5), null);
@@ -96,11 +68,22 @@ public class MainPresenterImpl {
         mViewPager.addAnimation(mobileAnimation);
     }
 
+    @Override
     public void animateGuidePageRasberryType(Context mContext, View loginView, Point size, int forPageStart, int forPageEnd, SCViewPager mViewPager) {
         SCViewAnimation raspberryAnimation = new SCViewAnimation(loginView);
         raspberryAnimation.startToPosition(-size.x, null);
         raspberryAnimation.addPageAnimation(new SCPositionAnimation(mContext, forPageStart, size.x, 0));
         raspberryAnimation.addPageAnimation(new SCPositionAnimation(mContext, forPageEnd, -size.x, 0));
         mViewPager.addAnimation(raspberryAnimation);
+    }
+
+    @Override
+    public void saveLoggedInUser(Activity activity, UserLoginOutput userLoginOutput) {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences("login-user-prefs", activity.MODE_PRIVATE);
+        sharedPreferences.edit().putBoolean("isUserLoggedIn", true).commit();
+
+        ComplexPreferences complexPreferences = new ComplexPreferences(activity, "login-user", activity.MODE_PRIVATE );
+        complexPreferences.putObject("loggedInUser", userLoginOutput);
+        complexPreferences.commit();
     }
 }
