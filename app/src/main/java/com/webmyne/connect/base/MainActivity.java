@@ -23,15 +23,19 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.base.mainMVP.MainPresenter;
-import com.webmyne.connect.base.mainMVP.MainView;
+import com.webmyne.connect.base.mainMVP.MainPresenterImpl;
+import com.webmyne.connect.base.mainMVP.LoginView;
+import com.webmyne.connect.base.mainMVP.SocialMediaPresenter;
+import com.webmyne.connect.base.mainMVP.SocialMediaPresenterImp;
+import com.webmyne.connect.base.model.UserProfile;
 import com.webmyne.connect.customUI.viewPager.DotsView;
 import com.webmyne.connect.customUI.viewPager.SCViewAnimationUtil;
 import com.webmyne.connect.customUI.viewPager.SCViewPager;
 import com.webmyne.connect.customUI.viewPager.SCViewPagerAdapter;
 
 
-public class MainActivity extends FragmentActivity implements RippleView.OnRippleCompleteListener, MainView, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends FragmentActivity implements RippleView.OnRippleCompleteListener,
+        LoginView, GoogleApiClient.OnConnectionFailedListener {
     private static final int NUM_PAGES = 4;
 
     private SCViewPager mViewPager;
@@ -41,7 +45,8 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
     private GoogleApiClient mGoogleApiClient;
 
     //MVP
-    private MainPresenter mainPresenter;
+    private MainPresenterImpl mainPresenterImpl;
+    private SocialMediaPresenter socialMediaPresenter;
 
     private void initSocialLogins() {
         // Initialize Facebook
@@ -82,7 +87,8 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
         mPageAdapter.setFragmentBackgroundColor(R.color.splashRippleBackground);
         mViewPager.setAdapter(mPageAdapter);
 
-        mainPresenter = new MainPresenter(this);
+        mainPresenterImpl = new MainPresenterImpl(this);
+        socialMediaPresenter = new SocialMediaPresenterImp(this);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -102,25 +108,25 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
         final Point size = SCViewAnimationUtil.getDisplaySize(this);
 
         View guideText1 = findViewById(R.id.guideText1);
-        mainPresenter.animateGuidePageView(MainActivity.this, guideText1, size, mViewPager);
+        mainPresenterImpl.animateGuidePageView(MainActivity.this, guideText1, size, mViewPager);
 
         View guideImage = findViewById(R.id.guideImage1);
-        mainPresenter.animateGuidePageImageSkewType(MainActivity.this, guideImage, size, mViewPager);
+        mainPresenterImpl.animateGuidePageImageSkewType(MainActivity.this, guideImage, size, mViewPager);
 
         View guideText2 = findViewById(R.id.guideText2);
-        mainPresenter.animateGuidePageTextDjangoType(MainActivity.this, guideText2, size, 0, 1, mViewPager);
+        mainPresenterImpl.animateGuidePageTextDjangoType(MainActivity.this, guideText2, size, 0, 1, mViewPager);
 
         View guideImage2 = findViewById(R.id.guideImage2);
-        mainPresenter.animateGuidePageImageMobileType(MainActivity.this, guideImage2, size, 0, 1, mViewPager);
+        mainPresenterImpl.animateGuidePageImageMobileType(MainActivity.this, guideImage2, size, 0, 1, mViewPager);
 
         View guideText3 = findViewById(R.id.guideText3);
-        mainPresenter.animateGuidePageTextDjangoType(MainActivity.this, guideText3, size, 1, 2, mViewPager);
+        mainPresenterImpl.animateGuidePageTextDjangoType(MainActivity.this, guideText3, size, 1, 2, mViewPager);
 
         View guideImage3 = findViewById(R.id.guideImage3);
-        mainPresenter.animateGuidePageImageMobileType(MainActivity.this, guideImage3, size, 1, 2, mViewPager);
+        mainPresenterImpl.animateGuidePageImageMobileType(MainActivity.this, guideImage3, size, 1, 2, mViewPager);
 
         View loginView = findViewById(R.id.loginLayout);
-        mainPresenter.animateGuidePageRasberryType(MainActivity.this, loginView, size, 2, 3, mViewPager);
+        mainPresenterImpl.animateGuidePageRasberryType(MainActivity.this, loginView, size, 2, 3, mViewPager);
 
         RippleView facebookRipple = (RippleView) loginView.findViewById(R.id.facebookRipple);
         facebookRipple.setOnRippleCompleteListener(this);
@@ -139,14 +145,14 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mainPresenter.socialMediaActivityResultHandler(requestCode, resultCode, data, mGoogleApiClient);
+        socialMediaPresenter.socialMediaActivityResultHandler(requestCode, resultCode, data, mGoogleApiClient);
     }
 
     @Override
     public void onComplete(RippleView rippleView) {
         switch (rippleView.getId()) {
             case R.id.facebookRipple:
-                mainPresenter.doFacebookLogin(MainActivity.this);
+                socialMediaPresenter.doFacebookLogin(MainActivity.this);
                 break;
             case R.id.googleRipple:
                /* SharedPreferences preferences = getSharedPreferences("user_login", 0);
@@ -155,13 +161,13 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
                 Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*/
-                mainPresenter.doGoogleLogin(MainActivity.this, mGoogleApiClient);
+                socialMediaPresenter.doGoogleLogin(MainActivity.this, mGoogleApiClient);
                 break;
         }
     }
 
     @Override
-    public void onGoogleLoginSuccess(String success) {
+    public void onGoogleLoginSuccess(UserProfile userProfile, String success) {
         Toast.makeText(MainActivity.this, "Welcome, " + success + ". Google Login Success.", Toast.LENGTH_SHORT).show();
     }
 
@@ -176,8 +182,8 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
     }
 
     @Override
-    public void onFacebookLoginSuccess(String success) {
-        Toast.makeText(MainActivity.this, "Welcome, " + success + ". Facebook Login Success.", Toast.LENGTH_SHORT).show();
+    public void onFacebookLoginSuccess(UserProfile userProfile,String success) {
+        Toast.makeText(MainActivity.this, "Welcome, " + userProfile.getFirstName() + ". Facebook Login Success.", Toast.LENGTH_SHORT).show();
     }
 
     @Override

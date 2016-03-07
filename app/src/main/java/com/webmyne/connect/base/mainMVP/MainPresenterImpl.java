@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
-import android.net.Uri;
-import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -13,13 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.Profile;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -36,15 +27,11 @@ import com.webmyne.connect.customUI.viewPager.SCViewAnimation;
 import com.webmyne.connect.customUI.viewPager.SCViewAnimationUtil;
 import com.webmyne.connect.customUI.viewPager.SCViewPager;
 
-import org.json.JSONObject;
-
-import java.util.Arrays;
-
 /**
  * Created by priyasindkar on 03-03-2016.
  */
-public class MainPresenter {
-    private MainView mainView;
+public class MainPresenterImpl {
+    private LoginView loginView;
 
     //facebook login
     private CallbackManager callbackManager;
@@ -61,8 +48,8 @@ public class MainPresenter {
     private String GCM_ID;
     private String deviceId;
 
-    public MainPresenter(MainView mainView) {
-        this.mainView = mainView;
+    public MainPresenterImpl(LoginView loginView) {
+        this.loginView = loginView;
     }
 
     public void callLoginUser(Context mContext) {
@@ -127,15 +114,15 @@ public class MainPresenter {
         mViewPager.addAnimation(raspberryAnimation);
     }
 
-    public void onFacebookLogin(boolean isSuccess, String success, String error) {
-        if (mainView != null) {
+   /* public void onFacebookLogin(boolean isSuccess, String success, String error) {
+        if (loginView != null) {
             if (isSuccess) {
-                mainView.onFacebookLoginSuccess(success);
+                loginView.onFacebookLoginSuccess(success);
             } else {
-                mainView.onFacebookLoginError(error);
+                loginView.onFacebookLoginError(error);
             }
         }
-    }
+    }*/
 
     public void socialMediaActivityResultHandler(int requestCode, int resultCode, Intent data, GoogleApiClient mGoogleApiClient) {
         if (requestCode == RC_SIGN_IN) {  //handles Google+ Result
@@ -145,17 +132,16 @@ public class MainPresenter {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-    public void onGoogleLogin(boolean isSuccess, String success, String error) {
-        if (mainView != null) {
+    public void onGoogleLogin(UserProfile userProfile, boolean isSuccess, String success, String error) {
+        if (loginView != null) {
             if (isSuccess) {
-                mainView.onGoogleLoginSuccess(success);
+                loginView.onGoogleLoginSuccess(userProfile, success);
             } else {
-                mainView.onGoogleLoginError(error);
+                loginView.onGoogleLoginError(error);
             }
         }
     }
-
+/*
     public void doFacebookLogin(final Activity activity) {
         LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email", "public_profile", "user_friends"));
         callbackManager = CallbackManager.Factory.create();
@@ -213,11 +199,11 @@ public class MainPresenter {
                         request.setParameters(parameters);
                         request.executeAsync();
 
-                        /*SharedPreferences preferences = getSharedPreferences("user_login", 0);
+                        *//*SharedPreferences preferences = getSharedPreferences("user_login", 0);
                         preferences.edit().putBoolean("isUserLoggedIn", true).commit();
                         Intent intent = new Intent(activity, DrawerActivity.class);
                         startActivity(intent);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*/
+                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*//*
                     }
 
                     @Override
@@ -230,7 +216,7 @@ public class MainPresenter {
                         onFacebookLogin(false, "", "Facebook Connection Failed");
                     }
                 });
-    }
+    } */
 
     public void doGoogleLogin(Activity mContext, GoogleApiClient mGoogleApiClient) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -275,9 +261,9 @@ public class MainPresenter {
                 }
             });
 
-            onGoogleLogin(true, acct.getDisplayName(), "");
+            onGoogleLogin(userProfile, true, acct.getDisplayName(), "");
         } else {
-            onGoogleLogin(false, "", "Google Connection Failed");
+            onGoogleLogin(userProfile, false, "", "Google Connection Failed");
         }
     }
 
