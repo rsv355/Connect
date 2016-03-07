@@ -1,4 +1,4 @@
-package com.webmyne.connect.base.mainMVP;
+package com.webmyne.connect.base.login;
 
 /**
  * Created by priyasindkar on 04-03-2016.

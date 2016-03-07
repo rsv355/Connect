@@ -37,4 +37,13 @@
     <string name="facebook_app_id">978921992200010</string>
     <string name="google_client_id">AIzaSyAa4EDPzxccmJi4gaOL6S46rvX_AQNoCYo</string>
 
+    <!-- User Messages -->
+    <string name="facebook_connection_cancelled">Facebook Connection Cancelled</string>
+    <string name="facebook_connection_failed">Facebook Connection Failed</string>
+    <string name="facebook_connection_error">Error Encountered While Login via Facebook</string>
+    <string name="google_connection_failed">Google Connection Failed</string>
+    <string name="success">Success</string>
+
+
+
 </resources>

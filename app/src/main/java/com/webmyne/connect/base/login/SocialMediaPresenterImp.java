@@ -1,11 +1,10 @@
-package com.webmyne.connect.base.mainMVP;
+package com.webmyne.connect.base.login;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -23,6 +22,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.webmyne.connect.R;
+import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.base.model.UserProfile;
 
 import org.json.JSONObject;
@@ -40,18 +41,16 @@ public class SocialMediaPresenterImp implements SocialMediaPresenter {
 
     //google login
     public int RC_SIGN_IN = 0;
-    public String personName = "";
     public UserProfile userProfile = new UserProfile();
-
-    public static String TAG = "SOCIAL_MEDIA";
+    private Activity mContext;
 
     public SocialMediaPresenterImp(LoginView loginView) {
         this.loginView = loginView;
     }
 
     @Override
-    public void doFacebookLogin(Activity activity) {
-        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("email", "public_profile", "user_friends"));
+    public void doFacebookLogin(final Activity activity) {
+        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(/*"email", "public_profile", "user_friends"*/Constants.FB_READ_PERMISSIONS));
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -63,120 +62,85 @@ public class SocialMediaPresenterImp implements SocialMediaPresenter {
                         if(profile!=null) {
                             profileUri = profile.getProfilePictureUri(640, 640);
                             userProfile.setPhotoUri(profileUri);
-
                         }
 
                         GraphRequest request = GraphRequest.newMeRequest(
                                 loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(JSONObject user, GraphResponse response) {
-                                        Log.e("#### FB RESPONSE", response.getJSONObject().toString());
                                         if (response.getError() != null) {
                                             // handle error
-                                            Log.e("#### FB ERROR", response.getError().toString());
+                                            onFacebookLogin(userProfile, false, "", activity.getString(R.string.facebook_connection_error));
                                         } else {
                                             try {
                                                 JSONObject profile = response.getJSONObject();
+                                                userProfile.setFirstName(profile.getString("first_name").toString());
+                                                userProfile.setLastName(profile.getString("last_name").toString());
+                                                userProfile.setGender(profile.getString("gender").toString());
+                                                userProfile.setEmailId(profile.getString("email").toString());
 
-                                                String email = profile.getString("email").toString();
-                                                String gender = profile.getString("gender").toString();
-                                                //   String DOB = profile.getString("birthday").toString();
-                                                String fName = profile.getString("first_name").toString();
-                                                String lName = profile.getString("last_name").toString();
-                                                String id = profile.getString("id").toString();
-                                                String link = profile.getString("link").toString();
-                                                Log.e("mFBEmail", email);
-                                                Log.e("mFBGender", gender);
-                                                // Log.e("mFBDOB", DOB);
-                                                Log.e("mFBFName", fName);
-                                                Log.e("mFBLName", lName);
-                                                Log.e("mFBId", link);
-                                                Log.e("mFBLink", link);
-                                                personName = fName + " " + lName;
-                                                userProfile.setFirstName(fName);
-                                                userProfile.setLastName(lName);
-                                                userProfile.setEmailId(email);
-
-                                                onFacebookLogin(userProfile, true, personName, "");
-
+                                                onFacebookLogin(userProfile, true, activity.getString(R.string.success), "");
                                             } catch (Exception e) {
-                                                Log.e("#### FB EXP", e.toString());
+                                                onFacebookLogin(userProfile, false, "", activity.getString(R.string.facebook_connection_error));
                                             }
                                         }
                                     }
                                 });
                         Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id, first_name,last_name, email, gender, birthday, link");
+                        parameters.putString("fields", /*"id, first_name,last_name, email, gender, birthday, link"*/Constants.FB_PARAM_FIELDS);
                         request.setParameters(parameters);
                         request.executeAsync();
-
-                        /*SharedPreferences preferences = getSharedPreferences("user_login", 0);
-                        preferences.edit().putBoolean("isUserLoggedIn", true).commit();
-                        Intent intent = new Intent(activity, DrawerActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*/
                     }
 
                     @Override
                     public void onCancel() {
-                        onFacebookLogin(userProfile, false, "", "Facebook Connection Cancelled");
+                        onFacebookLogin(userProfile, false, "", activity.getString(R.string.facebook_connection_cancelled));
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        onFacebookLogin(userProfile, false, "", "Facebook Connection Failed");
+                        onFacebookLogin(userProfile, false, "", activity.getString(R.string.facebook_connection_failed));
                     }
                 });
     }
 
     @Override
     public void doGoogleLogin(Activity mContext, GoogleApiClient mGoogleApiClient) {
+        this.mContext = mContext;
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         mContext.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     public void handleSignInResult(GoogleSignInResult result, GoogleApiClient mGoogleApiClient) {
-        Log.e("G+ ", "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             final GoogleSignInAccount acct = result.getSignInAccount();
-            Log.e("Name ", acct.getDisplayName());
-            Log.e("Email ", acct.getEmail());
-            Log.e("Photo ", acct.getPhotoUrl() + "");
-            Log.e("Id ", acct.getId() + "");
+            userProfile = new UserProfile();
             if(acct.getPhotoUrl() != null) {
-                Log.e("PhotoURL ", acct.getPhotoUrl().toString());
+                userProfile.setPhotoUri(acct.getPhotoUrl());
             }
 
-            // G+
             Plus.PeopleApi.load(mGoogleApiClient, acct.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
                 @Override
                 public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
                     Person person = loadPeopleResult.getPersonBuffer().get(0);
-                    Log.e(TAG, "Person loaded");
-                    Log.e(TAG, person.getName().getGivenName());
-                    Log.e(TAG, person.getName().getFamilyName());
-                    Log.e(TAG, person.getDisplayName());
-                    Log.e(TAG, person.getGender() + "");
-                    Log.e(TAG, person.getImage() + "");
 
-                    userProfile = new UserProfile();
-                    userProfile.setFirstName(acct.getDisplayName());
+                    userProfile.setFirstName( person.getName().getGivenName());
                     userProfile.setLastName(person.getName().getFamilyName());
                     userProfile.setEmailId(acct.getEmail());
                     if (acct.getPhotoUrl() != null) {
                         userProfile.setPhotoUri(acct.getPhotoUrl());
                     }
                     if (person.getGender() == 0) {
-                        userProfile.setEmailId("Male");
+                        userProfile.setGender("Male");
                     } else if (person.getGender() == 1) {
-                        userProfile.setEmailId("Female");
+                        userProfile.setGender("Female");
                     }
                 }
             });
-            onGoogleLogin(userProfile, true, acct.getDisplayName(), "");
+            onGoogleLogin(userProfile, true, mContext.getString(R.string.success), "");
         } else {
-            onGoogleLogin(userProfile, false, "", "Google Connection Failed");
+            onGoogleLogin(userProfile, false, "", mContext.getString(R.string.google_connection_failed));
         }
     }
 
