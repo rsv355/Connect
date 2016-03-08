@@ -19,17 +19,16 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.webmyne.connect.R;
-
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.login.model.UserLoginOutput;
 import com.webmyne.connect.commission.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragment;
 import com.webmyne.connect.leads.LeadsListActivity;
-import com.webmyne.connect.revenuePayment.RedeemMoneyActivity;
+import com.webmyne.connect.login.model.UserLoginOutput;
 import com.webmyne.connect.revenuePayment.PaymentHistoryListActivity;
+import com.webmyne.connect.revenuePayment.RedeemMoneyActivity;
 import com.webmyne.connect.shareAndEarn.SharAndEarnActivity;
-import com.webmyne.connect.user.EditProfileActivity1;
+import com.webmyne.connect.user.EditProfileActivity;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -45,8 +44,13 @@ public class DrawerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-        init(savedInstanceState);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        init();
         SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
         isLeadPosted = preferences.getBoolean("isLeadPosted", false);
 
@@ -61,8 +65,7 @@ public class DrawerActivity extends AppCompatActivity {
         ft.commit();
     }
 
-
-    private void init(Bundle savedInstanceState) {
+    private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -91,8 +94,8 @@ public class DrawerActivity extends AppCompatActivity {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withNameTypeface(Functions.getReferCodeTypeFace(DrawerActivity.this))
-                .withEmailTypeface(Functions.getReferCodeTypeFace(DrawerActivity.this))
+                .withNameTypeface(Functions.getTypeFace(DrawerActivity.this))
+                .withEmailTypeface(Functions.getTypeFace(DrawerActivity.this))
                 .withTextColorRes(R.color.white)
                 .withHeaderBackground(R.drawable.kk)
                 .withAlternativeProfileHeaderSwitching(false)
@@ -100,7 +103,7 @@ public class DrawerActivity extends AppCompatActivity {
                 .addProfiles(
                         profile
                 )
-                .withSavedInstance(savedInstanceState)
+                //.withSavedInstance(savedInstanceState)
                 .build();
 
 
@@ -218,7 +221,7 @@ public class DrawerActivity extends AppCompatActivity {
 
                             } else if (drawerItem.getIdentifier() == 2) {
                                 drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, EditProfileActivity1.class);
+                                intent = new Intent(DrawerActivity.this, EditProfileActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -268,7 +271,7 @@ public class DrawerActivity extends AppCompatActivity {
                         return false;
                     }
                 })
-                .withSavedInstance(savedInstanceState)
+                //.withSavedInstance(savedInstanceState)
                 .build();
     }
 

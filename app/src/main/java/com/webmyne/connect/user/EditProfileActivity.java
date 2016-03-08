@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -13,19 +14,21 @@ import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.login.model.UserLoginOutput;
 import com.webmyne.connect.customUI.CustomProgressDialog;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by priyasindkar on 11-02-2016.
  */
-public class EditProfileActivity1 extends AppCompatActivity implements View.OnClickListener, EditProfileView{
+public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener, EditProfileView {
 
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
@@ -42,7 +45,7 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile1);
+        setContentView(R.layout.activity_edit_profile);
         init();
     }
 
@@ -61,13 +64,14 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
             }
         });
 
-        progressDialog = new CustomProgressDialog(EditProfileActivity1.this);
+        progressDialog = new CustomProgressDialog(EditProfileActivity.this);
         progressDialog.setCancelable(false);
 
         editProfilePresenter = new EditProfilePresenterImpl(this);
 
         editName = (MaterialEditText) findViewById(R.id.editName);
-        editDOB = (MaterialEditText)findViewById(R.id.editDOB);
+        editDOB = (MaterialEditText) findViewById(R.id.editDOB);
+        editDOB.setOnClickListener(this);
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         editEmail = (MaterialEditText) findViewById(R.id.editEmail);
         editZipcode = (MaterialEditText) findViewById(R.id.editZipcode);
@@ -80,13 +84,13 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
         txtUpdate.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                editProfilePresenter.validateFormFields(EditProfileActivity1.this, editName.getText().toString().trim(), editEmail.getText().toString().trim(),
+                editProfilePresenter.validateFormFields(EditProfileActivity.this, editName.getText().toString().trim(), editEmail.getText().toString().trim(),
                         editDOB.getText().toString().trim(), editPhone.getText().toString().trim(), editZipcode.getText().toString().trim(),
-                        editLocation.getText().toString().trim(), currentUser.Gender , currentUser.UserID);
+                        editLocation.getText().toString().trim(), currentUser.Gender, currentUser.UserID);
             }
         });
 
-        editProfilePresenter.initUserData(EditProfileActivity1.this);
+        editProfilePresenter.initUserData(EditProfileActivity.this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataset);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -106,12 +110,20 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
             case R.id.fab:
                 editProfilePresenter.showEnterReferCodeDialog();
                 break;
+            case R.id.editDOB:
+                editProfilePresenter.showDatePicker(EditProfileActivity.this);
+                break;
         }
     }
 
     @Override
+    public void onDateSet(String date) {
+        editDOB.setText(date);
+    }
+
+    @Override
     public void setError(String errorString) {
-        AlertDialog.Builder dialog = Functions.getSimpleOkAlterDialog(EditProfileActivity1.this, errorString, "Ok");
+        AlertDialog.Builder dialog = Functions.getSimpleOkAlterDialog(EditProfileActivity.this, errorString, "Ok");
         dialog.show();
     }
 
@@ -122,7 +134,7 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
 
     @Override
     public void setEmailError(String errorString) {
-       editEmail.setError(errorString);
+        editEmail.setError(errorString);
     }
 
     @Override
@@ -131,9 +143,20 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    public void onSuccess(String successString) {
-        AlertDialog.Builder dialog = Functions.getSimpleOkAlterDialog(EditProfileActivity1.this, successString, "Ok");
-        dialog.show();
+    public void onValidationSuccess(boolean isValid, UserLoginOutput userLoginOutput) {
+        if (currentUser != null) {
+            editProfilePresenter.doUpdateUser(EditProfileActivity.this, userLoginOutput);
+        }
+    }
+
+    @Override
+    public void onUpdateUserSuccess(String successString) {
+        Functions.getSimpleOkAlterDialog(EditProfileActivity.this, successString, "Ok").show();
+    }
+
+    @Override
+    public void onUpdateUserFail(String errorString) {
+        Functions.getSimpleOkAlterDialog(EditProfileActivity.this, errorString, "Ok").show();
     }
 
     @Override
@@ -143,27 +166,27 @@ public class EditProfileActivity1 extends AppCompatActivity implements View.OnCl
         editName.setText(currentUser.Name);
         editEmail.setText(currentUser.Email);
 
-        if( !currentUser.Mobile.equals("")) {
+        if (!currentUser.Mobile.equals("")) {
             editPhone.setText(currentUser.Mobile);
         }
-        if( !currentUser.DOB.equals("")) {
+        if (!currentUser.DOB.equals("")) {
             editDOB.setText(currentUser.DOB);
         }
-        if( !currentUser.ZipCode.equals("")) {
+        if (!currentUser.ZipCode.equals("")) {
             editZipcode.setText(currentUser.ZipCode);
         }
-        if( !currentUser.Address.equals("")) {
+        if (!currentUser.Address.equals("")) {
             editLocation.setText(currentUser.Address);
         }
 
-        if( !currentUser.UserReferCode.equals("")) {
+        if (!currentUser.UserReferCode.equals("")) {
             txtMyReferCode.setText(currentUser.UserReferCode);
         }
     }
 
     @Override
     public void showReferCodeAlert() {
-        AddReferCodeFilterDialog filterDialog = new AddReferCodeFilterDialog(EditProfileActivity1.this, R.style.CustomAlertDialogStyle);
+        AddReferCodeFilterDialog filterDialog = new AddReferCodeFilterDialog(EditProfileActivity.this, R.style.CustomAlertDialogStyle);
         filterDialog.show();
     }
 

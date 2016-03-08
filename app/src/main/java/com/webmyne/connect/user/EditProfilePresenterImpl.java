@@ -1,11 +1,15 @@
 package com.webmyne.connect.user;
 
 import android.app.Activity;
+import android.util.Log;
 
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.login.model.UserLoginOutput;
+
+import java.util.Calendar;
 
 /**
  * Created by priyasindkar on 22-02-2016.
@@ -17,7 +21,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
 
     public EditProfilePresenterImpl(EditProfileView editProfileView) {
         this.editProfileView = editProfileView;
-        this.editProfileInteractor = new EditProfileInteractorImpl();
+        this.editProfileInteractor = new EditProfileInteractorImpl(this);
     }
 
     @Override
@@ -31,6 +35,28 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
     }
 
     @Override
+    public void showDatePicker(Activity activity) {
+        //DatePickerDialog dpd = (DatePickerDialog) activity.getFragmentManager().findFragmentByTag("Datepickerdialog");
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                        String date = year + "-" + String.format("%02d", ++monthOfYear) + "-" + String.format("%02d", dayOfMonth);
+                        if (editProfileView != null) {
+                            editProfileView.onDateSet(date);
+                        }
+                    }
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.setMaxDate(now);
+        dpd.show(activity.getFragmentManager(), "Datepickerdialog");
+    }
+
+    @Override
     public void validateFormFields(Activity activity, String name, String emailId, String DOB, String mobile,
                                    String zipcode, String location, String gender, int userId) {
         if (name.trim().length() == 0) {
@@ -41,56 +67,54 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
             if (editProfileView != null) {
                 editProfileView.setError(activity.getString(R.string.email_empty_validation));
             }
-        } else if ( !Functions.isEmailValid(emailId.trim())) {
+        } else if (!Functions.isEmailValid(emailId.trim())) {
             if (editProfileView != null) {
                 editProfileView.setError(activity.getString(R.string.email_invalid_validation));
             }
-        } else if (mobile.trim().length() > 10) {
+        } else if (mobile.trim().length() != 0 && mobile.trim().length() != 10) {
             if (editProfileView != null) {
                 editProfileView.setError(activity.getString(R.string.mobile_invalid_validation));
             }
         } else {
-            doUpdateUser(activity, name, emailId, DOB, mobile, zipcode, location, gender, userId);
+            if (editProfileView != null) {
+                UserLoginOutput userLoginOutput = new UserLoginOutput();
+                userLoginOutput.setName(name);
+                userLoginOutput.setEmail(emailId);
+                userLoginOutput.setDOB(DOB);
+                userLoginOutput.setMobile(mobile);
+                userLoginOutput.setZipCode(zipcode);
+                userLoginOutput.setAddress(location);
+                userLoginOutput.setGender(gender);
+                userLoginOutput.setUserID(userId);
+                editProfileView.onValidationSuccess(true, userLoginOutput);
+            }
+            //doUpdateUser(activity, name, emailId, DOB, mobile, zipcode, location, gender, userId);
         }
     }
 
-    public void doUpdateUser(Activity activity, String name, String emailId, String DOB,
-                             String mobile, String zipcode, String location, String gender, int userId) {
-        if(editProfileView !=null) {
+    @Override
+    public void doUpdateUser(Activity activity, UserLoginOutput userLoginOutput) {
+        if (editProfileView != null) {
             editProfileView.showProgress();
         }
-        UserLoginOutput userLoginOutput = new UserLoginOutput();
-        userLoginOutput.UserID = userId;
-        userLoginOutput.Name = name;
-        userLoginOutput.Email = emailId;
-        userLoginOutput.DOB = DOB;
-        userLoginOutput.Mobile = mobile;
-        userLoginOutput.Gender = gender;
-        userLoginOutput.ZipCode = zipcode;
-        userLoginOutput.Address = location;
+        editProfileInteractor.doCallUpdateUserService(activity, userLoginOutput);
+    }
 
-        editProfileInteractor.doCallUpdateUserService(userLoginOutput);
-
+    @Override
+    public void onUpdateUser(boolean isSuccess, String success, String error) {
+        if (editProfileView != null) {
+            editProfileView.hideProgress();
+        }
+        if (isSuccess) {
+            editProfileView.onUpdateUserSuccess(success);
+        } else {
+            editProfileView.onUpdateUserFail(error);
+        }
     }
 
     @Override
     public void onDestroy() {
         editProfileView = null;
-    }
-
-
-    public void onError(String errorString) {
-        if (editProfileView != null) {
-            editProfileView.hideProgress();
-            editProfileView.setError(errorString);
-        }
-    }
-
-    public void onSuccess(String successString) {
-        if (editProfileView != null) {
-            editProfileView.hideProgress();
-            editProfileView.onSuccess(successString);
-        }
     }
 
     @Override

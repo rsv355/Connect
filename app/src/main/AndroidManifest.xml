@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".base.MainActivity"></activity>
-        <activity android:name=".user.EditProfileActivity1"></activity>
+        <activity android:name=".user.EditProfileActivity"></activity>
 
         <activity android:name=".base.DrawerActivity">
 

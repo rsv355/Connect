@@ -7,9 +7,9 @@
 
     <string name="auto_insurance">Auto Insurance</string>
     <string name="auto_finance">Auto Finance</string>
-    <string name="health_finance">Health Insurance</string>
-    <string name="life_finance">Life Insurance</string>
-    <string name="home_finance">Home Insurance</string>
+    <string name="health_insurance">Health Insurance</string>
+    <string name="life_insurance">Life Insurance</string>
+    <string name="home_insurance">Home Insurance</string>
     <string name="new_car">New Car</string>
 
     <string name="filter_leads">Filter Leads</string>
@@ -54,6 +54,12 @@
     <string name="email_empty_validation">Email Cannot Be Empty</string>
     <string name="email_invalid_validation">Invalid Email Id</string>
     <string name="mobile_invalid_validation">Invalid Mobile No.</string>
+    <string name="update_user_error">Error Was Encountered. Please Try Again.</string>
+    <string name="update_user_failed">Update Failed. Please Try Again.</string>
+    <string name="update_user_success">Profile Updated Successfully</string>
+
+    <!-- Code -->
+    <string name="success_response_code">Successful</string>
 
 
 

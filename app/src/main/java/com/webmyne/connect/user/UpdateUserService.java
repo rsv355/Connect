@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 /**
  * Created by priyasindkar on 07-03-2016.
  */
-public interface EditProfileService {
+public interface UpdateUserService {
     @POST(APIConstants.USER_PROFILE_UPDATE_URL)
     Call<MainUserLoginResponse> doUserProfileUpdate(@Body UserLoginOutput userLoginOutput);
 }

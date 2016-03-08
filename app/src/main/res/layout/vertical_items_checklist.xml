@@ -12,12 +12,14 @@
         android:layout_height="wrap_content">
 
         <CheckBox
+            android:id="@+id/checkboxAI"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/auto_insurance" />
 
         <CheckBox
+            android:id="@+id/checkboxAF"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -32,16 +34,18 @@
         android:layout_height="wrap_content">
 
         <CheckBox
+            android:id="@+id/checkboxHI"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/health_finance" />
+            android:text="@string/health_insurance" />
 
         <CheckBox
+            android:id="@+id/checkboxLI"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/life_finance" />
+            android:text="@string/life_insurance" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,12 +57,14 @@
         android:layout_height="wrap_content">
 
         <CheckBox
+            android:id="@+id/checkboxHO"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="@string/home_finance" />
+            android:text="@string/home_insurance" />
 
         <CheckBox
+            android:id="@+id/checkboxNC"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"

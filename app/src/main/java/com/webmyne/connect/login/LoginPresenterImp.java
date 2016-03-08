@@ -251,18 +251,17 @@ public class LoginPresenterImp implements LoginPresenter {
             onLogin(null, false, "", activity.getString(R.string.gcm_error));
         } else {
             deviceId = Settings.Secure.getString(activity.getContentResolver(), Settings.Secure.ANDROID_ID);
-            // call webservice
             userProfile.setGCMID(GCM_ID);
             userProfile.setDeviceID(deviceId);
+
             LoginService loginService = MyApplication.retrofit.create(LoginService.class);
             Call<MainUserLoginResponse> call = loginService.doUserLogin(userProfile);
             call.enqueue(new Callback<MainUserLoginResponse>() {
                 @Override
                 public void onResponse(Call<MainUserLoginResponse> call, Response<MainUserLoginResponse> response) {
                     if (response.body() != null) {
-                        if (response.body().UserLoginOutput.getResponseMessage().equals("Successful")) {
+                        if (response.body().UserLoginOutput.getResponseMessage().equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
                             UserLoginOutput userLoginOutput = response.body().UserLoginOutput;
-                            Log.e("user ", userLoginOutput.toString());
                             onLogin(userLoginOutput, true, activity.getString(R.string.login_successful), "");
                         } else {
                             onLogin(null, false, "", activity.getString(R.string.login_failed));

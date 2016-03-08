@@ -7,9 +7,11 @@ import java.util.List;
  * Created by priyasindkar on 12-02-2016.
  */
 public class Constants {
+    public static int TOTAL_VERTICALS = 6;
     public static final List<String> VERTICAL_NAMES = Arrays.asList("Auto Insurance", "Auto Finance", "Health Insurance",
             "Life Insurance" , "Home Insurance", "New Car");
     public static final List<String> VERTICAL_SHORT_NAMES = Arrays.asList("AI", "AF", "HI", "LI" , "HO", "NC");
+    public static final int[] VERTICAL_IDS = new int[] {14, 13, 16, 17, 18, 15};
 
     public static enum VERTICALS {
         AUTO_INSURANCE(0),
