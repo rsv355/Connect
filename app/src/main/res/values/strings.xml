@@ -53,12 +53,23 @@
     <string name="name_empty_validation">Name Cannot Be Empty</string>
     <string name="email_empty_validation">Email Cannot Be Empty</string>
     <string name="email_invalid_validation">Invalid Email Id</string>
+    <string name="mobile_mandatory_validation">Contact No. Cannot Be Empty</string>
     <string name="mobile_invalid_validation">Invalid Mobile No.</string>
     <string name="update_user_error">Error Was Encountered. Please Try Again.</string>
     <string name="update_user_failed">Update Failed. Please Try Again.</string>
     <string name="update_user_success">Profile Updated Successfully</string>
+    <string name="post_lead_terms_message">If you post a lead your reference will receive a call and email from us for further procedure</string>
+    <string name="click_for_terms_conditions_message">Click here to view our Terms And Conditions</string>
+    <string name="post_lead_terms_decline">Your lead cannot be processed. Please go through out terms and conditions for further information.</string>
+    <string name="post_lead_failed">Error Was Encountered While Posting Lead. Please Try Again.</string>
+    <string name="post_lead_successful">Lead Posted Successfully. Email &amp; SMS sent to your reference.</string>
 
-    <!-- Code -->
+    <!-- Buttons and static screens-->
+    <string name="Decline">Decline</string>
+    <string name="Accept">Accept</string>
+
+
+    <!-- Codes -->
     <string name="success_response_code">Successful</string>
 
 

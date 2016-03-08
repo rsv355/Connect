@@ -33,12 +33,13 @@ import com.webmyne.connect.user.EditProfileActivity;
 /**
  * Created by priyasindkar on 12-02-2016.
  */
-public class DrawerActivity extends AppCompatActivity {
+public class DrawerActivity extends AppCompatActivity implements DrawerActivityView {
     private Toolbar toolbar;
     private AccountHeader headerResult = null;
     private Drawer result = null;
     private boolean isLeadPosted = false;
     private UserLoginOutput currentUser;
+    private DrawerActivityPresenter drawerActivityPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class DrawerActivity extends AppCompatActivity {
         init();
         SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
         isLeadPosted = preferences.getBoolean("isLeadPosted", false);
+
+        drawerActivityPresenter = new DrawerActivityPresenterImpl(this);
 
         //Dashboard Fragment
         FragmentManager manager = getFragmentManager();
@@ -251,11 +254,7 @@ public class DrawerActivity extends AppCompatActivity {
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             } else if (drawerItem.getIdentifier() == 8) {
                                 drawerItem.withSetSelected(true);
-                                SharedPreferences preferences = getSharedPreferences("user_login", 0);
-                                SharedPreferences preferences1 = getSharedPreferences("is_lead_posted", 0);
-                                preferences.edit().clear().commit();
-                                preferences1.edit().clear().commit();
-                                finish();
+                                drawerActivityPresenter.doLogout(DrawerActivity.this);
                             } else if (drawerItem.getIdentifier() == 9) {
                                 drawerItem.withSetSelected(true);
                                 intent = new Intent(DrawerActivity.this, LeadsListActivity.class);
@@ -290,4 +289,8 @@ public class DrawerActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onLogout() {
+        finish();
+    }
 }

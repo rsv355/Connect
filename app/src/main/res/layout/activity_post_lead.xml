@@ -149,13 +149,15 @@
                     app:met_primaryColor="@color/primaryTextColor"
                     app:met_textColorHint="@color/colorPrimary" />
 
-                <com.webmyne.connect.customUI.FlowLayout
+                <LinearLayout
                     android:id="@+id/linearVerticalsList"
                     android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_10">
-                    <!--<include layout="@layout/vertical_items_checklist" />-->
-                </com.webmyne.connect.customUI.FlowLayout>
+                    <include layout="@layout/vertical_items_checklist" />
+                </LinearLayout>
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/editDescription"

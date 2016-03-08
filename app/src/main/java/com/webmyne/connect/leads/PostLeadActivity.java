@@ -1,6 +1,5 @@
 package com.webmyne.connect.leads;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -12,42 +11,47 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.andexert.library.RippleView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
-import com.webmyne.connect.Utils.Constants;
+import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.DrawerActivity;
-import com.webmyne.connect.customUI.FlowLayout;
+import com.webmyne.connect.customUI.CustomProgressDialog;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
+import com.webmyne.connect.listeners.OnAlertButtonClicked;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Created by priyasindkar on 15-02-2016.
  */
 public class PostLeadActivity extends AppCompatActivity implements View.OnClickListener, RippleView.OnRippleCompleteListener,
-        LeadsView, CompoundButton.OnCheckedChangeListener {
+        LeadsView {
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
     private ImageView imgVertical;
     private FloatingActionButton fab;
     private RippleView txtPostLead;
     private MaterialEditText editName, editRefNo, editEmail, editDescription;
-    private FlowLayout linearVerticalsList;
+    private LinearLayout linearVerticalsList;
     private CheckBox checkboxAI, checkboxAF, checkboxHI, checkboxLI, checkboxHO, checkboxNC;
 
     private ImageView imgSearchContacts;
     private static final int RESULT_PICK_CONTACT = 1;
 
     private LeadsPresenter leadsPresenter;
-    private int[] selectedVerticals = new int[Constants.TOTAL_VERTICALS];
+    private LeadsInteractor leadsInteractor;
+    public List<Integer> selectedVerticals = new ArrayList<>();
+    private CustomProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,9 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        progressDialog = new CustomProgressDialog(PostLeadActivity.this);
+        progressDialog.setCancelable(false);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         imgVertical = (ImageView) findViewById(R.id.imgVertical);
@@ -88,22 +95,16 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         imgSearchContacts = (ImageView) findViewById(R.id.imgSearchContacts);
         imgSearchContacts.setOnClickListener(this);
 
-        linearVerticalsList = (FlowLayout) findViewById(R.id.linearVerticalsList);
-
-        /*checkboxAI = (CheckBox) findViewById(R.id.checkboxAI);
-        checkboxAI.setOnCheckedChangeListener(this);
+        linearVerticalsList = (LinearLayout) findViewById(R.id.linearVerticalsList);
+        checkboxAI = (CheckBox) findViewById(R.id.checkboxAI);
         checkboxAF = (CheckBox) findViewById(R.id.checkboxAF);
-        checkboxAF.setOnCheckedChangeListener(this);
         checkboxHI = (CheckBox) findViewById(R.id.checkboxHI);
-        checkboxHI.setOnCheckedChangeListener(this);
         checkboxLI = (CheckBox) findViewById(R.id.checkboxLI);
-        checkboxLI.setOnCheckedChangeListener(this);
         checkboxHO = (CheckBox) findViewById(R.id.checkboxHO);
-        checkboxHO.setOnCheckedChangeListener(this);
         checkboxNC = (CheckBox) findViewById(R.id.checkboxNC);
-        checkboxNC.setOnCheckedChangeListener(this);*/
 
         leadsPresenter = new LeadsPresenterImpl(this);
+        leadsInteractor = new LeadsInteractorImpl(this);
         if (getIntent() != null) {
             leadsPresenter.initUIData(PostLeadActivity.this, getIntent());
         }
@@ -162,66 +163,131 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
     public void onComplete(RippleView rippleView) {
         switch (rippleView.getId()) {
             case R.id.txtPostLead:
-                AlertDialog.Builder builder = new AlertDialog.Builder(PostLeadActivity.this, R.style.MaterialBaseTheme_Light_AlertDialog);
-                builder.setTitle("Lead Successfully Uploaded!");
-                builder.setMessage("SMS & Email is sent to your contact with further details");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                leadsPresenter.validateFormFields(PostLeadActivity.this, editName.getText().toString().trim(),
+                        editEmail.getText().toString(), editRefNo.getText().toString());
+                /*final AlertDialog.Builder builder = Functions.showAlterDialog(PostLeadActivity.this, "Lead Posted Successfully", "An Email and SMS sent to reference");
+                Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+                    public void onAlertButtonClicked() {
                         SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
                         preferences.edit().putBoolean("isLeadPosted", true).commit();
                         Intent intent = new Intent(PostLeadActivity.this, DrawerActivity.class);
                         startActivity(intent);
                     }
                 });
-                builder.show();
+                builder.show();*/
                 break;
         }
     }
 
     @Override
-    public void setInitUI(VerticalDataObject verticalDataObject) {
+    public void setInitUI(VerticalDataObject verticalDataObject, List<VerticalDataObject> secondaryVerticalsList) {
         collapsingToolbar.setTitle(verticalDataObject.verticalName);
         collapsingToolbar.setContentScrimColor(ColorGenerator.MATERIAL.getColorAtIndex(verticalDataObject.verticalColorIndex));
         TextDrawable drawable2 = TextDrawable.builder().buildRound(verticalDataObject.verticalShortName, ColorGenerator.MATERIAL.getColorAtIndex(verticalDataObject.verticalColorIndex));
         imgVertical.setImageDrawable(drawable2);
 
-        linearVerticalsList.removeAllViews();
-        for(String vertical : Constants.VERTICAL_NAMES) {
-            if( !verticalDataObject.getVerticalName().equalsIgnoreCase(vertical)) {
-                View view = getLayoutInflater().inflate(R.layout.vertical_check_box_item, null);
-                CheckBox checkBox = (CheckBox) view;
-                checkBox.setText(vertical);
-                checkBox.setOnCheckedChangeListener(this);
-                linearVerticalsList.addView(checkBox);
+        selectedVerticals.add(verticalDataObject.getVerticalId());
+
+        checkboxAI.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(0)));
+        checkboxAF.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(1)));
+        checkboxHI.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(2)));
+        checkboxLI.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(3)));
+        checkboxHO.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(4)));
+        checkboxNC.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(5)));
+
+        if (verticalDataObject.getVerticalName().equals(getString(R.string.auto_insurance))) {
+            checkboxAI.setVisibility(View.GONE);
+        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.auto_finance))) {
+            checkboxAF.setVisibility(View.GONE);
+        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.health_insurance))) {
+            checkboxHI.setVisibility(View.GONE);
+        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.life_insurance))) {
+            checkboxLI.setVisibility(View.GONE);
+        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.home_insurance))) {
+            checkboxHO.setVisibility(View.GONE);
+        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.new_car))) {
+            checkboxNC.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onSelectVertical(List<Integer> selectedVerticals) {
+        this.selectedVerticals = selectedVerticals;
+    }
+
+    @Override
+    public void setNameError(String error) {
+        editName.setError(error);
+    }
+
+    @Override
+    public void setEmailError(String error) {
+        editEmail.setError(error);
+    }
+
+    @Override
+    public void setContactNoError(String error) {
+        editRefNo.setError(error);
+    }
+
+    @Override
+    public void onValidationSuccess() {
+        leadsPresenter.showPostTermsConditionsDialog(PostLeadActivity.this);
+    }
+
+    @Override
+    public void onTermsAccepted() {
+        leadsInteractor.doPostLead(PostLeadActivity.this, editName.getText().toString().trim(),
+                editEmail.getText().toString(),editRefNo.getText().toString(), editDescription.getText().toString(),selectedVerticals);
+    }
+
+    @Override
+    public void onTermsDeclined() {
+        leadsPresenter.showDeclineMessageDialog(PostLeadActivity.this);
+
+    }
+
+    @Override
+    public void showProgressDialog() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        progressDialog.hide();
+    }
+
+    @Override
+    public void onLeadPostSuccess(String success) {
+        AlertDialog.Builder builder = Functions.showAlterDialog(this, success, "Ok");
+        Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
+            @Override
+            public void onAlertButtonClicked() {
+                SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
+                preferences.edit().putBoolean("isLeadPosted", true).commit();
+                Intent intent = new Intent(PostLeadActivity.this, DrawerActivity.class);
+                startActivity(intent);
             }
+        });
+        builder.show();
+    }
+
+    @Override
+    public void onLeadPostFail(String error) {
+
+    }
+
+    private class OnVerticalChecked implements CompoundButton.OnCheckedChangeListener {
+        VerticalDataObject verticalDataObject;
+
+        public OnVerticalChecked(VerticalDataObject verticalDataObject) {
+            this.verticalDataObject = verticalDataObject;
         }
 
-        /*if(verticalDataObject.getVerticalName().equals(getString(R.string.auto_insurance))) {
-            checkboxAI.setVisibility(View.GONE);
-        } else if(verticalDataObject.getVerticalName().equals(getString(R.string.auto_finance))) {
-            checkboxAF.setVisibility(View.GONE);
-        }  else if(verticalDataObject.getVerticalName().equals(getString(R.string.health_insurance))) {
-            checkboxHI.setVisibility(View.GONE);
-        } else if(verticalDataObject.getVerticalName().equals(getString(R.string.life_insurance))) {
-            checkboxLI.setVisibility(View.GONE);
-        } else if(verticalDataObject.getVerticalName().equals(getString(R.string.home_insurance))) {
-            checkboxHO.setVisibility(View.GONE);
-        } else if(verticalDataObject.getVerticalName().equals(getString(R.string.new_car))) {
-            checkboxNC.setVisibility(View.GONE);
-        }*/
-    }
-
-    @Override
-    public void seCheckBoxCheck() {
-
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.e("checked", buttonView.getText().toString().trim());
-        Log.e("isChecked", isChecked+"");
-
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            leadsPresenter.onVerticalSelect(verticalDataObject.getVerticalId(), isChecked, selectedVerticals);
+        }
     }
 }

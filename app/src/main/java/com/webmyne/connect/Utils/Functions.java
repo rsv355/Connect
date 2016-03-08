@@ -1,13 +1,19 @@
 package com.webmyne.connect.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v4.media.VolumeProviderCompat;
 import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,8 +21,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.webmyne.connect.R;
+import com.webmyne.connect.base.DrawerActivity;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
+import com.webmyne.connect.listeners.OnAlertButtonClicked;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +46,7 @@ public class Functions {
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static Pattern pattern;
     private static Matcher matcher;
+    private static OnAlertButtonClicked onAlertButtonClicked;
 
 
     public static Typeface getTypeFace(Context ctx) {
@@ -62,60 +71,20 @@ public class Functions {
         return builder;
     }
 
-    public static String getGCMid(final Context mContext) {
-        if (isGooglePlayServiceAvailable(mContext)) {
-           new AsyncTask<Void, Void, String>() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    Log.e("doInBackground :", "doInBackground");
-                    try {
-                        if (gcm == null) {
-                            gcm = GoogleCloudMessaging.getInstance(mContext);
-                        }
-                        regid = gcm.register(mContext.getString(R.string.project_id));
-                        //regid ="dd";
-
-                        Log.e("regid :", regid);
-                        if (regid == null || regid == "") {
-                            regid = "";
-                            AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
-                            alert.setTitle("Error");
-                            alert.setMessage("Internal Server Error");
-                            alert.setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    getGCMid(mContext);
-                                    dialog.dismiss();
-                                }
-                            });
-                            alert.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            alert.show();
-                        } else {
-                            return regid;
-                        }
-                    } catch (Exception ex) {
-                        Log.e("GCM EXP", ex.toString());
-                    }
-                    return null;
-                }
-
-               @Override
-               protected void onPostExecute(String s) {
-                   super.onPostExecute(s);
-
-               }
-           }.execute();
-
-        } else {
-            Toast.makeText(mContext, "Play Services not found.", Toast.LENGTH_LONG).show();
-        }
-        return regid;
+    public static AlertDialog.Builder showAlterDialog(Context ctx, String title, String positiveMessage) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.MaterialBaseTheme_Light_AlertDialog);
+        //builder.setTitle(title);
+        builder.setMessage(title);
+        builder.setPositiveButton(positiveMessage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onAlertButtonClicked.onAlertButtonClicked();
+                dialog.dismiss();
+            }
+        });
+        return builder;
     }
+
 
     public static boolean isGooglePlayServiceAvailable(Context mContext) {
         boolean flag = false;
@@ -132,5 +101,17 @@ public class Functions {
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(emailId);
         return matcher.matches();
+    }
+
+    public static void setOnAlertButtonClicked (OnAlertButtonClicked _onAlertButtonClicked) {
+        onAlertButtonClicked = _onAlertButtonClicked;
+    }
+
+    public static DisplayMetrics getDeviceMetrics(Activity context) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        display.getMetrics(metrics);
+        return metrics;
     }
 }

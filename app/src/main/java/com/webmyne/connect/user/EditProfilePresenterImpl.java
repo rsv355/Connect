@@ -61,19 +61,19 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
                                    String zipcode, String location, String gender, int userId) {
         if (name.trim().length() == 0) {
             if (editProfileView != null) {
-                editProfileView.setError(activity.getString(R.string.name_empty_validation));
+                editProfileView.setNameError(activity.getString(R.string.name_empty_validation));
             }
         } else if (emailId.trim().length() == 0) {
             if (editProfileView != null) {
-                editProfileView.setError(activity.getString(R.string.email_empty_validation));
+                editProfileView.setEmailError(activity.getString(R.string.email_empty_validation));
             }
         } else if (!Functions.isEmailValid(emailId.trim())) {
             if (editProfileView != null) {
-                editProfileView.setError(activity.getString(R.string.email_invalid_validation));
+                editProfileView.setEmailError(activity.getString(R.string.email_invalid_validation));
             }
         } else if (mobile.trim().length() != 0 && mobile.trim().length() != 10) {
             if (editProfileView != null) {
-                editProfileView.setError(activity.getString(R.string.mobile_invalid_validation));
+                editProfileView.setMobileError(activity.getString(R.string.mobile_invalid_validation));
             }
         } else {
             if (editProfileView != null) {
