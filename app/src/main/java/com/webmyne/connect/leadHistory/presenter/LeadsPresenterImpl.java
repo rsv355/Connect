@@ -85,13 +85,13 @@ public class LeadsPresenterImpl implements LeadsPresenter {
                     }
 
                 } else {
-                   /* if(response.body().getLeadData().size()==0){
+                    if(response.body().getLeadData().size()==0){
                         leadsHistoryView.hideProgressDialog();
                         leadsHistoryView.addEmptyView();
-                    }else {*/
+                    }else {
                         processInitData(response.body().getLeadData());
-                    leadsHistoryView.addEmptyView();
-                    //}
+                        //leadsHistoryView.addEmptyView();
+                    }
                 }
 
             }

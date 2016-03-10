@@ -66,10 +66,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
         <include
             android:id="@+id/emptyLayout"
             layout="@layout/recycleempty"/>
+
 
     </android.support.v4.widget.SwipeRefreshLayout>
   <!--  <com.andexert.library.RippleView

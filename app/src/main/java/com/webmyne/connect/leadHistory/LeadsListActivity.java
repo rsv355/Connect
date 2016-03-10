@@ -39,7 +39,7 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
     private CollapsingToolbarLayout collapsingToolbar;
     private FloatingActionButton fab;
     private SwipeRefreshLayout refreshLayout;
-    private View footerView,emptyView;
+    private View footerView,emptyLayout;
     private int USER_ID = 10;
     private CustomProgressDialog progressDialog;
     private LeadsPresenter presenter;
@@ -96,16 +96,15 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.recylerfooter, recyclerView, false);
-        emptyView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.recylerempty, recyclerView, false);
-
+        emptyLayout = (View)findViewById(R.id.emptyLayout);
 
     }
 
     private void setEmptyView(){
-        TextView txtMsg = (TextView)emptyView.findViewById(R.id.txtMsg);
-        ImageView imgEmptyIcon = (ImageView)emptyView.findViewById(R.id.imgEmptyIcon);
+        TextView txtMsg = (TextView)emptyLayout.findViewById(R.id.txtMsg);
+        ImageView imgEmptyIcon = (ImageView)emptyLayout.findViewById(R.id.imgEmptyIcon);
         imgEmptyIcon.setImageResource(R.drawable.leadhistory_emptyimage);
-        imgEmptyIcon.setColorFilter(R.color.accent_A400,PorterDuff.Mode.SRC_ATOP);
+        imgEmptyIcon.setColorFilter(R.color.accent_A400, PorterDuff.Mode.SRC_ATOP);
         txtMsg.setTypeface(Functions.getTypeFace(LeadsListActivity.this), Typeface.BOLD);
         txtMsg.setText("Oops! we couldn't find lead hsitory for you.");
 
@@ -168,7 +167,9 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
 
     @Override
     public void addEmptyView() {
-       setEmptyView();
+        recyclerView.setVisibility(View.GONE);
+        emptyLayout.setVisibility(View.VISIBLE);
+        setEmptyView();
     }
 
     //end of main class
