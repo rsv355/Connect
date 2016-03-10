@@ -6,6 +6,8 @@ package com.webmyne.connect.leadHistory.adapter;
 
 
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -31,17 +33,18 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
     private ArrayList<LeadDataObject> mDataset;
     private static MyClickListener myClickListener;
     private Context mContext;
-
+    boolean isExpanded = false;
 
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView txtLeadId, txtDateTime, txtCustomerName, txtCustomerNo;
+        public TextView txtLeadId, txtDateTime, txtCustomerName, txtCustomerNo,txtDescription;
         public LabelView labelStatus;
-        public ImageView image;
+        public ImageView image,imgArrow;
         private LinearLayout linearParent;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
+            txtDescription = (TextView) itemView.findViewById(R.id.txtDescription);
             txtLeadId = (TextView) itemView.findViewById(R.id.txtLeadId);
             txtDateTime = (TextView) itemView.findViewById(R.id.txtDateTime);
             labelStatus = (LabelView) itemView.findViewById(R.id.labelStatus);
@@ -49,6 +52,7 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
             txtCustomerNo =(TextView) itemView.findViewById(R.id.txtRedeemAmount);
             linearParent = (LinearLayout) itemView.findViewById(R.id.linearParent);
             image = (ImageView) itemView.findViewById(R.id.imgLeadItem);
+            imgArrow = (ImageView) itemView.findViewById(R.id.imgArrow);
             Log.e(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -83,7 +87,7 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
     }
 
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
+    public void onBindViewHolder(final DataObjectHolder holder, int position) {
         holder.txtLeadId.setTypeface(Functions.getTypeFace(mContext), Typeface.BOLD);
         holder.txtDateTime.setTypeface(Functions.getTypeFace(mContext));
         holder.txtCustomerName.setTypeface(Functions.getTypeFace(mContext));
@@ -109,6 +113,17 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
 
         TextDrawable drawable2 = TextDrawable.builder().buildRound(mDataset.get(position).getVerticalName(), mDataset.get(position).getColor());
         holder.image.setImageDrawable(drawable2);
+
+        holder.imgArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 if(!isExpanded) {
+                                    expand( holder.txtDescription);
+                                } else {
+                                    collapse(holder.txtDescription);
+                                }
+            }
+        });
     }
 
 
@@ -121,4 +136,60 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }
+
+    private void expand(final TextView text) {
+        //set Visible
+        text.setVisibility(View.VISIBLE);
+
+        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        text.measure(widthSpec, heightSpec);
+        ValueAnimator mAnimator = slideAnimator(text,0, text.getMeasuredHeight());
+        mAnimator.start();
+    }
+
+    private void collapse(final TextView text) {
+        int finalHeight = text.getHeight();
+        ValueAnimator mAnimator = slideAnimator(text,finalHeight, 0);
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                //Height=0, but it set visibility to GONE
+                text.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        mAnimator.start();
+    }
+
+    private ValueAnimator slideAnimator(final TextView text,int start, int end) {
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                //Update Height
+                int value = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = text.getLayoutParams();
+                layoutParams.height = value;
+                text.setLayoutParams(layoutParams);
+            }
+        });
+        return animator;
+    }
+
+    //end of main class
 }
