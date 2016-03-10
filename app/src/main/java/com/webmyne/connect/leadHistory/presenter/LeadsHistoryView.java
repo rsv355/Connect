@@ -18,6 +18,7 @@ public interface LeadsHistoryView {
     void addEmptyView();
 
     void setData(ArrayList<LeadDataObject> listData,LeadsListAdapter mLeadsAdapter);
+
 }
 
 
