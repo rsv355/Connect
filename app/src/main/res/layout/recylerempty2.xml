@@ -18,4 +18,5 @@
         app:infl_progressColor="@color/colorAccent"
         app:infl_strokeWidth="4dp" />
 
+
 </LinearLayout>

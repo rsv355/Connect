@@ -69,7 +69,7 @@
 
         <include
             android:id="@+id/emptyLayout"
-            layout="@layout/recylerempty"/>
+            layout="@layout/recylerempty2"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
   <!--  <com.andexert.library.RippleView
