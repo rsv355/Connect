@@ -55,7 +55,7 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
         initRecylerView();
 
         presenter = new LeadsPresenterImpl(LeadsListActivity.this,this);
-        presenter.fetchLeadData(USER_ID);
+        presenter.fetchLeadData(false,USER_ID);
 
     }
 
@@ -112,8 +112,7 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
 
     @Override
     public void onRefresh() {
-
-        //getList();
+        presenter.fetchLeadData(true, USER_ID);
     }
 
     @Override
@@ -128,6 +127,10 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
 
     @Override
     public void setData(final ArrayList<LeadDataObject> listData,LeadsListAdapter mLeadsAdapter) {
+
+           if(refreshLayout.isRefreshing())
+                    refreshLayout.setRefreshing(false);
+
 
         recyclerView.setAdapter(mLeadsAdapter);
         mLeadsAdapter.notifyDataSetChanged();
@@ -170,6 +173,15 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
         recyclerView.setVisibility(View.GONE);
         emptyLayout.setVisibility(View.VISIBLE);
         setEmptyView();
+        hideFabButton();
+    }
+
+    private void hideFabButton(){
+        fab.setVisibility(View.GONE);
+    }
+
+    private void showFabButton(){
+        fab.setVisibility(View.VISIBLE);
     }
 
     //end of main class

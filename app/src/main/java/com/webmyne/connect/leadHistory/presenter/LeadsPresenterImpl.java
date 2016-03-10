@@ -27,6 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LeadsPresenterImpl implements LeadsPresenter {
     private LeadsHistoryView leadsHistoryView;
     private LeadsListAdapter mLeadsAdapter;
+    private boolean isLayoutRefreshed = false;
     private ArrayList<LeadDataObject> listData;
     private Context _ctx;
 
@@ -35,7 +36,8 @@ public class LeadsPresenterImpl implements LeadsPresenter {
         this.leadsHistoryView = leadsHistoryView; }
 
     @Override
-    public void fetchLeadData(long userID) {
+    public void fetchLeadData(boolean isRefreshed, long userID) {
+        isLayoutRefreshed = isRefreshed;
         getList(false, userID, 0);
     }
 
@@ -49,6 +51,7 @@ public class LeadsPresenterImpl implements LeadsPresenter {
         if (isLoadMoreData) {
             leadsHistoryView.showFooter();
         }else {
+            if(!isLayoutRefreshed)
             leadsHistoryView.showProgressDialog();
         }
 
@@ -73,9 +76,7 @@ public class LeadsPresenterImpl implements LeadsPresenter {
 
 
                 Log.e("onResponse", "Sucess");
-             /*   if(refreshLayout.isRefreshing())
-                    refreshLayout.setRefreshing(false);
-*/
+
                 if (isLoadMoreData) {
                     if(response.body().getLeadData().size()==0){
                         leadsHistoryView.showToast("No More Data Found");
@@ -86,7 +87,9 @@ public class LeadsPresenterImpl implements LeadsPresenter {
 
                 } else {
                     if(response.body().getLeadData().size()==0){
+                        if(!isLayoutRefreshed)
                         leadsHistoryView.hideProgressDialog();
+
                         leadsHistoryView.addEmptyView();
                     }else {
                         processInitData(response.body().getLeadData());
@@ -103,6 +106,7 @@ public class LeadsPresenterImpl implements LeadsPresenter {
                 if (isLoadMoreData) {
                     leadsHistoryView.hideFooter();
                 } else {
+                    if(!isLayoutRefreshed)
                     leadsHistoryView.hideProgressDialog();
                 }
 
