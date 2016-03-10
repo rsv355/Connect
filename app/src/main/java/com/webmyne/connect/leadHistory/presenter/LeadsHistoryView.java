@@ -20,3 +20,5 @@ public interface LeadsHistoryView {
     void setData(ArrayList<LeadDataObject> listData,LeadsListAdapter mLeadsAdapter);
 
 }
+
+
