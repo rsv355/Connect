@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -107,10 +107,10 @@
             app:cardUseCompatPadding="true">
 
             <include
+                layout="@layout/custom_progress_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                layout="@layout/custom_progress_dialog"/>
+                android:layout_gravity="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,8 +149,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_10"
-                    android:hint="Enter DOB"
                     android:focusable="false"
+                    android:hint="Enter DOB"
                     android:inputType="text"
                     app:met_baseColor="@color/colorPrimary"
                     app:met_floatingLabel="highlight"
@@ -201,17 +201,17 @@
                 <com.andexert.library.RippleView
                     android:id="@+id/txtUpdate"
                     rv_centered="true"
-                    android:layout_margin="@dimen/margin_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_10">
 
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:clipToPadding="false"
                         android:layout_margin="@dimen/std_margin"
+                        android:clipToPadding="false"
                         app:cardBackgroundColor="@color/colorAccent"
                         app:cardCornerRadius="@dimen/small_margin"
                         app:cardElevation="@dimen/std_margin">

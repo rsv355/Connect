@@ -29,7 +29,7 @@ import com.webmyne.connect.leadHistory.adapter.LeadsListAdapter;
 import com.webmyne.connect.leadHistory.model.LeadDataObject;
 import com.webmyne.connect.leadHistory.presenter.LeadsPresenter;
 import com.webmyne.connect.leadHistory.presenter.LeadsPresenterImpl;
-import com.webmyne.connect.postLead.LeadsFilterDialog;
+import com.webmyne.connect.postLead.ui.LeadsFilterDialog;
 
 /**
  * Created by priyasindkar on 16-02-2016.

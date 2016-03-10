@@ -1,12 +1,12 @@
 package com.webmyne.connect.user;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -14,24 +14,27 @@ import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.login.model.UserLoginOutput;
 import com.webmyne.connect.customUI.CustomProgressDialog;
+import com.webmyne.connect.user.model.UserLoginOutput;
+import com.webmyne.connect.user.presenter.EditProfilePresenter;
+import com.webmyne.connect.user.presenter.EditProfilePresenterImpl;
+import com.webmyne.connect.user.presenter.EditProfileView;
+import com.webmyne.connect.user.ui.AddReferCodeFilterDialog;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by priyasindkar on 11-02-2016.
  */
-public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener, EditProfileView {
+public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener, EditProfileView, AppBarLayout.OnOffsetChangedListener {
 
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
+    private AppBarLayout appbar;
     private FloatingActionButton fab;
     private TextView txtMyReferCode;
     private MaterialAutoCompleteTextView editLocation;
@@ -56,6 +59,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         collapsingToolbar.setTitle("My Profile");
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
+        appbar.addOnOffsetChangedListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +95,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        editProfilePresenter.initUserData(EditProfileActivity.this);
+        editProfilePresenter.initUI(EditProfileActivity.this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataset);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -160,7 +165,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void initUserData(UserLoginOutput currentUser) {
+    public void initUI(UserLoginOutput currentUser) {
         this.currentUser = currentUser;
 
         editName.setText(currentUser.Name);
@@ -182,6 +187,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         if (!currentUser.UserReferCode.equals("")) {
             txtMyReferCode.setText(currentUser.UserReferCode);
         }
+        editProfilePresenter.startAlphaAnimation(toolbar, 0, View.INVISIBLE);
     }
 
     @Override
@@ -199,4 +205,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     public void hideProgress() {
         progressDialog.hide();
     }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+        editProfilePresenter.setToolBarOffset(EditProfileActivity.this, appBarLayout, offset, toolbar);
+    }
+
+
 }
