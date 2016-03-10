@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,7 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
     private FloatingActionButton fab;
     private SwipeRefreshLayout refreshLayout;
     private View footerView,emptyLayout;
-    private int USER_ID = 10;
+    private int USER_ID = 1;
     private CustomProgressDialog progressDialog;
     private LeadsPresenter presenter;
 
@@ -177,7 +178,11 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
     }
 
     private void hideFabButton(){
+        CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        p.setAnchorId(View.NO_ID);
+        fab.setLayoutParams(p);
         fab.setVisibility(View.GONE);
+
     }
 
     private void showFabButton(){
