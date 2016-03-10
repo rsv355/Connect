@@ -96,7 +96,7 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.recylerfooter, recyclerView, false);
-        emptyView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.recylerempty2, recyclerView, false);
+        emptyView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.recylerempty, recyclerView, false);
 
 
     }
