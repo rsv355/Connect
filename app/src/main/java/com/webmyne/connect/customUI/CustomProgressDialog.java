@@ -21,6 +21,7 @@ public class CustomProgressDialog extends ProgressDialog {
 
     }
 
+
     public static ProgressDialog ctor(Context context) {
         CustomProgressDialog dialog = new CustomProgressDialog(context);
         dialog.setIndeterminate(true);
