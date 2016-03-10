@@ -29,7 +29,6 @@ public class CustomProgressDialog extends ProgressDialog {
         return dialog;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);// must call before super.
