@@ -54,13 +54,20 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+
+    <com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        />
 
+    </android.support.v4.widget.SwipeRefreshLayout>
   <!--  <com.andexert.library.RippleView
         android:id="@+id/viewMoreRipple"
         rv_centered="true"

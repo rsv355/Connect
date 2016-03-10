@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
@@ -25,7 +24,7 @@ import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
-import com.webmyne.connect.leads.LeadsListActivity;
+import com.webmyne.connect.leadHistory.LeadsListActivity;
 import com.webmyne.connect.leads.PostLeadActivity;
 
 import java.util.ArrayList;

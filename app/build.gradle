@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'leadapp'
             keyPassword 'admin@net'
-            storeFile file('D:/Priya/Lead App/jks/leadapp.jks')
+//            storeFile file('D:/Priya/Lead App/jks/leadapp.jks')
             storePassword 'admin@net'
         }
     }
@@ -77,4 +77,7 @@ dependencies {
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+
+    //footer loader
+    compile 'com.github.ndczz:infinity-loading:0.4'
 }

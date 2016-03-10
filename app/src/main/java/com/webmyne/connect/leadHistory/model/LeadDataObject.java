@@ -1,4 +1,4 @@
-package com.webmyne.connect.leads;
+package com.webmyne.connect.leadHistory.model;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -17,6 +17,11 @@ public class LeadDataObject {
         this.status = status;
         this.customerName = customerName;
         this.color = color;
+    }
+
+    public String getLeadID() {
+        //removing vertical short name
+        return leadName.substring(2,leadName.length());
     }
 
     public String getLeadName() {

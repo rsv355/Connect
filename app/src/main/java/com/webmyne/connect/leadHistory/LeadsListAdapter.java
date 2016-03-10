@@ -1,4 +1,4 @@
-package com.webmyne.connect.leads;
+package com.webmyne.connect.leadHistory;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -24,6 +24,7 @@ import com.webmyne.connect.base.LabelView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
+import com.webmyne.connect.leadHistory.model.LeadDataObject;
 
 public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.DataObjectHolder> {
     private static String LOG_TAG = "LeadsListAdapter";

@@ -14,6 +14,16 @@ public class Constants {
     //public static final int[] VERTICAL_IDS = new int[] {14, 13, 16, 17, 18, 15};
     public static final List<Integer> VERTICAL_IDS = Arrays.asList(14, 13, 16, 17, 18, 15);
 
+    public static String getVerticalShortName(int veticalID){
+        int pos =0;
+        for(int i=0;i<VERTICAL_IDS.size();i++){
+            if(veticalID == VERTICAL_IDS.get(i))
+             pos = i;
+        }
+
+        return VERTICAL_SHORT_NAMES.get(pos);
+    }
+
     public static enum VERTICALS {
         AUTO_INSURANCE(0),
         AUTO_FINANCE(1),
@@ -32,6 +42,8 @@ public class Constants {
             return value;
         }
     }
+
+
 
     public static int KEYBOARD_CELL_ITEM_ANIMATION_DURATION = 800;
 
