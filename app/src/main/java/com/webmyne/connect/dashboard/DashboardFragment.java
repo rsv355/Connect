@@ -25,7 +25,7 @@ import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 import com.webmyne.connect.leadHistory.LeadsListActivity;
-import com.webmyne.connect.leads.PostLeadActivity;
+import com.webmyne.connect.postLead.PostLeadActivity;
 
 import java.util.ArrayList;
 

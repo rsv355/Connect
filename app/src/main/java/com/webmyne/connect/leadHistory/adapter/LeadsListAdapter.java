@@ -1,4 +1,4 @@
-package com.webmyne.connect.leadHistory;
+package com.webmyne.connect.leadHistory.adapter;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -111,15 +111,7 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
         holder.image.setImageDrawable(drawable2);
     }
 
-    public void addItem(LeadDataObject dataObj, int index) {
-        mDataset.add(dataObj);
-        notifyItemInserted(index);
-    }
 
-    public void deleteItem(int index) {
-        mDataset.remove(index);
-        notifyItemRemoved(index);
-    }
 
     @Override
     public int getItemCount() {

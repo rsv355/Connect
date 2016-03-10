@@ -1,12 +1,7 @@
-package com.webmyne.connect.leads;
+package com.webmyne.connect.postLead;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.WindowManager;
-import android.widget.CheckBox;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Constants;

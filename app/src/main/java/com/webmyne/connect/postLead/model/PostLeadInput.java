@@ -1,4 +1,4 @@
-package com.webmyne.connect.leads.model;
+package com.webmyne.connect.postLead.model;
 
 import java.util.Arrays;
 

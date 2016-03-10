@@ -1,4 +1,4 @@
-package com.webmyne.connect.leads;
+package com.webmyne.connect.postLead;
 
 import java.util.List;
 

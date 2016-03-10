@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:gravity="center"
-    android:layout_height="100dp">
+    android:layout_height="@dimen/recycler_footer">
 
     <com.github.ndczz.infinityloading.InfinityLoading
         android:id="@+id/loading"
-        android:layout_width="60dp"
+        android:layout_width="@dimen/vertical_item_size"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
@@ -16,6 +16,6 @@
         app:infl_drawBack="true"
         app:infl_reverse="true"
         app:infl_progressColor="@color/colorAccent"
-        app:infl_strokeWidth="4dp" />
+        app:infl_strokeWidth="@dimen/small_margin" />
 
 </LinearLayout>

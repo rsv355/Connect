@@ -1,4 +1,4 @@
-package com.webmyne.connect.leads;
+package com.webmyne.connect.postLead;
 
 /**
  * Created by priyasindkar on 08-03-2016.

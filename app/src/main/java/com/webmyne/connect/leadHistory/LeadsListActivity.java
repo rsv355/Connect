@@ -1,6 +1,8 @@
 package com.webmyne.connect.leadHistory;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -8,47 +10,40 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 import com.webmyne.connect.R;
-import com.webmyne.connect.Utils.Constants;
+import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.customUI.CustomProgressDialog;
 import com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerView;
 import com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerViewOnScrollListener;
-import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
+import com.webmyne.connect.leadHistory.presenter.LeadsHistoryView;
+import com.webmyne.connect.leadHistory.adapter.LeadsListAdapter;
 import com.webmyne.connect.leadHistory.model.LeadDataObject;
-import com.webmyne.connect.leadHistory.model.LeadHistoryData;
-import com.webmyne.connect.leadHistory.model.LeadHistoryIntf;
-import com.webmyne.connect.leadHistory.model.LeadHistoryRequest;
-import com.webmyne.connect.leadHistory.model.LeadHistoryResponse;
-import com.webmyne.connect.leads.LeadsFilterDialog;
+import com.webmyne.connect.leadHistory.presenter.LeadsPresenter;
+import com.webmyne.connect.leadHistory.presenter.LeadsPresenterImpl;
+import com.webmyne.connect.postLead.LeadsFilterDialog;
 
 /**
  * Created by priyasindkar on 16-02-2016.
  */
-public class LeadsListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class LeadsListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener,LeadsHistoryView {
     private FamiliarRecyclerView recyclerView;
-    private LeadsListAdapter mLeadsAdapter;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
     private FloatingActionButton fab;
     private SwipeRefreshLayout refreshLayout;
-    private View footerView;
-    private int USER_ID = 1;
-    ArrayList<LeadDataObject> listData;
+    private View footerView,emptyView;
+    private int USER_ID = 10;
+    private CustomProgressDialog progressDialog;
+    private LeadsPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +51,15 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
 
+        init();
+        initRecylerView();
+
+        presenter = new LeadsPresenterImpl(LeadsListActivity.this,this);
+        presenter.fetchLeadData(USER_ID);
+
+    }
+
+    private void init(){
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("Lead History");
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
@@ -72,10 +76,8 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         refreshLayout.setOnRefreshListener(this);
 
-        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recyclerView);
-
-        getList();
-        //initLeadsList();
+        progressDialog = new CustomProgressDialog(LeadsListActivity.this);
+        progressDialog.setCancelable(false);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,106 +87,49 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
 
             }
         });
-
-        /*viewMoreRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
-                LeadsFilterDialog filterDialog = new LeadsFilterDialog(LeadsListActivity.this);
-                filterDialog.show();
-            }
-        });*/
-
-
     }
 
-   /* private void initLeadsList() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(LeadsListActivity.this));
-        ArrayList<LeadDataObject> list = new ArrayList<>();
-        list.add(new LeadDataObject("QW123", "AI","2016-02-03 08:00AM GMT", "ACTIVE", "John Doe", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new LeadDataObject("UY123", "AF","2016-02-03 08:00AM GMT", "ACTIVE", "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new LeadDataObject("EW786", "HO","2016-01-21 08:00AM GMT", "ONGOING", "John Doe", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new LeadDataObject("IN386", "HI","2016-01-20 08:00AM GMT", "DEACTIVE", "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new LeadDataObject("BJ096", "LI", "2015-12-10 08:00AM GMT", "DEACTIVE", "John Doe", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new LeadDataObject("XS956", "AI", "2015-11-16 08:00AM GMT", "DEACTIVE", "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
-        list.add(new LeadDataObject("OP123", "LI","2015-10-13 08:00AM GMT", "DEACTIVE", "Jane Doe", ColorGenerator.MATERIAL.getARandomColor()));
-
-        mLeadsAdapter = new LeadsListAdapter(LeadsListActivity.this, list);
-        recyclerView.setAdapter(mLeadsAdapter);
-
-      *//*  mLeadsAdapter.addItem(new LeadDataObject(), 0);
-        mLeadsAdapter.addItem(new LeadDataObject(), 1);
-        mLeadsAdapter.addItem(new LeadDataObject(), 2);*//*
-
-        recyclerView.setItemAnimator(new SlideInLeftAnimator());
-      *//*  recyclerView.getItemAnimator().setAddDuration(1000);
-        recyclerView.getItemAnimator().setRemoveDuration(1000);
-        recyclerView.getItemAnimator().setMoveDuration(1000);
-        recyclerView.getItemAnimator().setChangeDuration(1000);*//*
-
-
-
-        mLeadsAdapter.setOnItemClickListener(new LeadsListAdapter.MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-
-            }
-        });
-    }*/
-
-    private void getList(){
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ws-srv-net/Applications/Androids/MapleAppServices/LeadsService.svc/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        LeadHistoryIntf checkinApiService = retrofit.create(LeadHistoryIntf.class);
-        LeadHistoryRequest requestObj = new LeadHistoryRequest();
-        requestObj.setUserID(USER_ID);
-
-        Call<LeadHistoryResponse> call = checkinApiService.getSearchResult(requestObj);
-
-        call.enqueue(new Callback<LeadHistoryResponse>() {
-            @Override
-            public void onResponse(Call<LeadHistoryResponse> call, Response<LeadHistoryResponse> response) {
-                Log.e("onResponse", "Sucess");
-                if(refreshLayout.isRefreshing())
-                    refreshLayout.setRefreshing(false);
-
-                setData(response.body().getLeadData());
-
-            }
-
-            @Override
-            public void onFailure(Call<LeadHistoryResponse> call, Throwable t) {
-                Log.e("onFailure", t.toString());
-            }
-        });
-    }
-
-    private void setData(ArrayList<LeadHistoryData> data){
-        listData = new ArrayList<>();
-
-        for(int i=0;i<data.size();i++){
-            listData.add(new LeadDataObject(Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID))+""+data.get(i).getLeadID(),
-                    Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID)),
-                    ""+data.get(i).getLeadDateTime(),
-                    "ACTIVE",
-                    ""+data.get(i).getRName(),
-                    ColorGenerator.MATERIAL.getARandomColor()));
-        }
-
+    private void initRecylerView(){
+        recyclerView = (FamiliarRecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(LeadsListActivity.this));
         // ItemAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.recylerfooter, recyclerView, false);
-
-        // empty view
-        //  mRecyclerView.setEmptyView(findViewById(R.id.tv_empty), true);
+        emptyView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.recylerempty, recyclerView, false);
 
 
-        mLeadsAdapter = new LeadsListAdapter(LeadsListActivity.this, listData);
+    }
+
+    private void setEmptyView(){
+        TextView txtMsg = (TextView)emptyView.findViewById(R.id.txtMsg);
+        ImageView imgEmptyIcon = (ImageView)emptyView.findViewById(R.id.imgEmptyIcon);
+        imgEmptyIcon.setImageResource(R.drawable.leadhistory_emptyimage);
+        imgEmptyIcon.setColorFilter(R.color.accent_A400,PorterDuff.Mode.SRC_ATOP);
+        txtMsg.setTypeface(Functions.getTypeFace(LeadsListActivity.this), Typeface.BOLD);
+        txtMsg.setText("Oops! we couldn't find lead hsitory for you.");
+
+    }
+
+    @Override
+    public void onRefresh() {
+
+        //getList();
+    }
+
+    @Override
+    public void showProgressDialog() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        progressDialog.hide();
+    }
+
+    @Override
+    public void setData(final ArrayList<LeadDataObject> listData,LeadsListAdapter mLeadsAdapter) {
+
         recyclerView.setAdapter(mLeadsAdapter);
         mLeadsAdapter.notifyDataSetChanged();
 
@@ -201,73 +146,29 @@ public class LeadsListActivity extends AppCompatActivity implements SwipeRefresh
                 ///new countDown(4000, 1000,lastPos).start();
                 showFooter();
                 Log.e("#### Last Item", "" + lastPos);
-                LoadMoreData(Long.parseLong(listData.get(lastPos).getLeadID()));
-            }
-        });
-    }
-
-
-    private void appendData(ArrayList<LeadHistoryData> data){
-        for(int i=0;i<data.size();i++){
-            listData.add(new LeadDataObject(Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID))+""+data.get(i).getLeadID(),
-                    Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID)),
-                    ""+data.get(i).getLeadDateTime(),
-                    "ACTIVE",
-                    ""+data.get(i).getRName(),
-                    ColorGenerator.MATERIAL.getARandomColor()));
-        }
-
-        mLeadsAdapter.notifyDataSetChanged();
-    }
-
-
-    void showFooter(){
-        recyclerView.addFooterView(footerView);
-    }
-
-    void hideFooter(){
-        recyclerView.removeFooterView(footerView);
-    }
-
-
-    void LoadMoreData(long lastLeadID){
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ws-srv-net/Applications/Androids/MapleAppServices/LeadsService.svc/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        LeadHistoryIntf checkinApiService = retrofit.create(LeadHistoryIntf.class);
-        LeadHistoryRequest requestObj = new LeadHistoryRequest();
-        requestObj.setUserID(USER_ID);
-        requestObj.setLastLeadID(lastLeadID);
-
-        Call<LeadHistoryResponse> call = checkinApiService.getSearchResult(requestObj);
-
-        call.enqueue(new Callback<LeadHistoryResponse>() {
-            @Override
-            public void onResponse(Call<LeadHistoryResponse> call, Response<LeadHistoryResponse> response) {
-                hideFooter();
-                Log.e("onResponse2", "Sucess");
-                if (response.body().getLeadData().size() == 0) {
-                    Toast.makeText(LeadsListActivity.this, "No More Data Found", Toast.LENGTH_SHORT).show();
-                } else {
-                    appendData(response.body().getLeadData());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<LeadHistoryResponse> call, Throwable t) {
-                Log.e("onFailure", t.toString());
+                presenter.loadMoreData(USER_ID, Long.parseLong(listData.get(lastPos).getLeadID()));
             }
         });
     }
 
     @Override
-    public void onRefresh() {
+    public void showFooter() {
+        recyclerView.addFooterView(footerView);
+    }
 
-        getList();
+    @Override
+    public void hideFooter() {
+        recyclerView.removeFooterView(footerView);
+    }
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(LeadsListActivity.this,""+msg,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addEmptyView() {
+       setEmptyView();
     }
 
     //end of main class

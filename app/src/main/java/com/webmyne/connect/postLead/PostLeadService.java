@@ -1,9 +1,8 @@
-package com.webmyne.connect.leads;
+package com.webmyne.connect.postLead;
 
 import com.webmyne.connect.Utils.APIConstants;
-import com.webmyne.connect.leads.model.MainPostLeadOutput;
-import com.webmyne.connect.leads.model.PostLeadInput;
-import com.webmyne.connect.leads.model.PostLeadOutput;
+import com.webmyne.connect.postLead.model.MainPostLeadOutput;
+import com.webmyne.connect.postLead.model.PostLeadInput;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -1,17 +1,14 @@
-package com.webmyne.connect.leads;
+package com.webmyne.connect.postLead;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.base.MyApplication;
-import com.webmyne.connect.leads.model.MainPostLeadOutput;
-import com.webmyne.connect.leads.model.PostLeadInput;
-import com.webmyne.connect.leads.model.PostLeadOutput;
+import com.webmyne.connect.postLead.model.MainPostLeadOutput;
+import com.webmyne.connect.postLead.model.PostLeadInput;
 import com.webmyne.connect.login.model.UserLoginOutput;
 
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;

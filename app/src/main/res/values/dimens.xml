@@ -21,6 +21,7 @@
     <dimen name="negative_margin_20">-20dp</dimen>
 
     <dimen name="header_image">100dp</dimen>
+    <dimen name="recycler_footer">100dp</dimen>
     <dimen name="header_layout">300dp</dimen>
     <dimen name="small_profile_image">70dp</dimen>
     <dimen name="profile_image">90dp</dimen>

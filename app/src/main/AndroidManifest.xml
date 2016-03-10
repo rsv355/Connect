@@ -44,7 +44,7 @@
         <activity android:name=".base.DrawerActivity">
 
         </activity>
-        <activity android:name=".leads.PostLeadActivity"></activity>
+        <activity android:name=".postLead.PostLeadActivity"></activity>
         <activity android:name=".leadHistory.LeadsListActivity"></activity>
         <activity android:name=".revenuePayment.RedeemMoneyActivity">
 
