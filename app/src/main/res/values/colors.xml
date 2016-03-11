@@ -15,21 +15,25 @@
     <color name="buttonBg">#ff5722</color>
     <color name="appPurpleColor">#4527A0</color>
 
- <!-- View Pager -->
- <color name="theme_500">#607D8B</color>
- <color name="theme_100">#CFD8DC</color>
- <color name="theme_700">#455A64</color>
+    <!-- View Pager -->
+    <color name="theme_500">#607D8B</color>
+    <color name="theme_100">#CFD8DC</color>
+    <color name="theme_700">#455A64</color>
 
- <color name="accent_A100">#FF8A80</color>
- <color name="accent_A200">#FF5252</color>
- <color name="accent_A400">#FF1744</color>
+    <color name="accent_A100">#FF8A80</color>
+    <color name="accent_A200">#FF5252</color>
+    <color name="accent_A400">#FF1744</color>
 
- <color name="facebook">#2e4589</color>
- <color name="google">#d74e30</color>
+    <color name="facebook">#2e4589</color>
+    <color name="google">#d74e30</color>
 
-<color name="material_cyan">#b9e6e3</color>
-<color name="drawer_bg">#4DB6AC</color>
+    <color name="material_cyan">#b9e6e3</color>
+    <color name="drawer_bg">#4DB6AC</color>
 
+
+
+    <color name="cyan_color">#00BCD4</color>
+    <color name="green_color">#4CAF50</color>
     <color name="flatGreenColor">#2ecc71</color>
     <color name="walletDividerLine">#bdc3c7</color>
     <color name="textColor">#999999</color>

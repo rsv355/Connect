@@ -10,4 +10,5 @@ public class APIConstants {
     public static final String POST_LEAD_URL = "LeadsService.svc/json/PostLead";
 
     public static final String FETCH_LEAD_HISTORY = "LeadsService.svc/json/LeadHistory";
+    public static final String FETCH_COMMISSION_HISTORY = "LeadsService.svc/json/CommissionHistory";
 }

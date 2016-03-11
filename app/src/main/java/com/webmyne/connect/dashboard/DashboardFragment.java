@@ -24,7 +24,7 @@ import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
-import com.webmyne.connect.leadHistory.LeadsListActivity;
+import com.webmyne.connect.leadHistory.LeadsHistoryListActivity;
 import com.webmyne.connect.postLead.PostLeadActivity;
 
 import java.util.ArrayList;
@@ -211,7 +211,7 @@ public class DashboardFragment extends Fragment {
         viewMoreRipple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                Intent intent = new Intent(getActivity(), LeadsListActivity.class);
+                Intent intent = new Intent(getActivity(), LeadsHistoryListActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_up_in, R.anim.push_down_out);
             }

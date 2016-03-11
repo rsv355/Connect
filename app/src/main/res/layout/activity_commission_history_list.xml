@@ -13,11 +13,24 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/anim_toolbar"
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/std_margin" />
+        android:layout_marginTop="@dimen/std_margin"
+        android:layout_marginBottom="@dimen/std_margin"
+        android:layout_below="@id/anim_toolbar">
+
+        <com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <include
+        android:id="@+id/emptyLayout"
+        layout="@layout/recycleempty" />
 
 </RelativeLayout>

@@ -78,7 +78,7 @@ public class SplashActivity extends CustomAwesomeSplash {
         configSplash.setAnimLogoSplashTechnique(Techniques.RollIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
         //Customize Title
-        configSplash.setTitleSplash("Lead App");
+        configSplash.setTitleSplash(getResources().getString(R.string.app_name));
         configSplash.setTitleTextColor(R.color.white);
         configSplash.setTitleFont(Functions.fontFamilyPathThin);
         configSplash.setTitleTextSize(48f); //float value

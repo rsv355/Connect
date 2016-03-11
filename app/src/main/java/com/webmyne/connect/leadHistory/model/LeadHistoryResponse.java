@@ -12,7 +12,7 @@ public class LeadHistoryResponse {
         return LeadHistoryOutput;
     }
 
-    public void setLeadData(ArrayList<LeadHistoryData> leadData) {
+    public void setCommissionData(ArrayList<LeadHistoryData> leadData) {
         this.LeadHistoryOutput = leadData;
     }
 }

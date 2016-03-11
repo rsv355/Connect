@@ -15,6 +15,9 @@
     <string name="filter_leads">Filter Leads</string>
     <string name="filter_revenue_history">Filter Revenue History</string>
     <string name="filter_add_refer">Add Refer Code</string>
+    <string name="lead_history_title">Lead History</string>
+    <string name="commission_history_title">Commission History</string>
+    <string name="my_profile_title">My Profile</string>
 
     <!-- Drawer Menu Items -->
     <string name="home">HOME</string>
@@ -63,6 +66,12 @@
     <string name="post_lead_terms_decline">Your lead cannot be processed. Please go through out terms and conditions for further information.</string>
     <string name="post_lead_failed">Error Was Encountered While Posting Lead. Please Try Again.</string>
     <string name="post_lead_successful">Lead Posted Successfully. Email &amp; SMS sent to your reference.</string>
+    <string name="no_internet_connection">No Internet Found. Please Try Again.</string>
+
+    <string name="no_lead_history_found">Oops! we couldn\'t find lead history for you.</string>
+    <string name="no_commission_history_found">Oops! we couldn\'t find commission history for you.</string>
+    <string name="no_more_data">No More Data Found.</string>
+    <string name="contact_not_picker">Contact Cannot Be Picked. Please Enter Contact Details</string>
 
     <!-- Buttons and static screens-->
     <string name="Decline">Decline</string>

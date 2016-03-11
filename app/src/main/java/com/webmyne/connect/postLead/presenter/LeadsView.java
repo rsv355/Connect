@@ -13,6 +13,8 @@ public interface LeadsView {
     void setNameError(String error);
     void setEmailError(String error);
     void setContactNoError(String error);
+    void setContactPickedDetails(String name, String mobile);
+    void setContactCannotPickedError(String msg);
     void onValidationSuccess();
     void onTermsAccepted();
     void onTermsDeclined();
@@ -20,4 +22,5 @@ public interface LeadsView {
     void hideProgressDialog();
     void onLeadPostSuccess(String success);
     void onLeadPostFail(String error);
+    void showNoInternetDialog();
 }

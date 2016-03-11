@@ -49,4 +49,7 @@ public class Constants {
 
     public static String[] FB_READ_PERMISSIONS = new String[]{"email", "public_profile", "user_friends"};
     public static String FB_PARAM_FIELDS = "id, first_name,last_name, email, gender, birthday, link";
+
+    public static String DOLLAR_PREFIX = "$ ";
+    public static String SP_PREFIX = "Lead Sold Price ";
 }

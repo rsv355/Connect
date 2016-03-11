@@ -21,4 +21,5 @@ public interface EditProfilePresenter {
     void onUpdateUser(boolean isSuccess, String success, String error);
     void showEnterReferCodeDialog();
     void onDestroy();
+    void showNoInternetDialog(Activity activity);
 }

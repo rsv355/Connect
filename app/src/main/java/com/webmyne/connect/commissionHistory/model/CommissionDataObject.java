@@ -1,22 +1,23 @@
-package com.webmyne.connect.leadHistory.model;
+package com.webmyne.connect.commissionHistory.model;
 
 /**
  * Created by priyasindkar on 12-02-2016.
  */
-public class LeadDataObject {
-    private String leadName, verticalName ,dateTime, status, customerName;
+public class CommissionDataObject {
+    private String leadName, verticalName ,dateTime, status, customerName, soldPrice, commissionEarned;
     private int color;
-    private boolean isExpanded = false;
 
-    public LeadDataObject() {
+    public CommissionDataObject() {
     }
 
-    public LeadDataObject(String leadName, String verticalName, String dateTime, String status, String customerName, int color) {
+    public CommissionDataObject(String leadName, String verticalName, String dateTime, String status, String customerName, String soldPrice, String commissionEarned ,int color) {
         this.leadName = leadName;
         this.verticalName = verticalName;
         this.dateTime = dateTime;
         this.status = status;
         this.customerName = customerName;
+        this.soldPrice = soldPrice;
+        this.commissionEarned = commissionEarned;
         this.color = color;
     }
 
@@ -73,11 +74,19 @@ public class LeadDataObject {
         this.color = color;
     }
 
-    public boolean isExpanded() {
-        return isExpanded;
+    public String getSoldPrice() {
+        return soldPrice;
     }
 
-    public void setExpanded(boolean expanded) {
-        isExpanded = expanded;
+    public void setSoldPrice(String soldPrice) {
+        this.soldPrice = soldPrice;
+    }
+
+    public String getCommissionEarned() {
+        return commissionEarned;
+    }
+
+    public void setCommissionEarned(String commissionEarned) {
+        this.commissionEarned = commissionEarned;
     }
 }

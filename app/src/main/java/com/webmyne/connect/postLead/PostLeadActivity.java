@@ -2,10 +2,8 @@ package com.webmyne.connect.postLead;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +13,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.andexert.library.RippleView;
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -23,6 +20,7 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.DrawerActivity;
 import com.webmyne.connect.customUI.CustomProgressDialog;
+import com.webmyne.connect.customUI.FlowLayout;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 import com.webmyne.connect.listeners.OnAlertButtonClicked;
@@ -41,23 +39,24 @@ import java.util.List;
  * Created by priyasindkar on 15-02-2016.
  */
 public class PostLeadActivity extends AppCompatActivity implements View.OnClickListener, RippleView.OnRippleCompleteListener,
-        LeadsView {
+        LeadsView, AppBarLayout.OnOffsetChangedListener {
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbar;
+    private AppBarLayout appbar;
     private ImageView imgVertical;
     private FloatingActionButton fab;
     private RippleView txtPostLead;
     private MaterialEditText editName, editRefNo, editEmail, editDescription;
-    private LinearLayout linearVerticalsList;
-    private CheckBox checkboxAI, checkboxAF, checkboxHI, checkboxLI, checkboxHO, checkboxNC;
-
+    private FlowLayout linearVerticalsList;
     private ImageView imgSearchContacts;
-    private static final int RESULT_PICK_CONTACT = 1;
+
 
     private LeadsPresenter leadsPresenter;
     private LeadsInteractor leadsInteractor;
     public List<Integer> selectedVerticals = new ArrayList<>();
+
     private CustomProgressDialog progressDialog;
+    private static final int RESULT_PICK_CONTACT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +83,8 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
                 finish();
             }
         });
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
+        appbar.addOnOffsetChangedListener(this);
 
         progressDialog = new CustomProgressDialog(PostLeadActivity.this);
         progressDialog.setCancelable(false);
@@ -101,19 +102,19 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         imgSearchContacts = (ImageView) findViewById(R.id.imgSearchContacts);
         imgSearchContacts.setOnClickListener(this);
 
-        linearVerticalsList = (LinearLayout) findViewById(R.id.linearVerticalsList);
-        checkboxAI = (CheckBox) findViewById(R.id.checkboxAI);
-        checkboxAF = (CheckBox) findViewById(R.id.checkboxAF);
-        checkboxHI = (CheckBox) findViewById(R.id.checkboxHI);
-        checkboxLI = (CheckBox) findViewById(R.id.checkboxLI);
-        checkboxHO = (CheckBox) findViewById(R.id.checkboxHO);
-        checkboxNC = (CheckBox) findViewById(R.id.checkboxNC);
+        linearVerticalsList = (FlowLayout) findViewById(R.id.linearVerticalsList);
 
-        leadsPresenter = new LeadsPresenterImpl(this);
+        leadsPresenter = new LeadsPresenterImpl(PostLeadActivity.this, this);
         leadsInteractor = new LeadsInteractorImpl(this);
         if (getIntent() != null) {
             leadsPresenter.initUIData(PostLeadActivity.this, getIntent());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        leadsPresenter.onDestroy();
     }
 
     @Override
@@ -125,15 +126,9 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
             case R.id.imgSearchContacts:
-                pickContact(v);
+                leadsPresenter.pickContact(v, PostLeadActivity.this);
                 break;
         }
-    }
-
-    public void pickContact(View v) {
-        Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-        startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
     }
 
     @Override
@@ -141,27 +136,9 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case RESULT_PICK_CONTACT:
-                    contactPicked(data);
+                    leadsPresenter.contactPicked(data);
                     break;
             }
-        }
-    }
-
-    private void contactPicked(Intent data) {
-        Cursor cursor = null;
-        try {
-            String phoneNo = null;
-            String name = null;
-            Uri uri = data.getData();
-            cursor = getContentResolver().query(uri, null, null, null, null);
-            cursor.moveToFirst();
-            int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            phoneNo = cursor.getString(phoneIndex);
-            name = cursor.getString(nameIndex);
-            editRefNo.setText(phoneNo);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -171,17 +148,6 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
             case R.id.txtPostLead:
                 leadsPresenter.validateFormFields(PostLeadActivity.this, editName.getText().toString().trim(),
                         editEmail.getText().toString(), editRefNo.getText().toString());
-                /*final AlertDialog.Builder builder = Functions.showAlterDialog(PostLeadActivity.this, "Lead Posted Successfully", "An Email and SMS sent to reference");
-                Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
-                    @Override
-                    public void onAlertButtonClicked() {
-                        SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
-                        preferences.edit().putBoolean("isLeadPosted", true).commit();
-                        Intent intent = new Intent(PostLeadActivity.this, DrawerActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                builder.show();*/
                 break;
         }
     }
@@ -193,28 +159,18 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
         TextDrawable drawable2 = TextDrawable.builder().buildRound(verticalDataObject.verticalShortName, ColorGenerator.MATERIAL.getColorAtIndex(verticalDataObject.verticalColorIndex));
         imgVertical.setImageDrawable(drawable2);
 
+        // add verticals checkboxes
         selectedVerticals.add(verticalDataObject.getVerticalId());
-
-        checkboxAI.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(0)));
-        checkboxAF.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(1)));
-        checkboxHI.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(2)));
-        checkboxLI.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(3)));
-        checkboxHO.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(4)));
-        checkboxNC.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(5)));
-
-        if (verticalDataObject.getVerticalName().equals(getString(R.string.auto_insurance))) {
-            checkboxAI.setVisibility(View.GONE);
-        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.auto_finance))) {
-            checkboxAF.setVisibility(View.GONE);
-        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.health_insurance))) {
-            checkboxHI.setVisibility(View.GONE);
-        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.life_insurance))) {
-            checkboxLI.setVisibility(View.GONE);
-        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.home_insurance))) {
-            checkboxHO.setVisibility(View.GONE);
-        } else if (verticalDataObject.getVerticalName().equals(getString(R.string.new_car))) {
-            checkboxNC.setVisibility(View.GONE);
+        linearVerticalsList.removeAllViews();
+        for (int i = 0; i < secondaryVerticalsList.size(); i++) {
+            View view = getLayoutInflater().inflate(R.layout.vertical_check_box_item, null);
+            CheckBox checkBox = (CheckBox) view;
+            checkBox.setText(secondaryVerticalsList.get(i).getVerticalName());
+            checkBox.setOnCheckedChangeListener(new OnVerticalChecked(secondaryVerticalsList.get(i)));
+            linearVerticalsList.addView(checkBox);
         }
+
+        leadsPresenter.startAlphaAnimation(toolbar, 0, View.VISIBLE);
     }
 
     @Override
@@ -238,6 +194,17 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    public void setContactPickedDetails(String name, String mobile) {
+        editName.setText(name);
+        editRefNo.setText(mobile);
+    }
+
+    @Override
+    public void setContactCannotPickedError(String msg) {
+        leadsPresenter.showAlertMessageDialog(PostLeadActivity.this, msg);
+    }
+
+    @Override
     public void onValidationSuccess() {
         leadsPresenter.showPostTermsConditionsDialog(PostLeadActivity.this);
     }
@@ -245,12 +212,12 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onTermsAccepted() {
         leadsInteractor.doPostLead(PostLeadActivity.this, editName.getText().toString().trim(),
-                editEmail.getText().toString(),editRefNo.getText().toString(), editDescription.getText().toString(),selectedVerticals);
+                editEmail.getText().toString(), editRefNo.getText().toString(), editDescription.getText().toString(), selectedVerticals);
     }
 
     @Override
     public void onTermsDeclined() {
-        leadsPresenter.showDeclineMessageDialog(PostLeadActivity.this);
+        leadsPresenter.showAlertMessageDialog(PostLeadActivity.this, getString(R.string.post_lead_terms_decline));
 
     }
 
@@ -281,7 +248,25 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onLeadPostFail(String error) {
+        AlertDialog.Builder builder = Functions.showAlterDialog(this, error, "Ok");
+        Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
+            @Override
+            public void onAlertButtonClicked() {
+                Intent intent = new Intent(PostLeadActivity.this, DrawerActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.show();
+    }
 
+    @Override
+    public void showNoInternetDialog() {
+        leadsPresenter.showNoInternetDialog(PostLeadActivity.this);
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
+        Functions.setToolBarOffset(PostLeadActivity.this, appBarLayout, offset, toolbar);
     }
 
     private class OnVerticalChecked implements CompoundButton.OnCheckedChangeListener {

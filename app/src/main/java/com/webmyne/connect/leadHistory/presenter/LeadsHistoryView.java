@@ -15,8 +15,8 @@ public interface LeadsHistoryView {
     void showFooter();
     void hideFooter();
     void showToast(String msg);
-    void addEmptyView();
-
+    void addEmptyView(String msg);
+    void showNoInternetAlert();
     void setData(ArrayList<LeadDataObject> listData,LeadsListAdapter mLeadsAdapter);
 
 }

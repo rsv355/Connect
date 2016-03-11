@@ -1,5 +1,6 @@
 package com.webmyne.connect.user;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -56,7 +57,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle("My Profile");
+        collapsingToolbar.setTitle(getString(R.string.my_profile_title));
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
         appbar = (AppBarLayout) findViewById(R.id.appbar);
@@ -187,7 +188,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         if (!currentUser.UserReferCode.equals("")) {
             txtMyReferCode.setText(currentUser.UserReferCode);
         }
-        editProfilePresenter.startAlphaAnimation(toolbar, 0, View.INVISIBLE);
+        editProfilePresenter.startAlphaAnimation(toolbar, 0, View.VISIBLE);
     }
 
     @Override
@@ -204,6 +205,11 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void hideProgress() {
         progressDialog.hide();
+    }
+
+    @Override
+    public void showNoInternetDialog(Activity activity) {
+        editProfilePresenter.showNoInternetDialog(activity);
     }
 
     @Override

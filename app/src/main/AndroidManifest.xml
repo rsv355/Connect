@@ -19,7 +19,7 @@
 
     <uses-permission android:name="com.webmyne.connect.permission.C2D_MESSAGE" />
 
-    <!-- This app has permission to register and receive data message. -->
+    <!-- This app has permission to register and receive LeadStatuses message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
@@ -44,14 +44,14 @@
 
         </activity>
         <activity android:name=".postLead.PostLeadActivity"></activity>
-        <activity android:name=".leadHistory.LeadsListActivity"></activity>
+        <activity android:name=".leadHistory.LeadsHistoryListActivity"></activity>
         <activity android:name=".revenuePayment.RedeemMoneyActivity">
 
         </activity>
 
         <activity android:name=".revenuePayment.AddBankActivity"></activity>
         <activity android:name=".revenuePayment.PaymentHistoryListActivity"></activity>
-        <activity android:name=".commission.CommissionHistoryListActivity"></activity>
+        <activity android:name=".commissionHistory.CommissionHistoryListActivity"></activity>
         <activity android:name=".shareAndEarn.SharAndEarnActivity"></activity>
 
         <meta-data

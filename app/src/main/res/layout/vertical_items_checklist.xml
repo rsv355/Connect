@@ -5,13 +5,16 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/linearVerticalCheckListRow1"
         android:layout_width="match_parent"
-        android:gravity="center"
+        android:layout_gravity="center"
+        android:gravity="left"
         android:weightSum="2"
         android:layout_margin="@dimen/margin_10"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
 
-        <CheckBox
+        <!--<CheckBox
             android:id="@+id/checkboxAI"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -23,17 +26,20 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/auto_finance" />
+            android:text="@string/auto_finance" />-->
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearVerticalCheckListRow2"
         android:layout_margin="@dimen/margin_10"
-        android:gravity="center"
+        android:layout_gravity="center"
+        android:gravity="left"
         android:weightSum="2"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <CheckBox
+        <!--<CheckBox
             android:id="@+id/checkboxHI"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -45,18 +51,20 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/life_insurance" />
+            android:text="@string/life_insurance" />-->
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearVerticalCheckListRow3"
         android:layout_margin="@dimen/margin_10"
         android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:gravity="center"
+        android:gravity="left"
         android:weightSum="2"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
 
-        <CheckBox
+        <!--<CheckBox
             android:id="@+id/checkboxHO"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -68,6 +76,6 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="@string/new_car" />
+            android:text="@string/new_car" />-->
     </LinearLayout>
 </LinearLayout>

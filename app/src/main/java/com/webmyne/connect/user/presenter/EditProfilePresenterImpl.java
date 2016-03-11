@@ -21,10 +21,6 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
 
     private EditProfileView editProfileView;
     private EditProfileInteractor editProfileInteractor;
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
-    private static final int ALPHA_ANIMATIONS_DURATION = 200;
-    private boolean mIsTheToolbarVisible = false;
-    private int maxScroll;
 
     public EditProfilePresenterImpl(EditProfileView editProfileView) {
         this.editProfileView = editProfileView;
@@ -43,7 +39,6 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
 
     @Override
     public void showDatePicker(Activity activity) {
-        //DatePickerDialog dpd = (DatePickerDialog) activity.getFragmentManager().findFragmentByTag("Datepickerdialog");
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 new DatePickerDialog.OnDateSetListener() {
@@ -65,44 +60,48 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
 
     @Override
     public void setToolBarOffset(Activity activity, AppBarLayout appBarLayout, int offset, Toolbar toolbar) {
-        maxScroll = appBarLayout.getTotalScrollRange();
-        float percentage = (float) Math.abs(offset) / (float) maxScroll;
-        handleToolbarVisibility(percentage, toolbar);
+       Functions.setToolBarOffset(activity, appBarLayout, offset, toolbar);
     }
 
     @Override
     public void validateFormFields(Activity activity, String name, String emailId, String DOB, String mobile,
                                    String zipcode, String location, String gender, int userId) {
-        if (name.trim().length() == 0) {
-            if (editProfileView != null) {
-                editProfileView.setNameError(activity.getString(R.string.name_empty_validation));
-            }
-        } else if (emailId.trim().length() == 0) {
-            if (editProfileView != null) {
-                editProfileView.setEmailError(activity.getString(R.string.email_empty_validation));
-            }
-        } else if (!Functions.isEmailValid(emailId.trim())) {
-            if (editProfileView != null) {
-                editProfileView.setEmailError(activity.getString(R.string.email_invalid_validation));
-            }
-        } else if (mobile.trim().length() != 0 && mobile.trim().length() != 10) {
-            if (editProfileView != null) {
-                editProfileView.setMobileError(activity.getString(R.string.mobile_invalid_validation));
+
+        if( Functions.checkInternet(activity)) {
+            if (name.trim().length() == 0) {
+                if (editProfileView != null) {
+                    editProfileView.setNameError(activity.getString(R.string.name_empty_validation));
+                }
+            } else if (emailId.trim().length() == 0) {
+                if (editProfileView != null) {
+                    editProfileView.setEmailError(activity.getString(R.string.email_empty_validation));
+                }
+            } else if (!Functions.isEmailValid(emailId.trim())) {
+                if (editProfileView != null) {
+                    editProfileView.setEmailError(activity.getString(R.string.email_invalid_validation));
+                }
+            } else if (mobile.trim().length() != 0 && mobile.trim().length() != 10) {
+                if (editProfileView != null) {
+                    editProfileView.setMobileError(activity.getString(R.string.mobile_invalid_validation));
+                }
+            } else {
+                if (editProfileView != null) {
+                    UserLoginOutput userLoginOutput = new UserLoginOutput();
+                    userLoginOutput.setName(name);
+                    userLoginOutput.setEmail(emailId);
+                    userLoginOutput.setDOB(DOB);
+                    userLoginOutput.setMobile(mobile);
+                    userLoginOutput.setZipCode(zipcode);
+                    userLoginOutput.setAddress(location);
+                    userLoginOutput.setGender(gender);
+                    userLoginOutput.setUserID(userId);
+                    editProfileView.onValidationSuccess(true, userLoginOutput);
+                }
             }
         } else {
-            if (editProfileView != null) {
-                UserLoginOutput userLoginOutput = new UserLoginOutput();
-                userLoginOutput.setName(name);
-                userLoginOutput.setEmail(emailId);
-                userLoginOutput.setDOB(DOB);
-                userLoginOutput.setMobile(mobile);
-                userLoginOutput.setZipCode(zipcode);
-                userLoginOutput.setAddress(location);
-                userLoginOutput.setGender(gender);
-                userLoginOutput.setUserID(userId);
-                editProfileView.onValidationSuccess(true, userLoginOutput);
+            if(editProfileView != null) {
+                editProfileView.showNoInternetDialog(activity);
             }
-            //doUpdateUser(activity, name, emailId, DOB, mobile, zipcode, location, gender, userId);
         }
     }
 
@@ -132,6 +131,11 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
     }
 
     @Override
+    public void showNoInternetDialog(Activity activity) {
+        Functions.getSimpleOkAlterDialog(activity, activity.getString(R.string.no_internet_connection), "Ok").show();
+    }
+
+    @Override
     public void showEnterReferCodeDialog() {
         if (editProfileView != null) {
             editProfileView.hideProgress();
@@ -139,28 +143,8 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
         }
     }
 
-    private void handleToolbarVisibility(float percentage, Toolbar toolbar) {
-        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR || percentage == 0) {
-            if (!mIsTheToolbarVisible) {
-                startAlphaAnimation(toolbar, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheToolbarVisible = true;
-            }
-        } else {
-            if (mIsTheToolbarVisible) {
-                startAlphaAnimation(toolbar, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheToolbarVisible = false;
-            }
-        }
-    }
-
     @Override
     public void startAlphaAnimation(View v, long duration, int visibility) {
-        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
-                ? new AlphaAnimation(0f, 1f)
-                : new AlphaAnimation(1f, 0f);
-
-        alphaAnimation.setDuration(duration);
-        alphaAnimation.setFillAfter(true);
-        v.startAnimation(alphaAnimation);
+       Functions.startAlphaAnimation(v, duration, visibility);
     }
 }

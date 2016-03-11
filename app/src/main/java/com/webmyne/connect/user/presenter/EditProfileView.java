@@ -1,5 +1,7 @@
 package com.webmyne.connect.user.presenter;
 
+import android.app.Activity;
+
 import com.webmyne.connect.user.model.UserLoginOutput;
 
 /**
@@ -18,4 +20,5 @@ public interface EditProfileView {
     void showReferCodeAlert();
     void showProgress();
     void hideProgress();
+    void showNoInternetDialog(Activity activity);
 }

@@ -21,9 +21,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
-import com.webmyne.connect.commission.CommissionHistoryListActivity;
+import com.webmyne.connect.commissionHistory.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragment;
-import com.webmyne.connect.leadHistory.LeadsListActivity;
+import com.webmyne.connect.leadHistory.LeadsHistoryListActivity;
 import com.webmyne.connect.user.model.UserLoginOutput;
 import com.webmyne.connect.revenuePayment.PaymentHistoryListActivity;
 import com.webmyne.connect.revenuePayment.RedeemMoneyActivity;
@@ -257,7 +257,7 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
                                 drawerActivityPresenter.doLogout(DrawerActivity.this);
                             } else if (drawerItem.getIdentifier() == 9) {
                                 drawerItem.withSetSelected(true);
-                                intent = new Intent(DrawerActivity.this, LeadsListActivity.class);
+                                intent = new Intent(DrawerActivity.this, LeadsHistoryListActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

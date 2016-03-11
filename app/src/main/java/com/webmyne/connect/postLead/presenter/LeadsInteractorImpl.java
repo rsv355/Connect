@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
+import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.MyApplication;
 import com.webmyne.connect.postLead.api.PostLeadService;
 import com.webmyne.connect.postLead.model.MainPostLeadOutput;
