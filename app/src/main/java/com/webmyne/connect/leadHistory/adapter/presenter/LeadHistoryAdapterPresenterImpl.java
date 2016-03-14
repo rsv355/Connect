@@ -81,7 +81,7 @@ public class LeadHistoryAdapterPresenterImpl implements LeadHistoryAdapterPresen
                 //Update Height
                 int value = (Integer) valueAnimator.getAnimatedValue();
                 ViewGroup.LayoutParams layoutParams = text.getLayoutParams();
-                layoutParams.height = 50;//value;
+                layoutParams.height = value;
                 text.setLayoutParams(layoutParams);
             }
         });

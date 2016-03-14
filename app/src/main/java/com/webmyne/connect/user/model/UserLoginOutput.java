@@ -4,7 +4,7 @@ package com.webmyne.connect.user.model;
  * Created by priyasindkar on 07-03-2016.
  */
 public class UserLoginOutput {
-    public String Address, DOB, Email, Gender, Industry, Mobile, Name, ProfilePic, ResponseCode, ResponseMessage, UserReferCode, ZipCode;
+    public String Address, DOB, Email, Gender, Industry, Mobile, Name, ProfilePic, ResponseCode, ResponseMessage, UserReferCode, ZipCode, ReferCode;
     public boolean IsActive, IsActiveLead, IsKYCComplete, IsNewAccount;
     public int UserID;
     public int WalletBalance;
@@ -153,26 +153,36 @@ public class UserLoginOutput {
         IsNewAccount = newAccount;
     }
 
+    public String getReferCode() {
+        return ReferCode;
+    }
+
+    public void setReferCode(String referCode) {
+        ReferCode = referCode;
+    }
+
     @Override
     public String toString() {
         return "UserLoginOutput{" +
                 "Address='" + Address + '\'' +
                 ", DOB='" + DOB + '\'' +
                 ", Email='" + Email + '\'' +
+                ", Gender='" + Gender + '\'' +
                 ", Industry='" + Industry + '\'' +
                 ", Mobile='" + Mobile + '\'' +
                 ", Name='" + Name + '\'' +
                 ", ProfilePic='" + ProfilePic + '\'' +
                 ", ResponseCode='" + ResponseCode + '\'' +
                 ", ResponseMessage='" + ResponseMessage + '\'' +
-                ", UserID='" + UserID + '\'' +
                 ", UserReferCode='" + UserReferCode + '\'' +
-                ", WalletBalance='" + WalletBalance + '\'' +
                 ", ZipCode='" + ZipCode + '\'' +
+                ", ReferCode='" + ReferCode + '\'' +
                 ", IsActive=" + IsActive +
                 ", IsActiveLead=" + IsActiveLead +
                 ", IsKYCComplete=" + IsKYCComplete +
                 ", IsNewAccount=" + IsNewAccount +
+                ", UserID=" + UserID +
+                ", WalletBalance=" + WalletBalance +
                 '}';
     }
 }

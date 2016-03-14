@@ -1,4 +1,4 @@
-package com.webmyne.connect.revenuePayment;
+package com.webmyne.connect.revenuePayment.ui;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -17,10 +17,11 @@ import java.util.Calendar;
 /**
  * Created by priyasindkar on 16-02-2016.
  */
-public class PaymentHistoryFilterDialog extends AppCompatDialog implements View.OnClickListener{
+public class PaymentHistoryFilterDialog extends AppCompatDialog implements View.OnClickListener, PaymentHistoryDialogView{
     private AppCompatButton btnCancel, btnFilter;
     private Context mContext;
     private MaterialEditText editStartDate, editEndDate;
+    private PaymentHistoryFilterPresenter presenter;
 
     public PaymentHistoryFilterDialog(Context context) {
         super(context);
@@ -46,6 +47,7 @@ public class PaymentHistoryFilterDialog extends AppCompatDialog implements View.
         editStartDate.setOnClickListener(this);
         editEndDate = (MaterialEditText) findViewById(R.id.editEndDate);
         editEndDate.setOnClickListener(this);
+        presenter = new PaymenyHistoryFilterPresenterImpl(mContext, this);
 
     }
 
@@ -53,7 +55,7 @@ public class PaymentHistoryFilterDialog extends AppCompatDialog implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.editStartDate:
-                Calendar newCalendar = Calendar.getInstance();
+               /* Calendar newCalendar = Calendar.getInstance();
                 DatePickerDialog fromDatePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -64,28 +66,27 @@ public class PaymentHistoryFilterDialog extends AppCompatDialog implements View.
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
                 fromDatePickerDialog.getDatePicker().setMinDate(newCalendar.getTimeInMillis());
-                fromDatePickerDialog.show();
+                fromDatePickerDialog.show();*/
+                presenter.showDatePicker(editStartDate);
                 break;
 
             case R.id.editEndDate:
-                newCalendar = Calendar.getInstance();
-                DatePickerDialog toDatePickerDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        editEndDate.setText(sdf.format(newDate.getTime()));
-                    }
-                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
-                toDatePickerDialog.getDatePicker().setMinDate(newCalendar.getTimeInMillis());
-                toDatePickerDialog.show();
+                presenter.showDatePicker(editEndDate);
                 break;
             case R.id.btnFilter:
+                presenter = null;
+                dismiss();
                 break;
             case R.id.btnCancel:
+                presenter = null;
                 dismiss();
                 break;
         }
+    }
+
+    @Override
+    public void setDate(String date, MaterialEditText editText) {
+        editText.setText(date);
+
     }
 }

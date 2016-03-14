@@ -1,10 +1,14 @@
 package com.webmyne.connect.user.presenter;
 
 import android.app.Activity;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.webmyne.connect.R;
@@ -12,7 +16,9 @@ import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.user.model.UserLoginOutput;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by priyasindkar on 22-02-2016.
@@ -60,14 +66,14 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
 
     @Override
     public void setToolBarOffset(Activity activity, AppBarLayout appBarLayout, int offset, Toolbar toolbar) {
-       Functions.setToolBarOffset(activity, appBarLayout, offset, toolbar);
+        Functions.setToolBarOffset(activity, appBarLayout, offset, toolbar);
     }
 
     @Override
     public void validateFormFields(Activity activity, String name, String emailId, String DOB, String mobile,
-                                   String zipcode, String location, String gender, int userId) {
+                                   String zipcode, String location, String indutry, String gender, int userId) {
 
-        if( Functions.checkInternet(activity)) {
+        if (Functions.checkInternet(activity)) {
             if (name.trim().length() == 0) {
                 if (editProfileView != null) {
                     editProfileView.setNameError(activity.getString(R.string.name_empty_validation));
@@ -80,9 +86,25 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
                 if (editProfileView != null) {
                     editProfileView.setEmailError(activity.getString(R.string.email_invalid_validation));
                 }
+            } else if (DOB.trim().length() == 0) {
+                if (editProfileView != null) {
+                    editProfileView.setDOBError(activity.getString(R.string.dob_empty_validation));
+                }
             } else if (mobile.trim().length() != 0 && mobile.trim().length() != 10) {
                 if (editProfileView != null) {
                     editProfileView.setMobileError(activity.getString(R.string.mobile_invalid_validation));
+                }
+            } else if (zipcode.trim().length() == 0) {
+                if (editProfileView != null) {
+                    editProfileView.setZipcodError(activity.getString(R.string.zipcode_empty_validation));
+                }
+            }  else if (indutry.trim().length() == 0) {
+                if (editProfileView != null) {
+                    editProfileView.setIndustryError(activity.getString(R.string.industry_empty_validation));
+                }
+            } else if (location.trim().length() == 0) {
+                if (editProfileView != null) {
+                    editProfileView.setAddressError(activity.getString(R.string.address_empty_validation));
                 }
             } else {
                 if (editProfileView != null) {
@@ -94,14 +116,45 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
                     userLoginOutput.setZipCode(zipcode);
                     userLoginOutput.setAddress(location);
                     userLoginOutput.setGender(gender);
+                    userLoginOutput.setIndustry(indutry);
                     userLoginOutput.setUserID(userId);
                     editProfileView.onValidationSuccess(true, userLoginOutput);
                 }
             }
         } else {
-            if(editProfileView != null) {
+            if (editProfileView != null) {
                 editProfileView.showNoInternetDialog(activity);
             }
+        }
+    }
+
+    @Override
+    public void getAddressesFromZipcode(Activity activity, String zipcode) {
+        final Geocoder geocoder = new Geocoder(activity);
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(zipcode, 10);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                /*String message = String.format("Latitude: %f, Longitude: %f",
+                        address.getLatitude(), address.getLongitude());*/
+
+                String[] addressList = new String[addresses.size()];
+                if (addresses != null) {
+
+                    for (int j = 0; j < addresses.size(); j++) {
+                        Address returnedAddress = addresses.get(j);
+                        StringBuilder strReturnedAddress = new StringBuilder();
+                        for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
+                            strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                        }
+                        addressList[j] = strReturnedAddress.toString();
+                    }
+                }
+                if (editProfileView != null) {
+                    editProfileView.setAddressList(addressList);
+                }
+            }
+        } catch (IOException e) {
         }
     }
 
@@ -145,6 +198,6 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
 
     @Override
     public void startAlphaAnimation(View v, long duration, int visibility) {
-       Functions.startAlphaAnimation(v, duration, visibility);
+        Functions.startAlphaAnimation(v, duration, visibility);
     }
 }

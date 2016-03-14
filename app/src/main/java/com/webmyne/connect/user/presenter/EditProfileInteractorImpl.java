@@ -1,6 +1,7 @@
 package com.webmyne.connect.user.presenter;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
@@ -27,6 +28,7 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
     @Override
     public void doCallUpdateUserService(final Activity activity, UserLoginOutput userLoginOutput) {
         if (userLoginOutput != null) {
+            Log.e("userLoginOutput", userLoginOutput.toString());
             UpdateUserService updateUserService = MyApplication.retrofit.create(UpdateUserService.class);
             Call<MainUserLoginResponse> call = updateUserService.doUserProfileUpdate(userLoginOutput);
 
@@ -37,6 +39,7 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
                         if (response.body().UserLoginOutput != null) {
                             UserLoginOutput user = response.body().UserLoginOutput;
                             if (user.ResponseMessage.equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
+                                Log.e("success user", user.toString());
                                 saveUpdatedUser(activity, user);
                                 onUpdateUser(true, activity.getString(R.string.update_user_success), "");
                             } else {

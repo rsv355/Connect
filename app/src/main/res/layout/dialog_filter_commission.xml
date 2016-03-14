@@ -139,34 +139,6 @@
                 android:id="@+id/verticalList"
                 layout="@layout/vertical_items_checklist" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/std_margin"
-                android:padding="@dimen/small_margin"
-                android:text="@string/search_lead_status"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/small_normal_text_size" />
-
-            <include
-                android:id="@+id/leadStatusList"
-                layout="@layout/lead_status_checklist" />
-
-
-            <!--<com.webmyne.connect.customUI.FlowLayout
-                android:id="@+id/linearVerticalsList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.webmyne.connect.customUI.FlowLayout>-->
-
-
-            <!--  <com.webmyne.connect.customUI.FlowLayout
-                  android:id="@+id/linearLeadStatusList"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"></com.webmyne.connect.customUI.FlowLayout>-->
-
-
         </LinearLayout>
     </ScrollView>
 

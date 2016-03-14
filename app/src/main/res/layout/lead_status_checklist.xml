@@ -15,18 +15,18 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:id="@+id/checkboxAI"
+            android:id="@+id/checkboxInProgress"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/auto_insurance" />
+            android:text="@string/in_progress" />
 
         <CheckBox
-            android:id="@+id/checkboxAF"
+            android:id="@+id/checkboxVerificationDone"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/auto_finance" />
+            android:text="@string/verification_done" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,18 +40,18 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:id="@+id/checkboxHI"
+            android:id="@+id/checkboxActive"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/health_insurance" />
+            android:text="@string/active" />
 
         <CheckBox
-            android:id="@+id/checkboxLI"
+            android:id="@+id/checkboxSold"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/life_insurance" />
+            android:text="@string/sold" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,17 +65,17 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:id="@+id/checkboxHO"
+            android:id="@+id/checkboxExpired"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="@string/home_insurance" />
+            android:text="@string/expired" />
 
         <CheckBox
-            android:id="@+id/checkboxNC"
+            android:id="@+id/checkboxUserNotInterested"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="@string/new_car" />
+            android:text="@string/user_denied" />
     </LinearLayout>
 </LinearLayout>

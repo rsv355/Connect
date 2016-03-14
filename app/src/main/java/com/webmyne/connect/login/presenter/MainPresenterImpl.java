@@ -82,8 +82,18 @@ public class MainPresenterImpl implements MainPresenter{
         SharedPreferences sharedPreferences = activity.getSharedPreferences("login-user-prefs", activity.MODE_PRIVATE);
         sharedPreferences.edit().putBoolean("isUserLoggedIn", true).commit();
 
+        if(userLoginOutput.isNewAccount()) {
+            SharedPreferences sharedPreferences1 = activity.getSharedPreferences("user-prefs", activity.MODE_PRIVATE);
+            sharedPreferences1.edit().putBoolean("isFirstTimeLogin", true).commit();
+        } else {
+            SharedPreferences sharedPreferences1 = activity.getSharedPreferences("user-prefs", activity.MODE_PRIVATE);
+            sharedPreferences1.edit().clear().commit();
+        }
+
         ComplexPreferences complexPreferences = new ComplexPreferences(activity, "login-user", activity.MODE_PRIVATE );
         complexPreferences.putObject("loggedInUser", userLoginOutput);
         complexPreferences.commit();
+
+
     }
 }

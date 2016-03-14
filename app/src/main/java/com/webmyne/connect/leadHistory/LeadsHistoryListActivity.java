@@ -12,12 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -31,7 +29,7 @@ import com.webmyne.connect.leadHistory.adapter.LeadsListAdapter;
 import com.webmyne.connect.leadHistory.model.LeadDataObject;
 import com.webmyne.connect.leadHistory.presenter.LeadsHistoryPresenter;
 import com.webmyne.connect.leadHistory.presenter.LeadsHistoryPresenterImpl;
-import com.webmyne.connect.postLead.ui.LeadsFilterDialog;
+import com.webmyne.connect.leadHistory.ui.LeadsHistoryFilterDialog;
 
 /**
  * Created by priyasindkar on 16-02-2016.
@@ -85,7 +83,8 @@ public class LeadsHistoryListActivity extends AppCompatActivity implements Swipe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LeadsFilterDialog filterDialog = new LeadsFilterDialog(LeadsHistoryListActivity.this, R.style.CustomAlertDialogStyle);
+                LeadsHistoryFilterDialog filterDialog = new LeadsHistoryFilterDialog(LeadsHistoryListActivity.this, R.style.CustomAlertDialogStyle);
+                filterDialog.getWindow().getAttributes().width = (int) (Functions.getDeviceMetrics(LeadsHistoryListActivity.this).widthPixels * 0.8);
                 filterDialog.show();
             }
         });

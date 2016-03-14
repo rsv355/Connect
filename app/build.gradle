@@ -80,4 +80,5 @@ dependencies {
 
     //footer loader
     compile 'com.github.ndczz:infinity-loading:0.4'
+    compile 'com.github.Jungerr:GridPasswordView:V0.3'
 }

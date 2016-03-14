@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.graphics.Color;
 import android.util.Base64;
 import android.util.Log;
 
@@ -16,6 +15,9 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.CustomAwesomeSplash;
 import com.webmyne.connect.customUI.CustomConfigSplash;
+import com.webmyne.connect.login.MainActivity;
+import com.webmyne.connect.user.EditProfileActivity;
+import com.webmyne.connect.user.presenter.EditProfileView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -91,10 +93,17 @@ public class SplashActivity extends CustomAwesomeSplash {
         SharedPreferences preferences = getSharedPreferences("login-user-prefs", MODE_PRIVATE);
         boolean isUserLoggedIn = preferences.getBoolean("isUserLoggedIn", false);
         Intent intent = null;
-        if( !isUserLoggedIn) {
-            intent = new Intent(SplashActivity.this, MainActivity.class);
+
+        SharedPreferences sharedPreferences1 = getSharedPreferences("user-prefs", MODE_PRIVATE);
+        boolean isFirstTimeLogin = sharedPreferences1.getBoolean("isFirstTimeLogin", false);
+        if(isFirstTimeLogin) {
+            intent = new Intent(SplashActivity.this, EditProfileActivity.class);
         } else {
-            intent = new Intent(SplashActivity.this, DrawerActivity.class);
+            if( !isUserLoggedIn) {
+                intent = new Intent(SplashActivity.this, MainActivity.class);
+            } else {
+                intent = new Intent(SplashActivity.this, DrawerActivity.class);
+            }
         }
         startActivity(intent);
         finish();

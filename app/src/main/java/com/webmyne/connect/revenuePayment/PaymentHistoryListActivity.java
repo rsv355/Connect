@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.webmyne.connect.R;
+import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
+import com.webmyne.connect.revenuePayment.ui.PaymentHistoryFilterDialog;
 
 import java.util.ArrayList;
 
@@ -51,6 +53,7 @@ public class PaymentHistoryListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PaymentHistoryFilterDialog filterDialog = new PaymentHistoryFilterDialog(PaymentHistoryListActivity.this, R.style.CustomAlertDialogStyle);
+                filterDialog.getWindow().getAttributes().width = (int) (Functions.getDeviceMetrics(PaymentHistoryListActivity.this).widthPixels * 0.8);
                 filterDialog.show();
 
             }

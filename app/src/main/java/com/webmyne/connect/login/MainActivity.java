@@ -1,7 +1,8 @@
-package com.webmyne.connect.base;
+package com.webmyne.connect.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -23,10 +24,12 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.base.DrawerActivity;
 import com.webmyne.connect.login.presenter.MainPresenterImpl;
 import com.webmyne.connect.login.presenter.LoginView;
 import com.webmyne.connect.login.presenter.LoginPresenter;
 import com.webmyne.connect.login.presenter.LoginPresenterImp;
+import com.webmyne.connect.user.EditProfileActivity;
 import com.webmyne.connect.user.model.UserLoginOutput;
 import com.webmyne.connect.login.model.UserProfile;
 import com.webmyne.connect.customUI.CustomProgressDialog;
@@ -159,15 +162,8 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
         switch (rippleView.getId()) {
             case R.id.facebookRipple:
                 loginPresenter.doFacebookLogin(MainActivity.this);
-                //Functions.getGCMid(MainActivity.this);
                 break;
             case R.id.googleRipple:
-               /* SharedPreferences preferences = getSharedPreferences("user_login", 0);
-                preferences = getSharedPreferences("user_login", 0);
-                preferences.edit().putBoolean("isUserLoggedIn", true).commit();
-                Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);*/
                 loginPresenter.doGoogleLogin(MainActivity.this, mGoogleApiClient);
                 break;
         }
@@ -200,9 +196,15 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
 
     @Override
     public void onLoginSuccess(UserLoginOutput userLoginOutput, String success) {
-        //Functions.getSimpleOkAlterDialog(MainActivity.this, success, "Ok").show();
         mainPresenterImpl.saveLoggedInUser(MainActivity.this, userLoginOutput);
-        Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
+        Intent intent = null;
+        if(userLoginOutput.getZipCode() == null || userLoginOutput.getZipCode().trim().length() == 0) {
+            SharedPreferences sharedPreferences1 = getSharedPreferences("user-prefs", MODE_PRIVATE);
+            sharedPreferences1.edit().putBoolean("isFirstTimeLogin", true).commit();
+            intent = new Intent(MainActivity.this, EditProfileActivity.class);
+        } else {
+            intent = new Intent(MainActivity.this, DrawerActivity.class);
+        }
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
@@ -221,6 +223,5 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
     public void hideProgressDialog() {
         progressDialog.hide();
     }
-
     //end of class
 }

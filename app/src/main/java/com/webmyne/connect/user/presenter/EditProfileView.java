@@ -13,7 +13,13 @@ public interface EditProfileView {
     void setNameError(String errorString);
     void setEmailError(String errorString);
     void setMobileError(String errorString);
+    void setDOBError(String errorString);
+    void setZipcodError(String errorString);
+    void setIndustryError(String errorString);
+    void setAddressError(String errorString);
+    void setAddressList(String[] addresses);
     void onValidationSuccess(boolean isValid, UserLoginOutput userLoginOutput);
+    void onReferCodeAdd(boolean isReferCodeAdded,String referCode);
     void onUpdateUserSuccess(String successString);
     void onUpdateUserFail(String errorString);
     void initUI(UserLoginOutput currentUser);

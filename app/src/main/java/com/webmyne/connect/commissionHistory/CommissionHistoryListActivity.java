@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -23,11 +25,13 @@ import com.webmyne.connect.commissionHistory.model.CommissionDataObject;
 import com.webmyne.connect.commissionHistory.presenter.CommissionHistoryPresenter;
 import com.webmyne.connect.commissionHistory.presenter.CommissionHistoryPresenterImpl;
 import com.webmyne.connect.commissionHistory.presenter.CommissionHistoryView;
+import com.webmyne.connect.commissionHistory.ui.CommissionHistoryFilterDialog;
 import com.webmyne.connect.customUI.CustomProgressDialog;
 import com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerView;
 import com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerViewOnScrollListener;
 import com.webmyne.connect.leadHistory.adapter.LeadsListAdapter;
 import com.webmyne.connect.leadHistory.model.LeadDataObject;
+import com.webmyne.connect.leadHistory.ui.LeadsHistoryFilterDialog;
 
 import java.util.ArrayList;
 
@@ -35,9 +39,11 @@ import java.util.ArrayList;
  * Created by priyasindkar on 16-02-2016.
  */
 public class CommissionHistoryListActivity extends AppCompatActivity implements CommissionHistoryView, SwipeRefreshLayout.OnRefreshListener {
-    private Toolbar toolbar;
     private CustomProgressDialog progressDialog;
     private FamiliarRecyclerView recyclerView;
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbar;
+    private FloatingActionButton fab;
     private SwipeRefreshLayout refreshLayout;
     private View footerView, emptyLayout;
     private int USER_ID = 1;
@@ -51,17 +57,21 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
     }
 
     private void init() {
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(getString(R.string.commission_history_title));
+        collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedAppBarTitleStyle);
+        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedAppBarTitleStyle);
         toolbar = (Toolbar) findViewById(R.id.anim_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.commission_history_title));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setNavigationIcon(R.drawable.ic_navigation_close);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         progressDialog = new CustomProgressDialog(CommissionHistoryListActivity.this);
         progressDialog.setCancelable(false);
@@ -69,6 +79,15 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
         initRecyclerView();
         presenter = new CommissionHistoryPresenterImpl(CommissionHistoryListActivity.this, this);
         presenter.fetchLeadData(false, USER_ID);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommissionHistoryFilterDialog filterDialog = new CommissionHistoryFilterDialog(CommissionHistoryListActivity.this, R.style.CustomAlertDialogStyle);
+                filterDialog.getWindow().getAttributes().width = (int) (Functions.getDeviceMetrics(CommissionHistoryListActivity.this).widthPixels * 0.8);
+                filterDialog.show();
+            }
+        });
     }
 
     @Override

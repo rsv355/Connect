@@ -7,12 +7,15 @@ package com.webmyne.connect.leadHistory.adapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -100,6 +103,7 @@ public class LeadsListAdapter extends RecyclerView.Adapter<LeadsListAdapter.Data
         holder.txtDateTime.setTextColor(Color.parseColor("#494949"));
         holder.labelStatus.setNum(LeadStatuses.getStatusMSG(Integer.parseInt(mDataset.get(position).getStatus())));
         holder.labelStatus.setBackGroundColor(LeadStatuses.getStatusColor(Integer.parseInt(mDataset.get(position).getStatus())));
+        holder.txtDescription.setText(LeadStatuses.getStatusDesc(Integer.parseInt(mDataset.get(position).getStatus())));
 
        /* if (status.equals("ACTIVE")) {
             holder.labelStatus.setBackGroundColor(mContext.getResources().getColor(R.color.primaryTextColor));

@@ -12,6 +12,13 @@
     <string name="home_insurance">Home Insurance</string>
     <string name="new_car">New Car</string>
 
+    <string name="in_progress">In Progress</string>
+    <string name="verification_done">Reference Verified</string>
+    <string name="active">Active</string>
+    <string name="sold">Sold</string>
+    <string name="expired">Expired</string>
+    <string name="user_denied">User Not Interested</string>
+
     <string name="filter_leads">Filter Leads</string>
     <string name="filter_revenue_history">Filter Revenue History</string>
     <string name="filter_add_refer">Add Refer Code</string>
@@ -55,9 +62,14 @@
     <string name="login_successful">Login Successful</string>
     <string name="name_empty_validation">Name Cannot Be Empty</string>
     <string name="email_empty_validation">Email Cannot Be Empty</string>
+    <string name="dob_empty_validation">Date Of Birth Cannot Be Empty</string>
+    <string name="zipcode_empty_validation">Zipcode Cannot Be Empty</string>
+    <string name="industry_empty_validation">Industry Cannot Be Empty</string>
+    <string name="address_empty_validation">Address Cannot Be Empty</string>
     <string name="email_invalid_validation">Invalid Email Id</string>
     <string name="mobile_mandatory_validation">Contact No. Cannot Be Empty</string>
     <string name="mobile_invalid_validation">Invalid Mobile No.</string>
+    <string name="refer_code_entry_text">Do You Have Your Friend\'s Refer Code?</string>
     <string name="update_user_error">Error Was Encountered. Please Try Again.</string>
     <string name="update_user_failed">Update Failed. Please Try Again.</string>
     <string name="update_user_success">Profile Updated Successfully</string>
@@ -74,10 +86,26 @@
     <string name="contact_not_picker">Contact Cannot Be Picked. Please Enter Contact Details</string>
 
     <!-- Buttons and static screens-->
+    <string name="hint_industry">Enter Industry</string>
+    <string name="hint_full_name">Enter Full Name</string>
+    <string name="hint_phone">Enter Contact Number</string>
+    <string name="hint_email">Enter Email Id</string>
+    <string name="hint_zipcode">Enter Zipcode</string>
+    <string name="hint_address">Enter Address</string>
+    <string name="hint_dob">Enter Date Of Birth</string>
+
     <string name="Decline">Decline</string>
     <string name="Accept">Accept</string>
+    <string name="hint_keyword">Search By Keyword</string>
+    <string name="hint_name">Search By Name</string>
+    <string name="hint_contact">Search By Contact No.</string>
+    <string name="search_verticals">Search By Verticals</string>
+    <string name="search_lead_status">Search By Lead Status</string>
+    <string name="add_refer_code">Add Refer Code</string>
+    <string name="cancel">Cancel</string>
 
-
+    <string name="No">No, I don\'t have</string>
+    <string name="Yes">Yes, I have</string>
     <!-- Codes -->
     <string name="success_response_code">Successful</string>
 

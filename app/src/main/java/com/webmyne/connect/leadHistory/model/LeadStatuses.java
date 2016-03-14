@@ -8,8 +8,8 @@ import com.webmyne.connect.R;
 public class LeadStatuses {
 
     public enum test1 {
-        IN_PROGRESS(0, "InProcess", "Your submission is in process", R.color.accent_A200),
-        VERIFICATION_DONE(1, "Verification Done", "User verification done", R.color.cyan_color),
+        IN_PROGRESS(0, "In Process", "Your submission is in process", R.color.accent_A200),
+        VERIFICATION_DONE(1, "Reference Verified", "User reference verification done", R.color.cyan_color),
         ACTIVE(2, "Active", "Your lead is now active!", R.color.green_color),
         SOLD(3, "Sold", "Congratulations! Your need sold", R.color.appYellowColor),
         EXPIRED(4, "Expired", "Sorry! Your lead expired", R.color.google),
