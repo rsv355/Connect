@@ -199,6 +199,19 @@
                     app:met_textColorHint="@color/colorPrimary" />
 
                 <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/editStreetNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:hint="@string/hint_street_no"
+                    android:inputType="text"
+                    app:met_baseColor="@color/colorPrimary"
+                    app:met_floatingLabel="highlight"
+                    app:met_iconLeft="@drawable/ic_profile_location"
+                    app:met_primaryColor="@color/primaryTextColor"
+                    app:met_textColorHint="@color/colorPrimary" />
+
+                <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
                     android:id="@+id/editIndustry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

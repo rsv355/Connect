@@ -20,12 +20,14 @@ import android.widget.TextView;
 
 import com.andexert.library.RippleView;
 import com.webmyne.connect.R;
+import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 import com.webmyne.connect.leadHistory.LeadsHistoryListActivity;
 import com.webmyne.connect.postLead.PostLeadActivity;
+import com.webmyne.connect.user.model.UserLoginOutput;
 
 import java.util.ArrayList;
 
@@ -33,15 +35,15 @@ import java.util.ArrayList;
  * Created by priyasindkar on 12-02-2016.
  */
 public class DashboardFragment extends Fragment {
-    private View aiVerticalView, afVerticalView, hiVerticalView, liVerticalView, hoVerticalView, ncVerticalView;
+    private View view, aiVerticalView, afVerticalView, hiVerticalView, liVerticalView, hoVerticalView, ncVerticalView;
     private ImageView aiImgVertical, afImgVertical, hiImgVertical, liImgVertical, hoiImgVertical, ncImgVertical;
     private TextView txtDashboardMessage, aiTextVertical, afTextVertical, hiTextVertical, liTextVertical, hoiTextVertical, ncTextVertical, txtViewMoreButton;
     private RippleView aiRippleView, afRippleView, hiRippleView, liRippleView, hoRippleView, ncRippleView;
-    private LinearLayout linearTop,linearMiddle,linearBottom;
+    private LinearLayout linearTop, linearMiddle, linearBottom;
     private Activity activity;
     private RippleView viewMoreRipple;
     private FloatingActionButton fab;
-    private static boolean isLeadPosted;
+    private UserLoginOutput currentUser;
 
     private OnVerticalClickListener onVerticalClickListener;
 
@@ -61,21 +63,24 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isLeadPosted = getArguments().getBoolean("isLeadPosted", false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, null);
+        view = inflater.inflate(R.layout.fragment_dashboard, null);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         activity = getActivity();
         init(view);
-
-        return view;
     }
 
     private void init(View view) {
         txtDashboardMessage = (TextView) view.findViewById(R.id.txtDashboardMessage);
-        txtDashboardMessage.setTypeface(Functions.getTypeFace(getActivity()));
+        txtDashboardMessage.setTypeface(Functions.getTypeFace(activity));
 
         aiVerticalView = view.findViewById(R.id.aiVerticalView);
         afVerticalView = view.findViewById(R.id.afVerticalView);
@@ -85,8 +90,16 @@ public class DashboardFragment extends Fragment {
         ncVerticalView = view.findViewById(R.id.ncVerticalView);
 
         viewMoreRipple = (RippleView) view.findViewById(R.id.viewMoreRipple);
-        if(isLeadPosted) {
-            viewMoreRipple.setVisibility(View.VISIBLE);
+        ComplexPreferences complexPreferences = new ComplexPreferences(activity, "login-user", activity.MODE_PRIVATE);
+        currentUser = complexPreferences.getObject("loggedInUser", UserLoginOutput.class);
+        if (currentUser != null) {
+            if(currentUser.isActiveLead()) {
+                viewMoreRipple.setVisibility(View.VISIBLE);
+            } else {
+                viewMoreRipple.setVisibility(View.GONE);
+            }
+        } else {
+            viewMoreRipple.setVisibility(View.GONE);
         }
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
@@ -129,18 +142,22 @@ public class DashboardFragment extends Fragment {
         setVerticalView(ncImgVertical, ncTextVertical, Constants.VERTICAL_NAMES.get(5), Constants.VERTICAL_SHORT_NAMES.get(5), color.get(5));
 
         //Left to right animation
-        Animator AIanim = ObjectAnimator.ofFloat(aiVerticalView, "translationX",-200,0);
-        Animator HIanim = ObjectAnimator.ofFloat(hiVerticalView, "translationX",-200,0);
-        Animator HOanim = ObjectAnimator.ofFloat(hoVerticalView, "translationX",-200,0);
+        Animator AIanim = ObjectAnimator.ofFloat(aiVerticalView, "translationX", -200, 0);
+        Animator HIanim = ObjectAnimator.ofFloat(hiVerticalView, "translationX", -200, 0);
+        Animator HOanim = ObjectAnimator.ofFloat(hoVerticalView, "translationX", -200, 0);
 
-        AIanim.setDuration(500);HIanim.setDuration(500);HOanim.setDuration(500);
+        AIanim.setDuration(500);
+        HIanim.setDuration(500);
+        HOanim.setDuration(500);
 
         //Right to left animation
-        Animator AFanim = ObjectAnimator.ofFloat(afVerticalView, "translationX",200,0);
-        Animator LIanim = ObjectAnimator.ofFloat(liVerticalView, "translationX",200,0);
-        Animator NCanim = ObjectAnimator.ofFloat(ncVerticalView, "translationX",200,0);
+        Animator AFanim = ObjectAnimator.ofFloat(afVerticalView, "translationX", 200, 0);
+        Animator LIanim = ObjectAnimator.ofFloat(liVerticalView, "translationX", 200, 0);
+        Animator NCanim = ObjectAnimator.ofFloat(ncVerticalView, "translationX", 200, 0);
 
-        AFanim.setDuration(500);LIanim.setDuration(500);NCanim.setDuration(500);
+        AFanim.setDuration(500);
+        LIanim.setDuration(500);
+        NCanim.setDuration(500);
 
         final AnimatorSet animatorSetTopRow = new AnimatorSet();
         final AnimatorSet animatorSetMiddleRow = new AnimatorSet();
@@ -150,25 +167,23 @@ public class DashboardFragment extends Fragment {
         animatorSetMiddleRow.playTogether(HIanim, LIanim);
         animatorSetBottomRow.playTogether(HOanim, NCanim);
 
-        linearTop = (LinearLayout)view.findViewById(R.id.linearTop);
-        linearMiddle = (LinearLayout)view.findViewById(R.id.linearMiddle);
-        linearBottom = (LinearLayout)view.findViewById(R.id.linearBottom);
+        linearTop = (LinearLayout) view.findViewById(R.id.linearTop);
+        linearMiddle = (LinearLayout) view.findViewById(R.id.linearMiddle);
+        linearBottom = (LinearLayout) view.findViewById(R.id.linearBottom);
 
         linearTop.setVisibility(View.VISIBLE);
-        linearTop.setAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+        linearTop.setAnimation(AnimationUtils.loadAnimation(activity, android.R.anim.fade_in));
         animatorSetTopRow.start();
         animatorSetTopRow.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 linearMiddle.setVisibility(View.GONE);
-
-                // linearTop.setAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 linearMiddle.setVisibility(View.VISIBLE);
-                linearMiddle.setAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                linearMiddle.setAnimation(AnimationUtils.loadAnimation(activity, android.R.anim.fade_in));
                 animatorSetMiddleRow.start();
             }
 
@@ -192,7 +207,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animator animation) {
                 linearBottom.setVisibility(View.VISIBLE);
-                linearBottom.setAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                linearBottom.setAnimation(AnimationUtils.loadAnimation(activity, android.R.anim.fade_in));
                 animatorSetBottomRow.start();
 
             }
@@ -218,7 +233,7 @@ public class DashboardFragment extends Fragment {
         });
     }
 
-    private void setVerticalView (ImageView verticalImageView, TextView verticalTextView, String verticalName, String shortName, int index) {
+    private void setVerticalView(ImageView verticalImageView, TextView verticalTextView, String verticalName, String shortName, int index) {
         int color = ColorGenerator.MATERIAL.getColorAtIndex(index);
         TextDrawable drawable2 = TextDrawable.builder().buildRound(shortName, color);
         verticalImageView.setImageDrawable(drawable2);
@@ -229,7 +244,7 @@ public class DashboardFragment extends Fragment {
 
         verticalTextView.setText(verticalName);
         verticalTextView.setTextColor(color);
-        verticalTextView.setTypeface(Functions.getTypeFace(getActivity()), Typeface.BOLD);
+        verticalTextView.setTypeface(Functions.getTypeFace(activity), Typeface.BOLD);
     }
 
     private class OnVerticalClickListener implements RippleView.OnRippleCompleteListener {

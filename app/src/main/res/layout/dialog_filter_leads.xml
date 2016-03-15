@@ -7,10 +7,10 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_alignParentTop="true"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -26,9 +26,9 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,42 +48,6 @@
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/primaryTextColor"
                 app:met_textColorHint="@color/colorPrimary" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/std_margin"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edtName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/small_margin"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_name"
-                    android:inputType="text"
-                    android:textSize="@dimen/small_normal_text_size"
-                    app:met_baseColor="@color/colorPrimary"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryTextColor"
-                    app:met_textColorHint="@color/colorPrimary" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/edtMobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/small_margin"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_contact"
-                    android:inputType="text"
-                    android:textSize="@dimen/small_normal_text_size"
-                    app:met_baseColor="@color/colorPrimary"
-                    app:met_floatingLabel="highlight"
-                    app:met_primaryColor="@color/primaryTextColor"
-                    app:met_textColorHint="@color/colorPrimary" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,19 +135,11 @@
     </ScrollView>
 
     <LinearLayout
-       android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/std_margin"
         android:gravity="right">
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnFilter"
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filter" />
-
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnCancel"
@@ -192,5 +148,18 @@
             android:layout_height="wrap_content"
             android:text="Cancel" />
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnClearFilter"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear Filter" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnFilter"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter" />
     </LinearLayout>
 </RelativeLayout>

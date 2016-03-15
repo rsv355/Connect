@@ -3,36 +3,35 @@ package com.webmyne.connect.Utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.media.VolumeProviderCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
+import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.webmyne.connect.R;
-import com.webmyne.connect.base.DrawerActivity;
-import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
-import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 import com.webmyne.connect.listeners.OnAlertButtonClicked;
 
+import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,13 +82,12 @@ public class Functions {
 
     public static AlertDialog.Builder showAlterDialog(Context ctx, String title, String positiveMessage) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(ctx, R.style.MaterialBaseTheme_Light_AlertDialog);
-        //builder.setTitle(title);
         builder.setMessage(title);
         builder.setPositiveButton(positiveMessage, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                onAlertButtonClicked.onAlertButtonClicked();
                 dialog.dismiss();
+                onAlertButtonClicked.onAlertButtonClicked();
             }
         });
         return builder;
@@ -174,5 +172,36 @@ public class Functions {
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(_ctx.getResources().getColor(R.color.accent_A100));
         snackbar.show();
+    }
+
+    public static int[] convertHashMapToIntArray(HashMap<Integer, Integer> map) {
+        int[] array = new int[map.size()];
+        int i = 0;
+        Set entries = map.entrySet();
+        Iterator entriesIterator = entries.iterator();
+        while (entriesIterator.hasNext()) {
+            Map.Entry pair = (Map.Entry) entriesIterator.next();
+            array[i] = (int) pair.getKey();
+            i++;
+        }
+        return array;
+    }
+
+    public static boolean validateStartEndDates(String startDateStr, String endDateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate, endDate = null;
+        boolean result = false;
+        try {
+            endDate = sdf.parse(endDateStr.trim());
+            startDate = sdf.parse(startDateStr);
+
+            if (startDate.after(endDate)) {
+                result = false;
+            } else {
+                result = true;
+            }
+        } catch (ParseException e) {
+        }
+        return result;
     }
 }

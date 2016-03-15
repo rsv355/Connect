@@ -1,4 +1,4 @@
-package com.webmyne.connect.revenuePayment;
+package com.webmyne.connect.revenuePayment.model;
 
 /**
  * Created by priyasindkar on 12-02-2016.

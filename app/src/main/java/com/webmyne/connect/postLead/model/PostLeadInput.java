@@ -14,11 +14,11 @@ public class PostLeadInput {
     }
 
     public PostLeadInput(String description, String REmail, String RMobile, String RName, int userID, int[] lstLeadTypeId) {
-        Description = description;
+        this.Description = description;
         this.REmail = REmail;
         this.RMobile = RMobile;
         this.RName = RName;
-        UserID = userID;
+        this.UserID = userID;
         this.lstLeadTypeId = lstLeadTypeId;
     }
 

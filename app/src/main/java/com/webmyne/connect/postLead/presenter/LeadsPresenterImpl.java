@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 
@@ -103,8 +104,8 @@ public class LeadsPresenterImpl implements LeadsPresenter {
             int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
             phoneNo = cursor.getString(phoneIndex);
             name = cursor.getString(nameIndex);
-
-            if(name != null && phoneNo != null) {
+            cursor.close();
+            if (name != null && phoneNo != null) {
                 if (leadsView != null) {
                     leadsView.setContactPickedDetails(name, phoneNo);
                 }
@@ -116,9 +117,11 @@ public class LeadsPresenterImpl implements LeadsPresenter {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("exp", e.toString());
+            cursor.close();
         }
     }
+
 
     @Override
     public void validateFormFields(Activity activity, String name, String emailId, String contactNo) {

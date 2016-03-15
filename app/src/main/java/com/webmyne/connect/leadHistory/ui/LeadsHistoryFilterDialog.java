@@ -9,10 +9,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
 import com.webmyne.connect.customUI.FlowLayout;
 import com.webmyne.connect.leadHistory.model.LeadDataObject;
+import com.webmyne.connect.leadHistory.model.LeadHistoryRequest;
 import com.webmyne.connect.leadHistory.model.LeadStatusObject;
+import com.webmyne.connect.leadHistory.presenter.LeadsHistoryView;
 import com.webmyne.connect.postLead.model.VerticalDataObject;
 
 import java.util.HashMap;
@@ -24,15 +27,16 @@ import java.util.Set;
 /**
  * Created by priyasindkar on 16-02-2016.
  */
-public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.OnClickListener, LeadsHistoryFilterView{
-    private AppCompatButton btnCancel, btnFilter;
+public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.OnClickListener, LeadsHistoryFilterView {
+    private AppCompatButton btnCancel, btnFilter, btnClearFilter;
+    private MaterialEditText edtKeyword, editStartDate, editEndDate;
     private View verticalList, leadStatusList;
     private Context mContext;
     private LeadsHistoryFilterPresenter presenter;
+    private LeadHistoryListFilterCommunicatorView communicatorView;
     private HashMap<Integer, Integer> selectedVerticals = new HashMap<>();
     private HashMap<Integer, Integer> selectedLeadStatuses = new HashMap<>();
-    private CheckBox checkboxAI, checkboxAF, checkboxHI,checkboxLI, checkboxHO, checkboxNC, checkboxInProgress, checkboxVerificationDone
-            , checkboxActive, checkboxSold,checkboxUserNotInterested, checkboxExpired;
+    private CheckBox checkboxAI, checkboxAF, checkboxHI, checkboxLI, checkboxHO, checkboxNC, checkboxInProgress, checkboxVerificationDone, checkboxActive, checkboxSold, checkboxUserNotInterested, checkboxExpired;
 
 
     public LeadsHistoryFilterDialog(Context context) {
@@ -40,9 +44,10 @@ public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.On
         mContext = context;
     }
 
-    public LeadsHistoryFilterDialog(Context context, int themeResId) {
+    public LeadsHistoryFilterDialog(Context context, LeadHistoryListFilterCommunicatorView communicatorView, int themeResId) {
         super(context, themeResId);
         mContext = context;
+        this.communicatorView = communicatorView;
     }
 
     @Override
@@ -55,10 +60,17 @@ public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.On
     private void init() {
         presenter = new LeadsHistoryFilterPresenterImpl(mContext, this);
 
+        edtKeyword = (MaterialEditText) findViewById(R.id.edtKeyword);
+        editStartDate = (MaterialEditText) findViewById(R.id.editStartDate);
+        editStartDate.setOnClickListener(this);
+        editEndDate = (MaterialEditText) findViewById(R.id.editEndDate);
+        editEndDate.setOnClickListener(this);
         btnCancel = (AppCompatButton) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(this);
         btnFilter = (AppCompatButton) findViewById(R.id.btnFilter);
         btnFilter.setOnClickListener(this);
+        btnClearFilter = (AppCompatButton) findViewById(R.id.btnClearFilter);
+        btnClearFilter.setOnClickListener(this);
 
       /*  linearVerticalsList = (FlowLayout) findViewById(R.id.linearVerticalsList);
         linearLeadStatusList = (FlowLayout) findViewById(R.id.linearLeadStatusList);*/
@@ -84,14 +96,27 @@ public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.editStartDate:
+                presenter.showDatePicker(editStartDate, editEndDate.getText().toString().trim(), true);
+                break;
+
+            case R.id.editEndDate:
+                presenter.showDatePicker(editEndDate, editStartDate.getText().toString().trim(), false);
+                break;
+
             case R.id.btnFilter:
-                presenter = null;
+                presenter.onFilterDataSet(edtKeyword.getText().toString().trim(), editStartDate.getText().toString(),
+                        editEndDate.getText().toString().trim(), selectedVerticals, selectedLeadStatuses);
                 dismiss();
                 break;
             case R.id.btnCancel:
-                presenter = null;
                 dismiss();
                 break;
+            case R.id.btnClearFilter:
+                if(communicatorView != null) {
+                    communicatorView.onClearFilter();
+                }
+                dismiss();
         }
     }
 
@@ -101,7 +126,7 @@ public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.On
 
         Iterator it = verticals.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
             /*View view = getLayoutInflater().inflate(R.layout.vertical_check_box_item, null);
             CheckBox checkBox = (CheckBox) view;
             checkBox.setText( ((VerticalDataObject)pair.getValue()).getVerticalName());
@@ -111,30 +136,30 @@ public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.On
             int verticalIndex = (int) pair.getKey();
             switch (verticalIndex) {
                 case 0:
-                    checkboxAI.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject)pair.getValue())));
+                    checkboxAI.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject) pair.getValue())));
                     break;
                 case 1:
-                    checkboxAF.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject)pair.getValue())));
+                    checkboxAF.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject) pair.getValue())));
                     break;
                 case 2:
-                    checkboxHI.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject)pair.getValue())));
+                    checkboxHI.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject) pair.getValue())));
                     break;
                 case 3:
-                    checkboxLI.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject)pair.getValue())));
+                    checkboxLI.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject) pair.getValue())));
                     break;
                 case 4:
-                    checkboxHO.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject)pair.getValue())));
+                    checkboxHO.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject) pair.getValue())));
                     break;
                 case 5:
-                    checkboxNC.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject)pair.getValue())));
+                    checkboxNC.setOnCheckedChangeListener(new OnVerticalChecked(((VerticalDataObject) pair.getValue())));
                     break;
             }
         }
 
-       // linearLeadStatusList.removeAllViews();
+        // linearLeadStatusList.removeAllViews();
         Iterator leadStatusIterator = leadStatuses.entrySet().iterator();
         while (leadStatusIterator.hasNext()) {
-            Map.Entry pair = (Map.Entry)leadStatusIterator.next();
+            Map.Entry pair = (Map.Entry) leadStatusIterator.next();
           /*  View view = getLayoutInflater().inflate(R.layout.vertical_check_box_item, null);
             CheckBox checkBox = (CheckBox) view;
             checkBox.setText( ((LeadStatusObject)pair.getValue()).getLeadStatusName());
@@ -144,36 +169,52 @@ public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.On
             int leadStatusId = (int) pair.getKey();
             switch (leadStatusId) {
                 case 0:
-                    checkboxInProgress.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject)pair.getValue())));
+                    checkboxInProgress.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject) pair.getValue())));
                     break;
                 case 1:
-                    checkboxVerificationDone.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject)pair.getValue())));
+                    checkboxVerificationDone.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject) pair.getValue())));
                     break;
                 case 2:
-                    checkboxActive.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject)pair.getValue())));
+                    checkboxActive.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject) pair.getValue())));
                     break;
                 case 3:
-                    checkboxSold.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject)pair.getValue())));
+                    checkboxSold.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject) pair.getValue())));
                     break;
                 case 4:
-                    checkboxExpired.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject)pair.getValue())));
+                    checkboxExpired.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject) pair.getValue())));
                     break;
                 case 5:
-                    checkboxUserNotInterested.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject)pair.getValue())));
+                    checkboxUserNotInterested.setOnCheckedChangeListener(new OnLeadStatusChecked(((LeadStatusObject) pair.getValue())));
                     break;
             }
         }
     }
 
     @Override
+    public void setDate(String date, MaterialEditText editText) {
+        editText.setText(date);
+    }
+
+    @Override
+    public void setDateError(MaterialEditText editText, String error) {
+        editText.setText("");
+        editText.setError(error);
+    }
+
+    @Override
     public void onVerticalSelected(HashMap<Integer, Integer> selectedVerticals) {
         this.selectedVerticals = selectedVerticals;
-        Log.e("selectedVerticals", selectedVerticals.toString());
     }
 
     @Override
     public void onLeadStatusSelected(HashMap<Integer, Integer> selectedLeadStatuses) {
         this.selectedLeadStatuses = selectedLeadStatuses;
+    }
+
+    @Override
+    public void setFilter(LeadHistoryRequest leadHistoryRequest) {
+        if (communicatorView != null)
+            communicatorView.onLeadFilterSet(leadHistoryRequest);
     }
 
     private class OnVerticalChecked implements CompoundButton.OnCheckedChangeListener {
@@ -198,7 +239,7 @@ public class LeadsHistoryFilterDialog extends AppCompatDialog implements View.On
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            presenter.onVerticalSelected(leadStatusObject.getLeadStatusId(), isChecked, selectedVerticals);
+            presenter.onLeadStatusSelected(leadStatusObject.getLeadStatusId(), isChecked, selectedLeadStatuses);
         }
     }
 }

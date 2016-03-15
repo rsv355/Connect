@@ -40,20 +40,20 @@ public class CommissionHistoryPresenterImpl implements CommissionHistoryPresente
     }
 
     @Override
-    public void fetchLeadData(boolean isRefreshed, long userID) {
+    public void fetchLeadData(boolean isRefreshed, CommissionHistoryRequest commissionHistoryRequest) {
         isLayoutRefreshed = isRefreshed;
-        getList(false, userID, 0);
+        getList(false, commissionHistoryRequest);
     }
 
     @Override
-    public void loadMoreData(long userID, long lastLeadID) {
-        getList(true, userID, lastLeadID);
+    public void loadMoreData(CommissionHistoryRequest commissionHistoryRequest) {
+        getList(true, commissionHistoryRequest);
     }
 
     @Override
     public void showNoInternetDialog(Activity activity) {
         Functions.getSimpleOkAlterDialog(activity, activity.getString(R.string.no_internet_connection), "Ok").show();
-        if(commissionHistoryView != null) {
+        if (commissionHistoryView != null) {
             commissionHistoryView.addEmptyView(_ctx.getString(R.string.no_commission_history_found));
         }
     }
@@ -63,8 +63,8 @@ public class CommissionHistoryPresenterImpl implements CommissionHistoryPresente
         commissionHistoryView = null;
     }
 
-    private void getList(final boolean isLoadMoreData, long userID, long lastLeadID) {
-        if( Functions.checkInternet(_ctx)) {
+    private void getList(final boolean isLoadMoreData, CommissionHistoryRequest commissionHistoryRequest) {
+        if (Functions.checkInternet(_ctx)) {
             if (isLoadMoreData) {
                 commissionHistoryView.showFooter();
             } else {
@@ -74,13 +74,8 @@ public class CommissionHistoryPresenterImpl implements CommissionHistoryPresente
 
             Retrofit retrofit = MyApplication.retrofit;
             CommissionHistoryService commissionHistoryService = retrofit.create(CommissionHistoryService.class);
-            final CommissionHistoryRequest requestObj = new CommissionHistoryRequest();
-            requestObj.setUserID(userID);
 
-            if (isLoadMoreData)
-                requestObj.setLastLeadID(lastLeadID);
-
-            Call<CommissionHistoryResponse> call = commissionHistoryService.getSearchResult(requestObj);
+            Call<CommissionHistoryResponse> call = commissionHistoryService.getSearchResult(commissionHistoryRequest);
 
             call.enqueue(new Callback<CommissionHistoryResponse>() {
                 @Override
@@ -135,7 +130,7 @@ public class CommissionHistoryPresenterImpl implements CommissionHistoryPresente
                 }
             });
         } else {
-            if(commissionHistoryView != null) {
+            if (commissionHistoryView != null) {
                 commissionHistoryView.showNoInternetDialog();
             }
         }
@@ -148,7 +143,7 @@ public class CommissionHistoryPresenterImpl implements CommissionHistoryPresente
                     "" + data.get(i).getLeadDateTime(),
                     data.get(i).getStatus(),
                     "" + data.get(i).getRName(), data.get(i).getSoldPrice(),
-                      data.get(i).getCommissionEarned(),
+                    data.get(i).getCommissionEarned(),
                     ColorGenerator.MATERIAL.getARandomColor()));
         }
         commissionHistoryView.hideFooter();

@@ -2,7 +2,11 @@ package com.webmyne.connect.user.presenter;
 
 import android.app.Activity;
 
+import com.webmyne.connect.user.model.IndustryModel;
 import com.webmyne.connect.user.model.UserLoginOutput;
+import com.webmyne.connect.user.model.UserUpdateInput;
+
+import java.util.List;
 
 /**
  * Created by priyasindkar on 22-02-2016.
@@ -18,7 +22,8 @@ public interface EditProfileView {
     void setIndustryError(String errorString);
     void setAddressError(String errorString);
     void setAddressList(String[] addresses);
-    void onValidationSuccess(boolean isValid, UserLoginOutput userLoginOutput);
+    void onIndustryListFetch(boolean isSuccess, String[] industryList);
+    void onValidationSuccess(boolean isValid, UserUpdateInput userUpdateInput);
     void onReferCodeAdd(boolean isReferCodeAdded,String referCode);
     void onUpdateUserSuccess(String successString);
     void onUpdateUserFail(String errorString);

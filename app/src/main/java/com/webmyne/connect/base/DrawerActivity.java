@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -52,19 +53,13 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
         super.onResume();
 
         init();
-        SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
-        isLeadPosted = preferences.getBoolean("isLeadPosted", false);
 
         drawerActivityPresenter = new DrawerActivityPresenterImpl(this);
 
         //Dashboard Fragment
         FragmentManager manager = getFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        if (isLeadPosted) {
-            ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
-        } else {
-            ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
-        }
+        ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
         ft.commit();
     }
 
@@ -82,15 +77,18 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
                 .withTextColorRes(R.color.colorAccent)
                 .withName(currentUser.Name)
                 .withEmail(currentUser.Email).withIdentifier(100);
-        //.withIcon(getResources().getDrawable(R.drawable.dummy_boy)).withIdentifier(100);
 
-        if (currentUser.Gender != null) {
-            if (currentUser.Gender.equalsIgnoreCase("Female")) {
-                profile.withIcon(getResources().getDrawable(R.drawable.dummy_girl));
-            } else if (currentUser.Gender.equalsIgnoreCase("Male")) {
-                profile.withIcon(getResources().getDrawable(R.drawable.dummy_boy));
-            } else {
-                profile.withIcon(getResources().getDrawable(R.drawable.dummy_boy));
+        if(currentUser.getProfilePic() != null || currentUser.getProfilePic().length() > 0) {
+            profile.withIcon(currentUser.getProfilePic());
+        } else {
+            if (currentUser.Gender != null) {
+                if (currentUser.Gender.equalsIgnoreCase("Female")) {
+                    profile.withIcon(getResources().getDrawable(R.drawable.dummy_girl));
+                } else if (currentUser.Gender.equalsIgnoreCase("Male")) {
+                    profile.withIcon(getResources().getDrawable(R.drawable.dummy_boy));
+                } else {
+                    profile.withIcon(getResources().getDrawable(R.drawable.dummy_boy));
+                }
             }
         }
 

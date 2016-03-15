@@ -1,10 +1,10 @@
 package com.webmyne.connect.postLead.presenter;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
-import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.MyApplication;
 import com.webmyne.connect.postLead.api.PostLeadService;
 import com.webmyne.connect.postLead.model.MainPostLeadOutput;
@@ -51,10 +51,10 @@ public class LeadsInteractorImpl implements LeadsInteractor {
                 public void onResponse(Call<MainPostLeadOutput> call, Response<MainPostLeadOutput> response) {
                     if(response.body() != null) {
                         if(response.body().PostLeadOutput != null) {
-                            if (response.body().PostLeadOutput.ResponseMessage.equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
+                            if (response.body().PostLeadOutput.ResponseCode.equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
                                 onLeadPost(true, activity.getString(R.string.post_lead_successful), "");
                             } else {
-                                onLeadPost(false, "", activity.getString(R.string.post_lead_failed));
+                                onLeadPost(false, "",response.body().PostLeadOutput.ResponseMessage);
                             }
                         } else {
                             onLeadPost(false, "", activity.getString(R.string.post_lead_failed));

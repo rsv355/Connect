@@ -14,11 +14,15 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.user.model.IndustryModel;
 import com.webmyne.connect.user.model.UserLoginOutput;
+import com.webmyne.connect.user.model.UserUpdateInput;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by priyasindkar on 22-02-2016.
@@ -70,8 +74,40 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
     }
 
     @Override
+    public void getIndustryList(Activity activity, String searchString) {
+        if (editProfileView != null) {
+            editProfileView.showProgress();
+        }
+        editProfileInteractor.getIndustryList(activity, searchString);
+
+    }
+
+    @Override
+    public void onIndustryListFetch(boolean isSuccess, List<IndustryModel> industryList) {
+        if (editProfileView != null) {
+            editProfileView.hideProgress();
+
+            if(isSuccess) {
+                if( !industryList.isEmpty()) {
+                    String[] industries = new String[industryList.size()];
+                    int i = 0;
+                    for (IndustryModel industryModel : industryList) {
+                        industries[i] = industryModel.IndustryName;
+                        i++;
+                    }
+                    editProfileView.onIndustryListFetch(true, industries);
+                } else {
+                    editProfileView.onIndustryListFetch(false, null);
+                }
+            } else {
+                editProfileView.onIndustryListFetch(false, null);
+            }
+        }
+    }
+
+    @Override
     public void validateFormFields(Activity activity, String name, String emailId, String DOB, String mobile,
-                                   String zipcode, String location, String indutry, String gender, int userId) {
+                                   String zipcode, String location, String streetNumber, String indutry, String gender, int userId) {
 
         if (Functions.checkInternet(activity)) {
             if (name.trim().length() == 0) {
@@ -98,7 +134,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
                 if (editProfileView != null) {
                     editProfileView.setZipcodError(activity.getString(R.string.zipcode_empty_validation));
                 }
-            }  else if (indutry.trim().length() == 0) {
+            } else if (indutry.trim().length() == 0 || indutry.trim().length() < 3 ) {
                 if (editProfileView != null) {
                     editProfileView.setIndustryError(activity.getString(R.string.industry_empty_validation));
                 }
@@ -106,19 +142,23 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
                 if (editProfileView != null) {
                     editProfileView.setAddressError(activity.getString(R.string.address_empty_validation));
                 }
+            } else if (streetNumber.trim().length() == 0) {
+                if (editProfileView != null) {
+                    editProfileView.setAddressError(activity.getString(R.string.street_no_empty_validation));
+                }
             } else {
                 if (editProfileView != null) {
-                    UserLoginOutput userLoginOutput = new UserLoginOutput();
-                    userLoginOutput.setName(name);
-                    userLoginOutput.setEmail(emailId);
-                    userLoginOutput.setDOB(DOB);
-                    userLoginOutput.setMobile(mobile);
-                    userLoginOutput.setZipCode(zipcode);
-                    userLoginOutput.setAddress(location);
-                    userLoginOutput.setGender(gender);
-                    userLoginOutput.setIndustry(indutry);
-                    userLoginOutput.setUserID(userId);
-                    editProfileView.onValidationSuccess(true, userLoginOutput);
+                    UserUpdateInput userUpdateInput = new UserUpdateInput();
+                    userUpdateInput.setName(name);
+                    userUpdateInput.setEmail(emailId);
+                    userUpdateInput.setDOB(DOB);
+                    userUpdateInput.setMobile(mobile);
+                    userUpdateInput.setZipCode(zipcode);
+                    userUpdateInput.setAddress(streetNumber.replace(",", "") + ", " + location);
+                    userUpdateInput.setGender(gender);
+                    userUpdateInput.setIndustry(indutry);
+                    userUpdateInput.setUserID(userId);
+                    editProfileView.onValidationSuccess(true, userUpdateInput);
                 }
             }
         } else {
@@ -145,7 +185,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
                         Address returnedAddress = addresses.get(j);
                         StringBuilder strReturnedAddress = new StringBuilder();
                         for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
-                            strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                            strReturnedAddress.append(returnedAddress.getAddressLine(i).replace(",", "")).append("\n");
                         }
                         addressList[j] = strReturnedAddress.toString();
                     }
@@ -159,7 +199,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
     }
 
     @Override
-    public void doUpdateUser(Activity activity, UserLoginOutput userLoginOutput) {
+    public void doUpdateUser(Activity activity, UserUpdateInput userLoginOutput) {
         if (editProfileView != null) {
             editProfileView.showProgress();
         }

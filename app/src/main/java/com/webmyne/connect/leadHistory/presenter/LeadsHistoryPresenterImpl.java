@@ -42,20 +42,20 @@ public class LeadsHistoryPresenterImpl implements LeadsHistoryPresenter {
     }
 
     @Override
-    public void fetchLeadData(boolean isRefreshed, long userID) {
+    public void fetchLeadData(boolean isRefreshed, LeadHistoryRequest leadHistoryRequest) {
         isLayoutRefreshed = isRefreshed;
-        getList(false, userID, 0);
+        getList(false, leadHistoryRequest);
     }
 
     @Override
-    public void loadMoreData(long userID, long lastLeadID) {
-        getList(true, userID, lastLeadID);
+    public void loadMoreData(LeadHistoryRequest leadHistoryRequest) {
+        getList(true, leadHistoryRequest);
     }
 
     @Override
     public void showNoInternetDialog(Activity activity) {
         Functions.getSimpleOkAlterDialog(activity, activity.getString(R.string.no_internet_connection), "Ok").show();
-        if(leadsHistoryView != null) {
+        if (leadsHistoryView != null) {
             leadsHistoryView.addEmptyView(_ctx.getString(R.string.no_commission_history_found));
         }
     }
@@ -65,8 +65,8 @@ public class LeadsHistoryPresenterImpl implements LeadsHistoryPresenter {
         leadsHistoryView = null;
     }
 
-    private void getList(final boolean isLoadMoreData, long userID, long lastLeadID) {
-        if ( Functions.checkInternet(_ctx)) {
+    private void getList(final boolean isLoadMoreData, LeadHistoryRequest leadHistoryRequest) {
+        if (Functions.checkInternet(_ctx)) {
             if (isLoadMoreData) {
                 leadsHistoryView.showFooter();
             } else {
@@ -76,19 +76,25 @@ public class LeadsHistoryPresenterImpl implements LeadsHistoryPresenter {
 
             Retrofit retrofit = MyApplication.retrofit;
             LeadHistoryService checkinApiService = retrofit.create(LeadHistoryService.class);
-            LeadHistoryRequest requestObj = new LeadHistoryRequest();
-            requestObj.setUserID(userID);
+            /*LeadHistoryRequest requestObj = new LeadHistoryRequest();
+            requestObj.setUserID(leadHistoryRequest.getUserID());
 
-            if (isLoadMoreData)
-                requestObj.setLastLeadID(lastLeadID);
+            if (isLoadMoreData) {
+                if (!isFilterApplied) {
+                    requestObj.setLastLeadID(leadHistoryRequest.getLastLeadID());
+                } else {
 
-            Call<LeadHistoryResponse> call = checkinApiService.getSearchResult(requestObj);
+                }
+            }*/
+
+            Call<LeadHistoryResponse> call = checkinApiService.getSearchResult(leadHistoryRequest);
 
             call.enqueue(new Callback<LeadHistoryResponse>() {
                 @Override
                 public void onResponse(Call<LeadHistoryResponse> call, Response<LeadHistoryResponse> response) {
-                    Log.e("onResponse", "Sucess");
+                    Log.e("onResponse", "Success");
                     if (isLoadMoreData) {
+                        Log.e("isLoadMoreData", isLoadMoreData+"");
                         if (response.body().getLeadData().size() == 0) {
                             leadsHistoryView.showToast("No More Data Found");
                             leadsHistoryView.hideFooter();
@@ -96,6 +102,7 @@ public class LeadsHistoryPresenterImpl implements LeadsHistoryPresenter {
                             processLoadNewData(response.body().getLeadData());
                         }
                     } else {
+                        Log.e("isLoadMoreData", isLoadMoreData+"");
                         if (response.body().getLeadData().size() == 0) {
                             if (!isLayoutRefreshed)
                                 leadsHistoryView.hideProgressDialog();
@@ -127,6 +134,7 @@ public class LeadsHistoryPresenterImpl implements LeadsHistoryPresenter {
     }
 
     private void processLoadNewData(ArrayList<LeadHistoryData> data) {
+        Log.e("processLoadNewData", data.size()+"");
         for (int i = 0; i < data.size(); i++) {
             listData.add(new LeadDataObject(Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID)) + "" + data.get(i).getLeadID(),
                     Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID)),
@@ -142,7 +150,7 @@ public class LeadsHistoryPresenterImpl implements LeadsHistoryPresenter {
 
     private void processInitData(ArrayList<LeadHistoryData> data) {
         listData = new ArrayList<>();
-
+        Log.e("processInitData", data.size()+"");
         for (int i = 0; i < data.size(); i++) {
             listData.add(new LeadDataObject(Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID)) + "" + data.get(i).getLeadID(),
                     Constants.getVerticalShortName(Integer.valueOf(data.get(i).LeadTypeID)),

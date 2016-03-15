@@ -9,6 +9,7 @@ import java.util.List;
 public class Constants {
     public static int TOTAL_VERTICALS = 6;
     public static int TOTAL_LEAD_STATUSES = 6;
+    public static int ZIPCODE_LENGTH_USA = 5;
     public static final List<String> VERTICAL_NAMES = Arrays.asList("Auto Insurance", "Auto Finance", "Health Insurance",
             "Life Insurance" , "Home Insurance", "New Car");
     public static final List<String> VERTICAL_SHORT_NAMES = Arrays.asList("AI", "AF", "HI", "LI" , "HO", "NC");

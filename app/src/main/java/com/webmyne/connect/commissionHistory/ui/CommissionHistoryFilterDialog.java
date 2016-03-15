@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
+import com.webmyne.connect.commissionHistory.model.CommissionHistoryRequest;
 import com.webmyne.connect.leadHistory.model.LeadStatusObject;
 import com.webmyne.connect.leadHistory.ui.LeadsHistoryFilterPresenter;
 import com.webmyne.connect.leadHistory.ui.LeadsHistoryFilterPresenterImpl;
@@ -24,22 +26,26 @@ import java.util.Map;
  * Created by priyasindkar on 16-02-2016.
  */
 public class CommissionHistoryFilterDialog extends AppCompatDialog implements View.OnClickListener, CommissionHistoryFilterView{
-    private AppCompatButton btnCancel, btnFilter;
+    private AppCompatButton btnCancel, btnFilter, btnClearFilter;
+    private MaterialEditText edtKeyword, editStartDate, editEndDate;
     private View verticalList;
     private Context mContext;
     private CommissionHistoryFilterPresenterImpl presenter;
     private HashMap<Integer, Integer> selectedVerticals = new HashMap<>();
     private CheckBox checkboxAI, checkboxAF, checkboxHI,checkboxLI, checkboxHO, checkboxNC;
+    private CommissionHistoryListFilterCommunicatorView communicatorView;
 
 
-    public CommissionHistoryFilterDialog(Context context) {
+    public CommissionHistoryFilterDialog(Context context, CommissionHistoryListFilterCommunicatorView communicatorView) {
         super(context);
         mContext = context;
+        this.communicatorView = communicatorView;
     }
 
-    public CommissionHistoryFilterDialog(Context context, int themeResId) {
+    public CommissionHistoryFilterDialog(Context context, CommissionHistoryListFilterCommunicatorView communicatorView,  int themeResId) {
         super(context, themeResId);
         mContext = context;
+        this.communicatorView = communicatorView;
     }
 
     @Override
@@ -52,10 +58,17 @@ public class CommissionHistoryFilterDialog extends AppCompatDialog implements Vi
     private void init() {
         presenter = new CommissionHistoryFilterPresenterImpl(mContext, this);
 
+        edtKeyword = (MaterialEditText) findViewById(R.id.edtKeyword);
+        editStartDate = (MaterialEditText) findViewById(R.id.editStartDate);
+        editStartDate.setOnClickListener(this);
+        editEndDate = (MaterialEditText) findViewById(R.id.editEndDate);
+        editEndDate.setOnClickListener(this);
         btnCancel = (AppCompatButton) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(this);
         btnFilter = (AppCompatButton) findViewById(R.id.btnFilter);
         btnFilter.setOnClickListener(this);
+        btnClearFilter = (AppCompatButton) findViewById(R.id.btnClearFilter);
+        btnClearFilter.setOnClickListener(this);
 
         verticalList = findViewById(R.id.verticalList);
 
@@ -72,13 +85,18 @@ public class CommissionHistoryFilterDialog extends AppCompatDialog implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFilter:
-                presenter = null;
+                presenter.onFilterDataSet(edtKeyword.getText().toString(), editStartDate.getText().toString(), editEndDate.getText().toString(), selectedVerticals);
                 dismiss();
                 break;
             case R.id.btnCancel:
                 presenter = null;
                 dismiss();
                 break;
+            case R.id.btnClearFilter:
+                if(communicatorView != null) {
+                    communicatorView.onClearFilter();
+                }
+                dismiss();
         }
     }
 
@@ -113,8 +131,24 @@ public class CommissionHistoryFilterDialog extends AppCompatDialog implements Vi
     }
 
     @Override
+    public void setDate(String date, MaterialEditText editText) {
+        editText.setText(date);
+    }
+
+    @Override
+    public void setDateError(MaterialEditText editText, String error) {
+        editText.setError(error);
+    }
+
+    @Override
     public void onVerticalSelected(HashMap<Integer, Integer> selectedVerticals) {
         this.selectedVerticals = selectedVerticals;
+    }
+
+    @Override
+    public void setFilter(CommissionHistoryRequest commissionHistoryRequest) {
+        if (communicatorView != null)
+            communicatorView.onLeadFilterSet(commissionHistoryRequest);
     }
 
     private class OnVerticalChecked implements CompoundButton.OnCheckedChangeListener {

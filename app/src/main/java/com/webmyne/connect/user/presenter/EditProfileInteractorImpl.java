@@ -1,14 +1,21 @@
 package com.webmyne.connect.user.presenter;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.base.MyApplication;
+import com.webmyne.connect.user.api.FetchIndustryResult;
+import com.webmyne.connect.user.api.FetchIndustryService;
+import com.webmyne.connect.user.model.IndustryModel;
 import com.webmyne.connect.user.model.MainUserLoginResponse;
 import com.webmyne.connect.user.model.UserLoginOutput;
 import com.webmyne.connect.user.api.UpdateUserService;
+import com.webmyne.connect.user.model.UserUpdateInput;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,9 +33,8 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
     }
 
     @Override
-    public void doCallUpdateUserService(final Activity activity, UserLoginOutput userLoginOutput) {
+    public void doCallUpdateUserService(final Activity activity, UserUpdateInput userLoginOutput) {
         if (userLoginOutput != null) {
-            Log.e("userLoginOutput", userLoginOutput.toString());
             UpdateUserService updateUserService = MyApplication.retrofit.create(UpdateUserService.class);
             Call<MainUserLoginResponse> call = updateUserService.doUserProfileUpdate(userLoginOutput);
 
@@ -38,13 +44,13 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
                     if (response.body() != null) {
                         if (response.body().UserLoginOutput != null) {
                             UserLoginOutput user = response.body().UserLoginOutput;
-                            if (user.ResponseMessage.equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
-                                Log.e("success user", user.toString());
+                            if (user.ResponseMessage.equalsIgnoreCase(activity.getString(R.string.success_response_message))) {
                                 saveUpdatedUser(activity, user);
                                 onUpdateUser(true, activity.getString(R.string.update_user_success), "");
                             } else {
                                 onUpdateUser(false, "", activity.getString(R.string.update_user_failed));
                             }
+
                         } else {
                             onUpdateUser(false, "", activity.getString(R.string.update_user_error));
                         }
@@ -59,6 +65,32 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
         }
     }
 
+    @Override
+    public void getIndustryList(Activity activity, String searchString) {
+        FetchIndustryService fetchIndustryService = MyApplication.retrofit.create(FetchIndustryService.class);
+        Call<FetchIndustryResult> call = fetchIndustryService.listIndustries(searchString);
+
+        call.enqueue(new Callback<FetchIndustryResult>() {
+            @Override
+            public void onResponse(Call<FetchIndustryResult> call, Response<FetchIndustryResult> response) {
+                if (response.body() != null) {
+                    List<IndustryModel> industryList = response.body().FetchIndustryResult;
+                    editProfilePresenter.onIndustryListFetch(true, industryList);
+                } else {
+                    editProfilePresenter.onIndustryListFetch(false, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FetchIndustryResult> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+                editProfilePresenter.onIndustryListFetch(false, null);
+            }
+        });
+
+
+    }
+
     private void onUpdateUser(boolean isSuccess, String success, String error) {
         if (editProfilePresenter != null) {
             editProfilePresenter.onUpdateUser(isSuccess, success, error);
@@ -69,5 +101,8 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
         ComplexPreferences complexPreferences = new ComplexPreferences(activity, "login-user", activity.MODE_PRIVATE);
         complexPreferences.putObject("loggedInUser", user);
         complexPreferences.commit();
+
+        SharedPreferences sharedPreferences1 = activity.getSharedPreferences("user-prefs", activity.MODE_PRIVATE);
+        sharedPreferences1.edit().clear().commit();
     }
 }

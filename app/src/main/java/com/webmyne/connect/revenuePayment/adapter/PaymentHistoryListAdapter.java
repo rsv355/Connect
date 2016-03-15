@@ -1,4 +1,4 @@
-package com.webmyne.connect.revenuePayment;
+package com.webmyne.connect.revenuePayment.adapter;
 
 /**
  * Created by priyasindkar on 12-02-2016.
@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.AdvancedSpannableString;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.revenuePayment.model.PaymentHistoryDataObject;
 
 import java.util.ArrayList;
 

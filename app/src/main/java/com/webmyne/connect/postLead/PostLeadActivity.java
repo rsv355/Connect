@@ -1,5 +1,6 @@
 package com.webmyne.connect.postLead;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -228,27 +229,24 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void hideProgressDialog() {
-        progressDialog.hide();
+        progressDialog.dismiss();
     }
 
     @Override
     public void onLeadPostSuccess(String success) {
-        AlertDialog.Builder builder = Functions.showAlterDialog(this, success, "Ok");
+        Functions.showAlterDialog(this, success, "Ok").show();
         Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
             @Override
             public void onAlertButtonClicked() {
-                SharedPreferences preferences = getSharedPreferences("is_lead_posted", 0);
-                preferences.edit().putBoolean("isLeadPosted", true).commit();
                 Intent intent = new Intent(PostLeadActivity.this, DrawerActivity.class);
                 startActivity(intent);
             }
         });
-        builder.show();
     }
 
     @Override
     public void onLeadPostFail(String error) {
-        AlertDialog.Builder builder = Functions.showAlterDialog(this, error, "Ok");
+        Functions.showAlterDialog(this, error, "Ok").show();
         Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
             @Override
             public void onAlertButtonClicked() {
@@ -256,7 +254,6 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
             }
         });
-        builder.show();
     }
 
     @Override

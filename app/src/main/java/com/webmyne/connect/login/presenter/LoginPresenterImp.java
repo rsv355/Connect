@@ -66,18 +66,18 @@ public class LoginPresenterImp implements LoginPresenter {
 
     @Override
     public void doFacebookLogin(final Activity activity) {
-        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(/*"email", "public_profile", "user_friends"*/Constants.FB_READ_PERMISSIONS));
+        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(Constants.FB_READ_PERMISSIONS));
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         Profile profile = Profile.getCurrentProfile();
-                        Uri profileUri;
+                        Uri profileUri = null;
                         userProfile = new UserProfile();
                         if (profile != null) {
                             profileUri = profile.getProfilePictureUri(640, 640);
-                            //userProfile.setPhotoUri(profileUri);
+                            userProfile.setProfilePic(profileUri.toString());
                         }
 
                         GraphRequest request = GraphRequest.newMeRequest(
@@ -86,7 +86,6 @@ public class LoginPresenterImp implements LoginPresenter {
                                     public void onCompleted(JSONObject user, GraphResponse response) {
                                         if (response.getError() != null) {
                                             // handle error
-                                            onFacebookLogin(userProfile, false, "", activity.getString(R.string.facebook_connection_error));
                                         } else {
                                             try {
                                                 JSONObject profile = response.getJSONObject();
@@ -95,7 +94,6 @@ public class LoginPresenterImp implements LoginPresenter {
                                                 userProfile.setEmail(profile.getString("email").toString());
                                                 userProfile.setSignupById("fb");
                                                 userProfile.setSignupWith("Facebook");
-
                                                 onFacebookLogin(userProfile, true, activity.getString(R.string.success), "");
                                             } catch (Exception e) {
                                                 onFacebookLogin(userProfile, false, "", activity.getString(R.string.facebook_connection_error));
@@ -144,9 +142,9 @@ public class LoginPresenterImp implements LoginPresenter {
                     Person person = loadPeopleResult.getPersonBuffer().get(0);
 
                     userProfile.setEmail(acct.getEmail());
-                    /*if (acct.getPhotoUrl() != null) {
-                        userProfile.setPhotoUri(acct.getPhotoUrl());
-                    }*/
+                    if (acct.getPhotoUrl() != null) {
+                        userProfile.setProfilePic(acct.getPhotoUrl().toString());
+                    }
                     if (person.getGender() == 0) {
                         userProfile.setGender("Male");
                     } else if (person.getGender() == 1) {
@@ -207,7 +205,7 @@ public class LoginPresenterImp implements LoginPresenter {
         try {
             if (gcm == null) {
 
-                if(Functions.isGooglePlayServiceAvailable(activity)) {
+                if (Functions.isGooglePlayServiceAvailable(activity)) {
                     new AsyncTask<Void, Void, String>() {
                         @Override
                         protected String doInBackground(Void... params) {
@@ -241,7 +239,7 @@ public class LoginPresenterImp implements LoginPresenter {
                 processLogin(activity, userProfile);
             }
         } catch (Exception e) {
-            onLogin(null, false, "",activity.getString(R.string.gcm_error));
+            onLogin(null, false, "", activity.getString(R.string.gcm_error));
         }
     }
 
@@ -259,7 +257,7 @@ public class LoginPresenterImp implements LoginPresenter {
                 @Override
                 public void onResponse(Call<MainUserLoginResponse> call, Response<MainUserLoginResponse> response) {
                     if (response.body() != null) {
-                        if (response.body().UserLoginOutput.getResponseMessage().equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
+                        if (response.body().UserLoginOutput.getResponseMessage().equalsIgnoreCase(activity.getString(R.string.success_response_message))) {
                             UserLoginOutput userLoginOutput = response.body().UserLoginOutput;
                             onLogin(userLoginOutput, true, activity.getString(R.string.login_successful), "");
                         } else {

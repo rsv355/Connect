@@ -22,15 +22,18 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.commissionHistory.adapter.CommissionListAdapter;
 import com.webmyne.connect.commissionHistory.model.CommissionDataObject;
+import com.webmyne.connect.commissionHistory.model.CommissionHistoryRequest;
 import com.webmyne.connect.commissionHistory.presenter.CommissionHistoryPresenter;
 import com.webmyne.connect.commissionHistory.presenter.CommissionHistoryPresenterImpl;
 import com.webmyne.connect.commissionHistory.presenter.CommissionHistoryView;
 import com.webmyne.connect.commissionHistory.ui.CommissionHistoryFilterDialog;
+import com.webmyne.connect.commissionHistory.ui.CommissionHistoryListFilterCommunicatorView;
 import com.webmyne.connect.customUI.CustomProgressDialog;
 import com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerView;
 import com.webmyne.connect.customUI.FamiliarRecylerView.FamiliarRecyclerViewOnScrollListener;
 import com.webmyne.connect.leadHistory.adapter.LeadsListAdapter;
 import com.webmyne.connect.leadHistory.model.LeadDataObject;
+import com.webmyne.connect.leadHistory.model.LeadHistoryRequest;
 import com.webmyne.connect.leadHistory.ui.LeadsHistoryFilterDialog;
 
 import java.util.ArrayList;
@@ -38,7 +41,8 @@ import java.util.ArrayList;
 /**
  * Created by priyasindkar on 16-02-2016.
  */
-public class CommissionHistoryListActivity extends AppCompatActivity implements CommissionHistoryView, SwipeRefreshLayout.OnRefreshListener {
+public class CommissionHistoryListActivity extends AppCompatActivity implements CommissionHistoryView,
+        SwipeRefreshLayout.OnRefreshListener, CommissionHistoryListFilterCommunicatorView {
     private CustomProgressDialog progressDialog;
     private FamiliarRecyclerView recyclerView;
     private Toolbar toolbar;
@@ -46,8 +50,11 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
     private FloatingActionButton fab;
     private SwipeRefreshLayout refreshLayout;
     private View footerView, emptyLayout;
+    //todo get userid from current user
     private int USER_ID = 1;
     private CommissionHistoryPresenter presenter;
+    private boolean isFilterApplied = false, isHistoryListEmpty = false;
+    private CommissionHistoryRequest commissionHistoryRequestFilterObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +85,14 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
 
         initRecyclerView();
         presenter = new CommissionHistoryPresenterImpl(CommissionHistoryListActivity.this, this);
-        presenter.fetchLeadData(false, USER_ID);
+        CommissionHistoryRequest commissionHistoryRequest = new CommissionHistoryRequest();
+        commissionHistoryRequest.setUserID(USER_ID);
+        presenter.fetchLeadData(false, commissionHistoryRequest);
 
+        final CommissionHistoryFilterDialog filterDialog = new CommissionHistoryFilterDialog(CommissionHistoryListActivity.this, this, R.style.CustomAlertDialogStyle);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommissionHistoryFilterDialog filterDialog = new CommissionHistoryFilterDialog(CommissionHistoryListActivity.this, R.style.CustomAlertDialogStyle);
                 filterDialog.getWindow().getAttributes().width = (int) (Functions.getDeviceMetrics(CommissionHistoryListActivity.this).widthPixels * 0.8);
                 filterDialog.show();
             }
@@ -109,6 +118,11 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
     }
 
     private void setEmptyView(String msg) {
+        isHistoryListEmpty = true;
+        CommissionListAdapter mCommissionAdapter = new CommissionListAdapter(CommissionHistoryListActivity.this);
+        recyclerView.setAdapter(mCommissionAdapter);
+        mCommissionAdapter.notifyDataSetChanged();
+
         TextView txtMsg = (TextView) emptyLayout.findViewById(R.id.txtMsg);
         ImageView imgEmptyIcon = (ImageView) emptyLayout.findViewById(R.id.imgEmptyIcon);
         imgEmptyIcon.setImageResource(R.drawable.leadhistory_emptyimage);
@@ -124,7 +138,7 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
 
     @Override
     public void hideProgressDialog() {
-        progressDialog.hide();
+        progressDialog.dismiss();
     }
 
     @Override
@@ -156,11 +170,23 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
 
     @Override
     public void onRefresh() {
-        presenter.fetchLeadData(true, USER_ID);
+        if (!isHistoryListEmpty) {
+            CommissionHistoryRequest commissionHistoryRequest;
+            if (!isFilterApplied) {
+                commissionHistoryRequest = new CommissionHistoryRequest();
+                commissionHistoryRequest.setUserID(USER_ID);
+            } else {
+                commissionHistoryRequest = commissionHistoryRequestFilterObject;
+            }
+            presenter.fetchLeadData(true, commissionHistoryRequest);
+        } else {
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     public void setData(final ArrayList<CommissionDataObject> listData, CommissionListAdapter mCommissionAdapter) {
+        isHistoryListEmpty = false;
         if (refreshLayout.isRefreshing())
             refreshLayout.setRefreshing(false);
 
@@ -177,13 +203,35 @@ public class CommissionHistoryListActivity extends AppCompatActivity implements 
             @Override
             public void onScrolledToBottom() {
                 int lastPos = recyclerView.getLastVisiblePosition();
-                ///new countDown(4000, 1000,lastPos).start();
                 showFooter();
-                Log.e("#### Last Item", "" + lastPos);
-                presenter.loadMoreData(USER_ID, Long.parseLong(listData.get(lastPos).getLeadID()));
+                CommissionHistoryRequest commissionHistoryRequest;
+                if (!isFilterApplied) {
+                    commissionHistoryRequest = new CommissionHistoryRequest();
+                    commissionHistoryRequest.setUserID(USER_ID);
+                } else {
+                    commissionHistoryRequest = commissionHistoryRequestFilterObject;
+                }
+
+                if (listData.size() > 0) {
+                    commissionHistoryRequest.setLastLeadID(Long.parseLong(listData.get(lastPos).getLeadID()));
+                    presenter.loadMoreData(commissionHistoryRequest);
+                }
             }
         });
     }
 
 
+    @Override
+    public void onLeadFilterSet(CommissionHistoryRequest commissionHistoryRequest) {
+        commissionHistoryRequestFilterObject = commissionHistoryRequest;
+        isFilterApplied = true;
+        presenter.fetchLeadData(false, commissionHistoryRequestFilterObject);
+    }
+
+    @Override
+    public void onClearFilter() {
+        CommissionHistoryRequest commissionHistoryRequest = new CommissionHistoryRequest();
+        commissionHistoryRequest.setUserID(USER_ID);
+        presenter.fetchLeadData(false, commissionHistoryRequest);
+    }
 }
