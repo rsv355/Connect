@@ -38,6 +38,8 @@ import com.webmyne.connect.leadHistory.ui.LeadsHistoryFilterDialog;
 /**
  * Created by priyasindkar on 16-02-2016.
  */
+
+//LOaded
 public class LeadsHistoryListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener,
         LeadsHistoryView, LeadHistoryListFilterCommunicatorView {
     private FamiliarRecyclerView recyclerView;
