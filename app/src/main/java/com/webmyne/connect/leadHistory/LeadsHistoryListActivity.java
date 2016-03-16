@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -174,6 +175,7 @@ public class LeadsHistoryListActivity extends AppCompatActivity implements Swipe
             @Override
             public void onScrolledToBottom() {
                 int lastPos = recyclerView.getLastVisiblePosition();
+
                 showFooter();
                 LeadHistoryRequest leadHistoryRequest;
                 if (!isFilterApplied) {
@@ -187,6 +189,7 @@ public class LeadsHistoryListActivity extends AppCompatActivity implements Swipe
                     leadHistoryRequest.setLastLeadID(Long.parseLong(listData.get(lastPos).getLeadID()));
                     presenter.loadMoreData(leadHistoryRequest);
                 }
+                Log.d("lastPos",String.valueOf(lastPos));
             }
         });
     }
