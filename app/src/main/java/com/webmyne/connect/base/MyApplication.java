@@ -25,6 +25,9 @@ public class MyApplication extends Application {
                 .build();
     }
 
+
+    //LOaded
+
     public static synchronized MyApplication getInstance() {
         return sInstance;
     }

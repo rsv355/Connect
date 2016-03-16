@@ -172,6 +172,7 @@ public class LeadsHistoryListActivity extends AppCompatActivity implements Swipe
             public void onScrolledToTop() {
             }
 
+
             @Override
             public void onScrolledToBottom() {
                 int lastPos = recyclerView.getLastVisiblePosition();
