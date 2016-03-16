@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -43,8 +44,7 @@ public class DashboardFragment extends Fragment {
     private Activity activity;
     private RippleView viewMoreRipple;
     private FloatingActionButton fab;
-    private UserLoginOutput currentUser;
-
+    private boolean isLeadPosted;
     private OnVerticalClickListener onVerticalClickListener;
 
     public static DashboardFragment newInstance(boolean isLeadPosted) {
@@ -63,6 +63,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isLeadPosted = getArguments().getBoolean("isLeadPosted");
     }
 
     @Override
@@ -90,17 +91,13 @@ public class DashboardFragment extends Fragment {
         ncVerticalView = view.findViewById(R.id.ncVerticalView);
 
         viewMoreRipple = (RippleView) view.findViewById(R.id.viewMoreRipple);
-        ComplexPreferences complexPreferences = new ComplexPreferences(activity, "login-user", activity.MODE_PRIVATE);
-        currentUser = complexPreferences.getObject("loggedInUser", UserLoginOutput.class);
-        if (currentUser != null) {
-            if(currentUser.isActiveLead()) {
-                viewMoreRipple.setVisibility(View.VISIBLE);
-            } else {
-                viewMoreRipple.setVisibility(View.GONE);
-            }
+
+        if (isLeadPosted) {
+            viewMoreRipple.setVisibility(View.VISIBLE);
         } else {
             viewMoreRipple.setVisibility(View.GONE);
         }
+
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
 
         ArrayList<Integer> color = ColorGenerator.MATERIAL.getRandomColor();

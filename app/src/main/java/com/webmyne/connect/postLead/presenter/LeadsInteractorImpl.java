@@ -1,6 +1,7 @@
 package com.webmyne.connect.postLead.presenter;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.webmyne.connect.R;
@@ -52,6 +53,8 @@ public class LeadsInteractorImpl implements LeadsInteractor {
                     if(response.body() != null) {
                         if(response.body().PostLeadOutput != null) {
                             if (response.body().PostLeadOutput.ResponseCode.equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
+                                SharedPreferences preferences = activity.getSharedPreferences("user_lead_post", activity.MODE_PRIVATE);
+                                preferences.edit().putBoolean("isLeadPosted", true).commit();
                                 onLeadPost(true, activity.getString(R.string.post_lead_successful), "");
                             } else {
                                 onLeadPost(false, "",response.body().PostLeadOutput.ResponseMessage);

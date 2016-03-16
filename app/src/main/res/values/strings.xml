@@ -111,7 +111,7 @@
     <string name="Yes">Yes, I have</string>
     <!-- Codes -->
     <string name="success_response_message">Successful</string>
-    <string name="success_response_code">0</string>
+    <string name="success_response_code">1</string>
 
 
     <string name="error_start_date">Start Date Cannot Be After End Date</string>

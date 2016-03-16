@@ -38,7 +38,7 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
     private Toolbar toolbar;
     private AccountHeader headerResult = null;
     private Drawer result = null;
-    private boolean isLeadPosted = false;
+    private boolean isLeadPosted;
     private UserLoginOutput currentUser;
     private DrawerActivityPresenter drawerActivityPresenter;
 
@@ -59,7 +59,7 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
         //Dashboard Fragment
         FragmentManager manager = getFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
+        ft.replace(R.id.frame_container, DashboardFragment.newInstance(isLeadPosted), "DASHBOARD");
         ft.commit();
     }
 
@@ -69,6 +69,17 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
 
         ComplexPreferences complexPreferences = new ComplexPreferences(this, "login-user", MODE_PRIVATE);
         currentUser = complexPreferences.getObject("loggedInUser", UserLoginOutput.class);
+
+        if(currentUser!= null) {
+            if(currentUser.isActiveLead()) {
+                isLeadPosted = true;
+            } else {
+                SharedPreferences preferences = getSharedPreferences("user_lead_post", MODE_PRIVATE);
+                isLeadPosted = preferences.getBoolean("isLeadPosted", false);
+            }
+        } else {
+            isLeadPosted = false;
+        }
 
         toolbar.setTitle("Hi, " + currentUser.Name);
         toolbar.setSubtitle("$ " + String.valueOf(currentUser.WalletBalance));
