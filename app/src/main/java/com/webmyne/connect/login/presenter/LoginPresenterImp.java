@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -30,9 +29,9 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.MyApplication;
+import com.webmyne.connect.login.model.UserProfile;
 import com.webmyne.connect.user.model.MainUserLoginResponse;
 import com.webmyne.connect.user.model.UserLoginOutput;
-import com.webmyne.connect.login.model.UserProfile;
 
 import org.json.JSONObject;
 
