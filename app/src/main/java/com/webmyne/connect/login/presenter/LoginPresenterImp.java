@@ -60,6 +60,8 @@ public class LoginPresenterImp implements LoginPresenter {
     private String GCM_ID;
     private String deviceId;
 
+
+
     public LoginPresenterImp(LoginView loginView) {
         this.loginView = loginView;
     }
