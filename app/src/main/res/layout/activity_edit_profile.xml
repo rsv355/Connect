@@ -70,7 +70,7 @@
                 android:layout_marginTop="@dimen/margin_10"
                 android:gravity="center_vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgVertical"
                     android:layout_width="@dimen/small_profile_image"
                     android:layout_height="@dimen/small_profile_image"

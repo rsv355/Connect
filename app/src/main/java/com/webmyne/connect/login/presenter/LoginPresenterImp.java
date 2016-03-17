@@ -15,6 +15,7 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
@@ -60,7 +61,7 @@ public class LoginPresenterImp implements LoginPresenter {
     private GoogleCloudMessaging gcm;
     private String GCM_ID;
     private String deviceId;
-
+    private ProfileTracker mProfileTracker;
 
 
     public LoginPresenterImp(LoginView loginView) {
@@ -71,6 +72,7 @@ public class LoginPresenterImp implements LoginPresenter {
     public void doFacebookLogin(final Activity activity) {
         LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList(Constants.FB_READ_PERMISSIONS));
         callbackManager = CallbackManager.Factory.create();
+
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -78,10 +80,37 @@ public class LoginPresenterImp implements LoginPresenter {
                         Profile profile = Profile.getCurrentProfile();
                         Uri profileUri = null;
                         userProfile = new UserProfile();
-                        if (profile != null) {
+
+
+                        if(Profile.getCurrentProfile() == null) {
+                            mProfileTracker = new ProfileTracker() {
+                                @Override
+                                protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                                    // profile2 is the new profile
+
+                                    Uri profileUri = null;
+                                    profileUri = profile2.getProfilePictureUri(512, 512);
+                                    userProfile.setProfilePic(profileUri.toString());
+                                    Log.e("@@@@@1 Profile pic url", "" + profileUri);
+                                    mProfileTracker.stopTracking();
+                                }
+                            };
+                            mProfileTracker.startTracking();
+                        }
+                        else {
+                            profileUri = profile.getProfilePictureUri(512, 512);
+                            userProfile.setProfilePic(profileUri.toString());
+                            Log.e("@@@@@ Profile pic url", "" + profileUri);
+                        }
+
+
+                       /* if (profile != null) {
                             profileUri = profile.getProfilePictureUri(640, 640);
                             userProfile.setProfilePic(profileUri.toString());
-                        }
+                            Log.e("### Profile pic url",""+profileUri);
+                        }else{
+                            Log.e("### Profile pic url","notfound NULL");
+                        }*/
 
                         GraphRequest request = GraphRequest.newMeRequest(
                                 loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {

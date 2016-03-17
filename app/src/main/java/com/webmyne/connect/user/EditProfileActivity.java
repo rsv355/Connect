@@ -18,10 +18,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andexert.library.RippleView;
+import com.bumptech.glide.Glide;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
@@ -42,6 +44,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by priyasindkar on 11-02-2016.
  */
@@ -59,6 +63,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private UserLoginOutput currentUser;
     private UserUpdateInput updatedUserObject;
     private boolean isSelect = false;
+    private CircleImageView imgVertical;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +93,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 finish();
             }
         });
-
+        imgVertical = (CircleImageView)findViewById(R.id.imgVertical);
         progressDialog = new CustomProgressDialog(EditProfileActivity.this);
         progressDialog.setCancelable(false);
 
@@ -342,6 +347,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         if (!currentUser.UserReferCode.equals("")) {
             txtMyReferCode.setText(currentUser.UserReferCode);
         }
+
+        Glide.with(EditProfileActivity.this).load(currentUser.getProfilePic())
+                .centerCrop()
+                .into(imgVertical);
+
+
         editProfilePresenter.startAlphaAnimation(toolbar, 0, View.VISIBLE);
     }
 

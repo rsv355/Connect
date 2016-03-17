@@ -19,6 +19,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
@@ -91,7 +92,10 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
                 .withName(currentUser.Name)
                 .withEmail(currentUser.Email).withIdentifier(100);
 
+
+       // DrawerImageLoader.init(IDrawerImageLoader);
         if(currentUser.getProfilePic() != null || currentUser.getProfilePic().length() > 0) {
+            Log.e("### PIC",currentUser.getProfilePic());
             profile.withIcon(currentUser.getProfilePic());
         } else {
             if (currentUser.Gender != null) {

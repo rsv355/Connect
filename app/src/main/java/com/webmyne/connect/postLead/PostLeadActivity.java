@@ -236,7 +236,11 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onLeadPostSuccess(String success,String responseCode) {
 
-        PrefUtils.setActiveLead(PostLeadActivity.this,true);
+        if (responseCode.equalsIgnoreCase(getString(R.string.success_response_code))) {
+            PrefUtils.setActiveLead(PostLeadActivity.this, true);
+        }
+
+
 
         Functions.showAlterDialog(this, success, "Ok").show();
         Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
