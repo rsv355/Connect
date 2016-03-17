@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
+import com.webmyne.connect.Utils.PrefUtils;
 import com.webmyne.connect.base.MyApplication;
 import com.webmyne.connect.postLead.api.PostLeadService;
 import com.webmyne.connect.postLead.model.MainPostLeadOutput;
@@ -23,7 +24,7 @@ import retrofit2.Response;
  */
 public class LeadsInteractorImpl implements LeadsInteractor {
     private LeadsView leadsView;
-
+    private String responseCode = "-1";
     public LeadsInteractorImpl(LeadsView leadsView) {
         this.leadsView = leadsView;
     }
@@ -52,36 +53,41 @@ public class LeadsInteractorImpl implements LeadsInteractor {
                 public void onResponse(Call<MainPostLeadOutput> call, Response<MainPostLeadOutput> response) {
                     if(response.body() != null) {
                         if(response.body().PostLeadOutput != null) {
-                            if (response.body().PostLeadOutput.ResponseCode.equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
-                                SharedPreferences preferences = activity.getSharedPreferences("user_lead_post", activity.MODE_PRIVATE);
+
+                            responseCode = response.body().PostLeadOutput.ResponseCode;
+                            onLeadPost(true,response.body().PostLeadOutput.ResponseMessage,"" ,responseCode);
+                          /*  if (response.body().PostLeadOutput.ResponseCode.equalsIgnoreCase(activity.getString(R.string.success_response_code))) {
+                             *//*   SharedPreferences preferences = activity.getSharedPreferences("user_lead_post", activity.MODE_PRIVATE);
                                 preferences.edit().putBoolean("isLeadPosted", true).commit();
+                              *//*
+
                                 onLeadPost(true, activity.getString(R.string.post_lead_successful), "");
                             } else {
                                 onLeadPost(false, "",response.body().PostLeadOutput.ResponseMessage);
-                            }
+                            }*/
                         } else {
-                            onLeadPost(false, "", activity.getString(R.string.post_lead_failed));
+                            onLeadPost(false, "", activity.getString(R.string.post_lead_failed),responseCode);
                         }
                     } else {
-                        onLeadPost(false, "", activity.getString(R.string.post_lead_failed));
+                        onLeadPost(false, "", activity.getString(R.string.post_lead_failed),responseCode);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<MainPostLeadOutput> call, Throwable t) {
-                    onLeadPost(false, "", activity.getString(R.string.post_lead_failed));
+                    onLeadPost(false, "", activity.getString(R.string.post_lead_failed),responseCode);
                 }
             });
         }
     }
 
-    private void onLeadPost(boolean isSuccess, String success, String error) {
+    private void onLeadPost(boolean isSuccess, String success, String error,String responseCode) {
         if( leadsView != null) {
             leadsView.hideProgressDialog();
             if(isSuccess)
-                leadsView.onLeadPostSuccess(success);
+                leadsView.onLeadPostSuccess(success,responseCode);
             else
-                leadsView.onLeadPostSuccess(error);
+                leadsView.onLeadPostSuccess(error,responseCode);
         }
     }
 }

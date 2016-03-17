@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -279,6 +280,7 @@ public class LoginPresenterImp implements LoginPresenter {
     }
 
     public void onLogin(UserLoginOutput userLoginOutput, boolean isSuccess, String success, String error) {
+
         if (loginView != null) {
             loginView.hideProgressDialog();
             if (isSuccess) {

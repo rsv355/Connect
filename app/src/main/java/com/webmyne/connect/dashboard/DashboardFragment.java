@@ -24,6 +24,7 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.Utils.PrefUtils;
 import com.webmyne.connect.customUI.textDrawableIcons.ColorGenerator;
 import com.webmyne.connect.customUI.textDrawableIcons.TextDrawable;
 import com.webmyne.connect.leadHistory.LeadsHistoryListActivity;
@@ -47,11 +48,11 @@ public class DashboardFragment extends Fragment {
     private boolean isLeadPosted;
     private OnVerticalClickListener onVerticalClickListener;
 
-    public static DashboardFragment newInstance(boolean isLeadPosted) {
+    public static DashboardFragment newInstance() {
         DashboardFragment fragment = new DashboardFragment();
-        Bundle bundle = new Bundle();
+      /*  Bundle bundle = new Bundle();
         bundle.putBoolean("isLeadPosted", isLeadPosted);
-        fragment.setArguments(bundle);
+        fragment.setArguments(bundle);*/
         return fragment;
     }
 
@@ -63,7 +64,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isLeadPosted = getArguments().getBoolean("isLeadPosted");
+        isLeadPosted = PrefUtils.isActiveLead(getActivity());
     }
 
     @Override

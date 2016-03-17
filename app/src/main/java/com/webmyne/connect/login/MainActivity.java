@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.Utils.PrefUtils;
 import com.webmyne.connect.base.DrawerActivity;
 import com.webmyne.connect.login.presenter.MainPresenterImpl;
 import com.webmyne.connect.login.presenter.LoginView;
@@ -196,12 +198,18 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
 
     @Override
     public void onLoginSuccess(UserLoginOutput userLoginOutput, String success) {
+
+        Log.e("login response", userLoginOutput.toString());
         mainPresenterImpl.saveLoggedInUser(MainActivity.this, userLoginOutput);
         Intent intent = null;
         if(userLoginOutput.getZipCode() == null || userLoginOutput.getZipCode().trim().length() == 0) {
+
             SharedPreferences sharedPreferences1 = getSharedPreferences("user-prefs", MODE_PRIVATE);
             sharedPreferences1.edit().putBoolean("isFirstTimeLogin", true).commit();
             intent = new Intent(MainActivity.this, EditProfileActivity.class);
+
+            PrefUtils.setActiveLead(this,userLoginOutput.isActiveLead());
+
         } else {
             intent = new Intent(MainActivity.this, DrawerActivity.class);
         }

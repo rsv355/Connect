@@ -20,7 +20,7 @@ public interface LeadsView {
     void onTermsDeclined();
     void showProgressDialog();
     void hideProgressDialog();
-    void onLeadPostSuccess(String success);
+    void onLeadPostSuccess(String success,String responseCode);
     void onLeadPostFail(String error);
     void showNoInternetDialog();
 }

@@ -22,6 +22,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.Utils.PrefUtils;
 import com.webmyne.connect.commissionHistory.CommissionHistoryListActivity;
 import com.webmyne.connect.dashboard.DashboardFragment;
 import com.webmyne.connect.leadHistory.LeadsHistoryListActivity;
@@ -38,7 +39,6 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
     private Toolbar toolbar;
     private AccountHeader headerResult = null;
     private Drawer result = null;
-    private boolean isLeadPosted;
     private UserLoginOutput currentUser;
     private DrawerActivityPresenter drawerActivityPresenter;
 
@@ -52,6 +52,8 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
     protected void onResume() {
         super.onResume();
 
+        Log.e("IsActiveLeadStatus", ""+PrefUtils.isActiveLead(DrawerActivity.this));
+
         init();
 
         drawerActivityPresenter = new DrawerActivityPresenterImpl(this);
@@ -59,7 +61,7 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
         //Dashboard Fragment
         FragmentManager manager = getFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.frame_container, DashboardFragment.newInstance(isLeadPosted), "DASHBOARD");
+        ft.replace(R.id.frame_container, DashboardFragment.newInstance(), "DASHBOARD");
         ft.commit();
     }
 
@@ -70,7 +72,7 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
         ComplexPreferences complexPreferences = new ComplexPreferences(this, "login-user", MODE_PRIVATE);
         currentUser = complexPreferences.getObject("loggedInUser", UserLoginOutput.class);
 
-        if(currentUser!= null) {
+        /*if(currentUser!= null) {
             if(currentUser.isActiveLead()) {
                 isLeadPosted = true;
             } else {
@@ -79,7 +81,7 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
             }
         } else {
             isLeadPosted = false;
-        }
+        }*/
 
         toolbar.setTitle("Hi, " + currentUser.Name);
         toolbar.setSubtitle("$ " + String.valueOf(currentUser.WalletBalance));
@@ -224,11 +226,9 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
                                 //Dashboard Fragment
                                 FragmentManager manager = getFragmentManager();
                                 FragmentTransaction ft = manager.beginTransaction();
-                                if (isLeadPosted) {
-                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(true), "DASHBOARD");
-                                } else {
-                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(false), "DASHBOARD");
-                                }
+
+                                    ft.replace(R.id.frame_container, DashboardFragment.newInstance(), "DASHBOARD");
+
                                 ft.commit();
 
                             } else if (drawerItem.getIdentifier() == 2) {

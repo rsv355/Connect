@@ -19,6 +19,7 @@ import com.andexert.library.RippleView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
+import com.webmyne.connect.Utils.PrefUtils;
 import com.webmyne.connect.base.DrawerActivity;
 import com.webmyne.connect.customUI.CustomProgressDialog;
 import com.webmyne.connect.customUI.FlowLayout;
@@ -233,7 +234,10 @@ public class PostLeadActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onLeadPostSuccess(String success) {
+    public void onLeadPostSuccess(String success,String responseCode) {
+
+        PrefUtils.setActiveLead(PostLeadActivity.this,true);
+
         Functions.showAlterDialog(this, success, "Ok").show();
         Functions.setOnAlertButtonClicked(new OnAlertButtonClicked() {
             @Override
