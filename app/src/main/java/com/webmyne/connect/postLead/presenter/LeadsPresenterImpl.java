@@ -186,4 +186,5 @@ public class LeadsPresenterImpl implements LeadsPresenter {
         Functions.startAlphaAnimation(v, duration, visibility);
     }
 
+
 }
