@@ -82,7 +82,7 @@ public class LoginPresenterImp implements LoginPresenter {
                         userProfile = new UserProfile();
 
 
-                        if(Profile.getCurrentProfile() == null) {
+                        if (Profile.getCurrentProfile() == null) {
                             mProfileTracker = new ProfileTracker() {
                                 @Override
                                 protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
@@ -96,8 +96,7 @@ public class LoginPresenterImp implements LoginPresenter {
                                 }
                             };
                             mProfileTracker.startTracking();
-                        }
-                        else {
+                        } else {
                             profileUri = profile.getProfilePictureUri(640, 640);
                             userProfile.setProfilePic(profileUri.toString());
                             Log.e("@@@@@ Profile pic url", "" + profileUri);
@@ -124,7 +123,7 @@ public class LoginPresenterImp implements LoginPresenter {
                                                 userProfile.setName(profile.getString("first_name").toString() + " " + profile.getString("last_name").toString());
                                                 userProfile.setGender(profile.getString("gender").toString());
                                                 userProfile.setEmail(profile.getString("email").toString());
-                                                userProfile.setSignupById("fb");
+                                                userProfile.setSignupById(profile.get("id").toString());
                                                 userProfile.setSignupWith("Facebook");
                                                 onFacebookLogin(userProfile, true, activity.getString(R.string.success), "");
                                             } catch (Exception e) {
@@ -171,36 +170,35 @@ public class LoginPresenterImp implements LoginPresenter {
             Plus.PeopleApi.load(mGoogleApiClient, acct.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
                 @Override
                 public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
-                    Person person = loadPeopleResult.getPersonBuffer().get(0);
+                    try {
+                        Person person = loadPeopleResult.getPersonBuffer().get(0);
 
-                    userProfile.setEmail(acct.getEmail());
-                    if (acct.getPhotoUrl() != null) {
-                        userProfile.setProfilePic(acct.getPhotoUrl().toString());
+                        userProfile.setEmail(acct.getEmail());
+                        if (acct.getPhotoUrl() != null) {
+                            userProfile.setProfilePic(acct.getPhotoUrl().toString());
+                        }
+                        if (person.getGender() == 0) {
+                            userProfile.setGender("Male");
+                        } else if (person.getGender() == 1) {
+                            userProfile.setGender("Female");
+                        }
+                        userProfile.setSignupById(acct.getId());
+                        userProfile.setSignupWith("G+");
+
+                        onGoogleLogin(userProfile, true, mContext.getString(R.string.success), "");
+                    } catch (Exception e) {
+                        onGoogleLogin(userProfile, false, "", mContext.getString(R.string.google_connection_failed));
                     }
-                    if (person.getGender() == 0) {
-                        userProfile.setGender("Male");
-                    } else if (person.getGender() == 1) {
-                        userProfile.setGender("Female");
-                    }
-                    userProfile.setSignupById("g+");
-                    userProfile.setSignupWith("G+");
                 }
             });
-          /*  //signout
-            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                    new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(Status status) {
-                        }
-                    });*/
-            onGoogleLogin(userProfile, true, mContext.getString(R.string.success), "");
         } else {
             onGoogleLogin(userProfile, false, "", mContext.getString(R.string.google_connection_failed));
         }
     }
 
     @Override
-    public void socialMediaActivityResultHandler(int requestCode, int resultCode, Intent data, GoogleApiClient mGoogleApiClient) {
+    public void socialMediaActivityResultHandler(int requestCode, int resultCode, Intent
+            data, GoogleApiClient mGoogleApiClient) {
         if (requestCode == RC_SIGN_IN) {  //handles Google+ Result
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result, mGoogleApiClient);
@@ -289,6 +287,7 @@ public class LoginPresenterImp implements LoginPresenter {
                 @Override
                 public void onResponse(Call<MainUserLoginResponse> call, Response<MainUserLoginResponse> response) {
                     if (response.body() != null) {
+                        Log.e("res google", response.body().toString());
                         if (response.body().UserLoginOutput.getResponseMessage().equalsIgnoreCase(activity.getString(R.string.success_response_message))) {
                             UserLoginOutput userLoginOutput = response.body().UserLoginOutput;
                             onLogin(userLoginOutput, true, activity.getString(R.string.login_successful), "");
