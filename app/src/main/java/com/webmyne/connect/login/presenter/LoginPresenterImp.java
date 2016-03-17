@@ -89,7 +89,7 @@ public class LoginPresenterImp implements LoginPresenter {
                                     // profile2 is the new profile
 
                                     Uri profileUri = null;
-                                    profileUri = profile2.getProfilePictureUri(512, 512);
+                                    profileUri = profile2.getProfilePictureUri(640, 640);
                                     userProfile.setProfilePic(profileUri.toString());
                                     Log.e("@@@@@1 Profile pic url", "" + profileUri);
                                     mProfileTracker.stopTracking();
@@ -98,7 +98,7 @@ public class LoginPresenterImp implements LoginPresenter {
                             mProfileTracker.startTracking();
                         }
                         else {
-                            profileUri = profile.getProfilePictureUri(512, 512);
+                            profileUri = profile.getProfilePictureUri(640, 640);
                             userProfile.setProfilePic(profileUri.toString());
                             Log.e("@@@@@ Profile pic url", "" + profileUri);
                         }

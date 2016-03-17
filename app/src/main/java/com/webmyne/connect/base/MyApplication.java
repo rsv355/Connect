@@ -39,7 +39,6 @@ public class MyApplication extends Application {
 
     //initialize and create the image loader logic
     DrawerImageLoader.init(new
-
     AbstractDrawerImageLoader() {
         @Override
         public void set (ImageView imageView, Uri uri, Drawable placeholder){
