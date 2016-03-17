@@ -101,16 +101,16 @@ public class UserProfile {
     @Override
     public String toString() {
         return "UserProfile{" +
-                "DOB='" + DOB + '\'' +
-                ", DeviceID='" + DeviceID + '\'' +
-                ", GCMID='" + GCMID + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Gender='" + Gender + '\'' +
-                ", Mobile='" + Mobile + '\'' +
-                ", Name='" + Name + '\'' +
-                ", ProfilePic='" + ProfilePic + '\'' +
-                ", SignupById='" + SignupById + '\'' +
-                ", SignupWith='" + SignupWith + '\'' +
+                "DOB:'" + DOB + '\'' +
+                ", DeviceID:'" + DeviceID + '\'' +
+                ", GCMID:'" + GCMID + '\'' +
+                ", Email:'" + Email + '\'' +
+                ", Gender:'" + Gender + '\'' +
+                ", Mobile:'" + Mobile + '\'' +
+                ", Name:'" + Name + '\'' +
+                ", ProfilePic:'" + ProfilePic + '\'' +
+                ", SignupById:'" + SignupById + '\'' +
+                ", SignupWith:'" + SignupWith + '\'' +
                 '}';
     }
 }

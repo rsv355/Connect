@@ -6,7 +6,7 @@ package com.webmyne.connect.postLead.model;
 public class PostLeadOutput {
     public boolean IsActiveLead;
     public String ResponseCode, ResponseMessage;
-    public long WalletBalance;
+    public float WalletBalance;
 
     @Override
     public String toString() {

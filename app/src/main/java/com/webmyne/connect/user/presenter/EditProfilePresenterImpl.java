@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Toast;
 
+import com.google.gson.GsonBuilder;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
@@ -107,7 +108,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
 
     @Override
     public void validateFormFields(Activity activity, String name, String emailId, String DOB, String mobile,
-                                   String zipcode, String location, String streetNumber, String indutry, String gender, int userId) {
+                                   String zipcode, String location, String streetNumber, String indutry, String gender, long userId) {
 
         if (Functions.checkInternet(activity)) {
             if (name.trim().length() == 0) {
@@ -158,6 +159,7 @@ public class EditProfilePresenterImpl implements EditProfilePresenter {
                     userUpdateInput.setGender(gender);
                     userUpdateInput.setIndustry(indutry);
                     userUpdateInput.setUserID(userId);
+
                     editProfileView.onValidationSuccess(true, userUpdateInput);
                 }
             }

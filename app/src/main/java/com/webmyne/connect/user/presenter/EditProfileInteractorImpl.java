@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.android.gms.gcm.Task;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
+import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.MyApplication;
 import com.webmyne.connect.user.api.FetchIndustryResult;
 import com.webmyne.connect.user.api.FetchIndustryService;
@@ -15,6 +19,7 @@ import com.webmyne.connect.user.model.UserLoginOutput;
 import com.webmyne.connect.user.api.UpdateUserService;
 import com.webmyne.connect.user.model.UserUpdateInput;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,8 +37,14 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
         this.editProfilePresenter = editProfilePresenter;
     }
 
+
+
     @Override
     public void doCallUpdateUserService(final Activity activity, UserUpdateInput userLoginOutput) {
+
+
+        Log.e("edit prof input", Functions.jsonString(userLoginOutput));
+
         if (userLoginOutput != null) {
             UpdateUserService updateUserService = MyApplication.retrofit.create(UpdateUserService.class);
             Call<MainUserLoginResponse> call = updateUserService.doUserProfileUpdate(userLoginOutput);
@@ -41,6 +52,9 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
             call.enqueue(new Callback<MainUserLoginResponse>() {
                 @Override
                 public void onResponse(Call<MainUserLoginResponse> call, Response<MainUserLoginResponse> response) {
+
+                    Log.e("edit prof output", response.body().toString());
+
                     if (response.body() != null) {
                         if (response.body().UserLoginOutput != null) {
                             UserLoginOutput user = response.body().UserLoginOutput;
@@ -59,7 +73,8 @@ public class EditProfileInteractorImpl implements EditProfileInteractor {
 
                 @Override
                 public void onFailure(Call<MainUserLoginResponse> call, Throwable t) {
-                    onUpdateUser(false, "", activity.getString(R.string.update_user_error));
+                   // onUpdateUser(false, "", activity.getString(R.string.update_user_error));
+                    onUpdateUser(false, "", t.toString());
                 }
             });
         }

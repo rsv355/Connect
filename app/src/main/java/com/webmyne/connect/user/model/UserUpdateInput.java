@@ -4,8 +4,8 @@ package com.webmyne.connect.user.model;
  * Created by priyasindkar on 07-03-2016.
  */
 public class UserUpdateInput {
-    public String Address, DOB, Email, Gender, Industry, Mobile, Name, ProfileImg, ZipCode, ReferCode;
-    public int UserID;
+    public String Address, DOB, Email, Gender, Industry, Mobile, Name,  ZipCode, ReferCode;
+    public long UserID;
 
     public UserUpdateInput() {
         this.Address = "";
@@ -15,7 +15,6 @@ public class UserUpdateInput {
         this.Industry = "";
         this.Mobile = "";
         this.Name = "";
-        this.ProfileImg = "";
         this.ZipCode = "";
         this.ReferCode = "";
     }
@@ -76,13 +75,6 @@ public class UserUpdateInput {
         Name = name;
     }
 
-    public String getProfileImg() {
-        return ProfileImg;
-    }
-
-    public void setProfileImg(String profileImg) {
-        ProfileImg = profileImg;
-    }
 
     public String getZipCode() {
         return ZipCode;
@@ -100,11 +92,28 @@ public class UserUpdateInput {
         ReferCode = referCode;
     }
 
-    public int getUserID() {
+    public long getUserID() {
         return UserID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(long userID) {
         UserID = userID;
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "Address:'" + Address + '\'' +
+                ", DOB:'" + DOB + '\'' +
+                ", UserID:'" + UserID + '\'' +
+                ", Industry:'" + Industry + '\'' +
+                ", Email:'" + Email + '\'' +
+                ", Gender:'" + Gender + '\'' +
+                ", Mobile:'" + Mobile + '\'' +
+                ", Name:'" + Name + '\'' +
+                ", ZipCode:'" + ZipCode + '\'' +
+                ", ReferCode:'" + ReferCode + '\'' +
+                '}';
     }
 }

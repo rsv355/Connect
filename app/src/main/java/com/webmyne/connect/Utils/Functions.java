@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ import android.view.animation.AlphaAnimation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.gson.GsonBuilder;
 import com.webmyne.connect.R;
 import com.webmyne.connect.listeners.OnAlertButtonClicked;
 
@@ -91,6 +93,10 @@ public class Functions {
             }
         });
         return builder;
+    }
+
+    public static String jsonString(Object obj){
+       return "" + new GsonBuilder().create().toJson(obj).toString();
     }
 
 

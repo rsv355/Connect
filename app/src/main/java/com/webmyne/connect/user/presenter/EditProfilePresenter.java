@@ -22,7 +22,7 @@ public interface EditProfilePresenter {
     void getIndustryList(Activity activity, String searchString);
     void onIndustryListFetch(boolean isSuccess, List<IndustryModel> industryList);
     void validateFormFields(Activity activity, String name, String emailId, String DOB, String mobile,
-                            String zipcode, String location, String streetNumber, String industry, String gender, int userId);
+                            String zipcode, String location, String streetNumber, String industry, String gender, long userId);
     void getAddressesFromZipcode(Activity activity, String zipcode);
     void doUpdateUser(Activity activity, UserUpdateInput userUpdateInput);
     void onUpdateUser(boolean isSuccess, String success, String error);

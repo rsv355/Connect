@@ -4,11 +4,13 @@ package com.webmyne.connect.user.model;
  * Created by priyasindkar on 07-03-2016.
  */
 public class UserLoginOutput {
-    public String Address, DOB, Email, Gender, Industry, Mobile, Name, ProfilePic, ResponseCode, ResponseMessage, UserReferCode, ZipCode, ReferCode;
-    public boolean IsActive, IsActiveLead, IsKYCComplete, IsNewAccount;
-    public int UserID;
-    public int WalletBalance;
 
+    public String Address, DOB, Email, Gender, Industry, Mobile, Name, ProfilePic, ResponseCode, ResponseMessage, UserReferCode, ZipCode;
+    public boolean IsActive, IsActiveLead, IsKYCComplete, IsNewAccount;
+    public long UserID;
+    public float WalletBalance;
+
+///ReferCode
     public String getAddress() {
         return Address;
     }
@@ -89,7 +91,7 @@ public class UserLoginOutput {
         ResponseMessage = responseMessage;
     }
 
-    public int getUserID() {
+    public long getUserID() {
         return UserID;
     }
 
@@ -105,7 +107,7 @@ public class UserLoginOutput {
         UserReferCode = userReferCode;
     }
 
-    public int getWalletBalance() {
+    public float getWalletBalance() {
         return WalletBalance;
     }
 
@@ -153,14 +155,14 @@ public class UserLoginOutput {
         IsNewAccount = newAccount;
     }
 
-    public String getReferCode() {
+   /* public String getReferCode() {
         return ReferCode;
     }
 
     public void setReferCode(String referCode) {
         ReferCode = referCode;
     }
-
+*/
     @Override
     public String toString() {
         return "UserLoginOutput{" +
@@ -176,7 +178,7 @@ public class UserLoginOutput {
                 ", ResponseMessage='" + ResponseMessage + '\'' +
                 ", UserReferCode='" + UserReferCode + '\'' +
                 ", ZipCode='" + ZipCode + '\'' +
-                ", ReferCode='" + ReferCode + '\'' +
+
                 ", IsActive=" + IsActive +
                 ", IsActiveLead=" + IsActiveLead +
                 ", IsKYCComplete=" + IsKYCComplete +

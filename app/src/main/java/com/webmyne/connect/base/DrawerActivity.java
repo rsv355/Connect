@@ -304,6 +304,7 @@ public class DrawerActivity extends AppCompatActivity implements DrawerActivityV
 
     @Override
     public void onLogout() {
-        finish();
+        finishAffinity();
+
     }
 }
