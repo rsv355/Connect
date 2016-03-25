@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -14,6 +16,7 @@ import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -27,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.webmyne.connect.R;
+import com.webmyne.connect.Utils.APIConstants;
 import com.webmyne.connect.Utils.Constants;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.base.DrawerActivity;
@@ -40,10 +44,23 @@ import com.webmyne.connect.user.presenter.EditProfilePresenterImpl;
 import com.webmyne.connect.user.presenter.EditProfileView;
 import com.webmyne.connect.user.ui.AddReferCodeFilterDialog;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.util.EntityUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.client.HttpClient;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -192,6 +209,56 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 editProfilePresenter.showDatePicker(EditProfileActivity.this);
                 break;
         }
+    }
+
+
+    public void doFileUploadAnother(File f) throws Exception {
+
+        HttpClient httpclient = new DefaultHttpClient();
+        httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+        HttpPost httppost = new HttpPost(APIConstants.BASE_URL+APIConstants.UPDATE_PROFILE_PIC);
+        String boundary = "--";
+        httppost.setHeader("Content-type", "multipart/form-data; boundary=" + boundary);
+
+        Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        b.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        ByteArrayBody bab = new ByteArrayBody(imageBytes, new File(f.getAbsolutePath()).getName() + ".jpg");
+
+        HttpEntity entity = MultipartEntityBuilder.create()
+                .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
+                .setBoundary(boundary)
+                .addPart("UserID", new StringBody("2"))
+                .addPart("ProfilePic", bab)
+
+                .build();
+
+        httppost.setEntity(entity);
+        try {
+            HttpResponse response = httpclient.execute(httppost);
+
+            entity = response.getEntity();
+            final String response_str = EntityUtils.toString(entity);
+            if (entity != null) {
+                Log.e("RESPONSE", response_str);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        try {
+                            //res.setTextColor(Color.GREEN);
+                            // res.setText("n Response from server : n " + response_str);
+                            Toast.makeText(getApplicationContext(), "Upload Complete. Check the server uploads directory.", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        } catch (Exception e) {
+
+        }
+
+
     }
 
     @Override

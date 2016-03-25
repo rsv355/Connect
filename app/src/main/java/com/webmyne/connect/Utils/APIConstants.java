@@ -12,4 +12,6 @@ public class APIConstants {
 
     public static final String FETCH_LEAD_HISTORY = "LeadsService.svc/json/LeadHistory";
     public static final String FETCH_COMMISSION_HISTORY = "LeadsService.svc/json/CommissionHistory";
+
+    public static final String UPDATE_PROFILE_PIC = "Configuration.svc/json/UploadMultipartProfileImage";
 }
