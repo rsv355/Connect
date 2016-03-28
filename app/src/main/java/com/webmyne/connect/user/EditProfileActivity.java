@@ -59,8 +59,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import cz.msebera.android.httpclient.client.HttpClient;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -211,7 +209,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
+/*
     public void doFileUploadAnother(File f) throws Exception {
 
         HttpClient httpclient = new DefaultHttpClient();
@@ -259,7 +257,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
 
 
-    }
+    }*/
 
     @Override
     public void onDateSet(String date) {

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.ComplexPreferences;
+import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.Utils.PrefUtils;
 import com.webmyne.connect.base.MyApplication;
 import com.webmyne.connect.postLead.api.PostLeadService;
@@ -13,7 +14,10 @@ import com.webmyne.connect.postLead.model.MainPostLeadOutput;
 import com.webmyne.connect.postLead.model.PostLeadInput;
 import com.webmyne.connect.user.model.UserLoginOutput;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +33,16 @@ public class LeadsInteractorImpl implements LeadsInteractor {
         this.leadsView = leadsView;
     }
 
+    public List<Integer> removeAllDuplicates(List<Integer> arList){
+        List<Integer> al = new ArrayList<>();
+        al = arList;
+        Set<Integer> hs = new HashSet<>();
+        hs.addAll(al);
+        al.clear();
+        al.addAll(hs);
+        return al;
+    }
+
     @Override
     public void doPostLead(final Activity activity, String name, String emailId, String contactNo, String description, List<Integer> selectedVerticals) {
         if (leadsView != null) {
@@ -39,13 +53,20 @@ public class LeadsInteractorImpl implements LeadsInteractor {
         UserLoginOutput currentUser = complexPreferences.getObject("loggedInUser", UserLoginOutput.class);
 
         if (currentUser != null) {
-            int[] arr = new int[selectedVerticals.size()];
+
+            List<Integer> selcUniqueVert = removeAllDuplicates(selectedVerticals);
+
+            int[] arr = new int[selcUniqueVert.size()];
 
             for (int i = 0; i < selectedVerticals.size(); i++) {
                 arr[i] = selectedVerticals.get(i);
             }
+
+
             PostLeadInput postLeadInput = new PostLeadInput(description, emailId, contactNo, name, currentUser.UserID, arr);
             PostLeadService postLeadService = MyApplication.retrofit.create(PostLeadService.class);
+
+            Log.e("POST Lead obj", Functions.jsonString(postLeadInput));
 
             Call<MainPostLeadOutput> call = postLeadService.doUserProfileUpdate(postLeadInput);
             call.enqueue(new Callback<MainPostLeadOutput>() {
