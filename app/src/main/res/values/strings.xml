@@ -45,9 +45,11 @@
 
 
     <string name="facebook_app_id">978921992200010</string>
-    <string name="google_client_id">AIzaSyAa4EDPzxccmJi4gaOL6S46rvX_AQNoCYo</string>
+    <!--<string name="google_client_id">AIzaSyAa4EDPzxccmJi4gaOL6S46rvX_AQNoCYo</string>-->
+    <string name="google_client_id">AIzaSyDJPIurl5-3kcOp18pG2UDC2FQLquXojxg</string>
 
-    <string name="project_id">732099720034</string>
+    <!--<string name="project_id">732099720034</string>-->
+    <string name="project_id">372519544611</string>
 
     <!-- User Messages -->
     <string name="facebook_connection_cancelled">Facebook Connection Cancelled</string>

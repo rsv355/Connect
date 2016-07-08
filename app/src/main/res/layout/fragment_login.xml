@@ -17,80 +17,80 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:layout_marginBottom="48dp"
             android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="48dp"
+            android:gravity="center"
             android:text="Explore your contacts and earn MONEY"
             android:textColor="@color/appYellowColor"
             android:textSize="@dimen/small_large_text_size" />
 
-        <com.andexert.library.RippleView
-            android:id="@+id/facebookRipple"
-            rv_centered="true"
+        <!-- <com.andexert.library.RippleView
+             android:id="@+id/facebookRipple"
+             rv_centered="true"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">-->
+
+        <LinearLayout
+            android:id="@+id/linearFbLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/facebook">
 
-            <LinearLayout
-                android:id="@+id/linearFbLogin"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/facebook">
+                android:padding="@dimen/margin_10"
+                android:src="@drawable/ic_facebook" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_10"
-                    android:src="@drawable/ic_facebook" />
+            <TextView
+                android:id="@+id/txtFbLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Login With Facebook"
+                android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/txtFbLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Login With Facebook"
-                    android:textColor="@color/white" />
+        </LinearLayout>
 
-            </LinearLayout>
+        <!--  </com.andexert.library.RippleView>-->
 
-        </com.andexert.library.RippleView>
+        <!-- <com.andexert.library.RippleView
+             android:id="@+id/googleRipple"
+             rv_centered="true"
+             android:layout_marginTop="@dimen/margin_10"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">-->
 
-        <com.andexert.library.RippleView
-            android:id="@+id/googleRipple"
-            rv_centered="true"
+        <LinearLayout
+            android:id="@+id/linearGPlusLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:background="@color/google">
 
-            <LinearLayout
-                android:id="@+id/linearGPlusLogin"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/google">
+                android:padding="@dimen/margin_10"
+                android:src="@drawable/ic_google" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_10"
-                    android:src="@drawable/ic_google" />
-
-                <TextView
-                    android:id="@+id/txtGoogleLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="Login With Google+"
-                    android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/txtGoogleLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Login With Google+"
+                android:textColor="@color/white" />
 
 
-
-            </LinearLayout>
-        </com.andexert.library.RippleView>
+        </LinearLayout>
+        <!--   </com.andexert.library.RippleView>-->
         <com.google.android.gms.common.SignInButton
-            android:visibility="gone"
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>

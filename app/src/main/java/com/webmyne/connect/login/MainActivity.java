@@ -12,9 +12,9 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.andexert.library.RippleView;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -27,21 +27,21 @@ import com.webmyne.connect.R;
 import com.webmyne.connect.Utils.Functions;
 import com.webmyne.connect.Utils.PrefUtils;
 import com.webmyne.connect.base.DrawerActivity;
-import com.webmyne.connect.login.presenter.MainPresenterImpl;
-import com.webmyne.connect.login.presenter.LoginView;
-import com.webmyne.connect.login.presenter.LoginPresenter;
-import com.webmyne.connect.login.presenter.LoginPresenterImp;
-import com.webmyne.connect.user.EditProfileActivity;
-import com.webmyne.connect.user.model.UserLoginOutput;
-import com.webmyne.connect.login.model.UserProfile;
 import com.webmyne.connect.customUI.CustomProgressDialog;
 import com.webmyne.connect.customUI.viewPager.DotsView;
 import com.webmyne.connect.customUI.viewPager.SCViewAnimationUtil;
 import com.webmyne.connect.customUI.viewPager.SCViewPager;
 import com.webmyne.connect.customUI.viewPager.SCViewPagerAdapter;
+import com.webmyne.connect.login.model.UserProfile;
+import com.webmyne.connect.login.presenter.LoginPresenter;
+import com.webmyne.connect.login.presenter.LoginPresenterImp;
+import com.webmyne.connect.login.presenter.LoginView;
+import com.webmyne.connect.login.presenter.MainPresenterImpl;
+import com.webmyne.connect.user.EditProfileActivity;
+import com.webmyne.connect.user.model.UserLoginOutput;
 
 
-public class MainActivity extends FragmentActivity implements RippleView.OnRippleCompleteListener,
+public class MainActivity extends FragmentActivity implements View.OnClickListener/*, RippleView.OnRippleCompleteListener*/,
         LoginView, GoogleApiClient.OnConnectionFailedListener {
     private static final int NUM_PAGES = 4;
 
@@ -139,10 +139,14 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
         View loginView = findViewById(R.id.loginLayout);
         mainPresenterImpl.animateGuidePageRasberryType(MainActivity.this, loginView, size, 2, 3, mViewPager);
 
-        RippleView facebookRipple = (RippleView) loginView.findViewById(R.id.facebookRipple);
+        /*RippleView facebookRipple = (RippleView) loginView.findViewById(R.id.facebookRipple);
         facebookRipple.setOnRippleCompleteListener(this);
         RippleView googleRipple = (RippleView) loginView.findViewById(R.id.googleRipple);
-        googleRipple.setOnRippleCompleteListener(this);
+        googleRipple.setOnRippleCompleteListener(this);*/
+        LinearLayout linearFbLogin = (LinearLayout) loginView.findViewById(R.id.linearFbLogin);
+        linearFbLogin.setOnClickListener(this);
+        LinearLayout linearGPlusLogin = (LinearLayout) loginView.findViewById(R.id.linearGPlusLogin);
+        linearGPlusLogin.setOnClickListener(this);
         TextView txtLoginGuide = (TextView) loginView.findViewById(R.id.txtLoginGuide);
         txtLoginGuide.setTypeface(Functions.getTypeFace(MainActivity.this), Typeface.BOLD);
 
@@ -159,7 +163,7 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
         loginPresenter.socialMediaActivityResultHandler(requestCode, resultCode, data, mGoogleApiClient);
     }
 
-    @Override
+   /* @Override
     public void onComplete(RippleView rippleView) {
         switch (rippleView.getId()) {
             case R.id.facebookRipple:
@@ -169,7 +173,7 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
                 loginPresenter.doGoogleLogin(MainActivity.this, mGoogleApiClient);
                 break;
         }
-    }
+    }*/
 
     @Override
     public void onGoogleLoginSuccess(UserProfile userProfile, String success) {
@@ -202,13 +206,13 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
         Log.e("login response", userLoginOutput.toString());
         mainPresenterImpl.saveLoggedInUser(MainActivity.this, userLoginOutput);
         Intent intent = null;
-        if(userLoginOutput.getZipCode() == null || userLoginOutput.getZipCode().trim().length() == 0) {
+        if (userLoginOutput.getZipCode() == null || userLoginOutput.getZipCode().trim().length() == 0) {
 
             SharedPreferences sharedPreferences1 = getSharedPreferences("user-prefs", MODE_PRIVATE);
             sharedPreferences1.edit().putBoolean("isFirstTimeLogin", true).commit();
             intent = new Intent(MainActivity.this, EditProfileActivity.class);
 
-            PrefUtils.setActiveLead(this,userLoginOutput.isActiveLead());
+            PrefUtils.setActiveLead(this, userLoginOutput.isActiveLead());
 
         } else {
             intent = new Intent(MainActivity.this, DrawerActivity.class);
@@ -230,6 +234,18 @@ public class MainActivity extends FragmentActivity implements RippleView.OnRippl
     @Override
     public void hideProgressDialog() {
         progressDialog.hide();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.linearFbLogin:
+                loginPresenter.doFacebookLogin(MainActivity.this);
+                break;
+            case R.id.linearGPlusLogin:
+                loginPresenter.doGoogleLogin(MainActivity.this, mGoogleApiClient);
+                break;
+        }
     }
     //end of class
 }

@@ -1,23 +1,19 @@
 {
   "project_info": {
-    "project_id": "erudite-scholar-123612",
-    "project_number": "732099720034",
-    "name": "Connect"
+    "project_number": "372519544611",
+    "project_id": "connect-4d66d"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:732099720034:android:7566bf00df85008f",
-        "client_id": "android:com.webmyne.connect",
-        "client_type": 1,
+        "mobilesdk_app_id": "1:372519544611:android:7566bf00df85008f",
         "android_client_info": {
-          "package_name": "com.webmyne.connect",
-          "certificate_hash": []
+          "package_name": "com.webmyne.connect"
         }
       },
       "oauth_client": [
         {
-          "client_id": "732099720034-6033vafuosrqlrje0bba94aodj54pn9k.apps.googleusercontent.com",
+          "client_id": "372519544611-i0ks552pn0in9216empn00pqcprskl4l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.webmyne.connect",
@@ -25,25 +21,22 @@
           }
         },
         {
-          "client_id": "732099720034-v4t2imlprksldeajandq5el6qpstjavl.apps.googleusercontent.com",
+          "client_id": "372519544611-t1nut8eq4eji2mlb04futocs8o1ruq8f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJPIurl5-3kcOp18pG2UDC2FQLquXojxg"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
         },
-        "cloud_messaging_service": {
-          "status": 1,
-          "apns_config": []
-        },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
-        },
-        "google_signin_service": {
-          "status": 2
         },
         "ads_service": {
           "status": 1
@@ -51,6 +44,5 @@
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }
